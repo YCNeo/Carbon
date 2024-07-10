@@ -54,8 +54,8 @@ const mapDisptchToProps = (dispatch) => {
     login(account, password) {
       dispatch(actionCreators.login(account.value, password.value))
     },
-    revisepassword(password, old_password, comfirm_new_password) {
-      dispatch(actionCreators.revisepassword(password.value, old_password.value, comfirm_new_password.value))
+    revisepassword(old_password, new_password, comfirm_new_password) {
+      dispatch(actionCreators.revisepassword(old_password.value, new_password.value, comfirm_new_password.value))
     }
   }
 }
