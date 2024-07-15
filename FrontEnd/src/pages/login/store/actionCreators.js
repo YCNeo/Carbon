@@ -21,7 +21,6 @@ export const login = (account, password) => {
   return (dispatch) => {
     const hash1 = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
     axios./*正是對接時用post*/get('/api/login.json', { account, hash1 }).then((res) => {
-      console.log(account, hash1);
       const result = res.data.data;
       if (result) {
         dispatch(changelogin())

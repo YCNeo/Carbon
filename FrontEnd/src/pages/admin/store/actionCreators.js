@@ -13,9 +13,9 @@ export const setpage = (page) => ({
 
 /////////////////admin///////////////////
 
-export const CUsendinfo = (user_name, access) => {
+export const CUsendinfo = (user_name, accessChecked) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/CUinfo.json', { user_name, access }).then((res) => {
+    axios./*正是對接時用post*/get('/api/CUinfo.json', { user_name, accessChecked }).then((res) => {
       const result = res.data.data;
       dispatch(CUsuccesssend(result));
     }).catch(() => {
@@ -29,9 +29,9 @@ const CUsuccesssend = (result) => ({
   value: result
 })
 
-export const AAsendinfo = (user_id, access) => {
+export const AAsendinfo = (user_id, accessChecked) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/AAinfo.json', { user_id, access }).then((res) => {
+    axios./*正是對接時用post*/get('/api/AAinfo.json', { user_id, accessChecked }).then((res) => {
       const result = res.data.data;
       dispatch(AAsuccesssend(result));
     }).catch(() => {
@@ -45,9 +45,9 @@ const AAsuccesssend = (result) => ({
   value: result
 })
 
-export const CPsendinfo = (project_id, pm_id, material, equipment) => {
+export const CPsendinfo = (project_id, pm_id, materialChecked, equipmentChecked) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/CPinfo.json', { project_id, pm_id, material, equipment }).then((res) => {
+    axios./*正是對接時用post*/get('/api/CPinfo.json', { project_id, pm_id, materialChecked, equipmentChecked }).then((res) => {
       const result = res.data.data;
       dispatch(CPsuccesssend(result));
     }).catch(() => {
@@ -140,6 +140,50 @@ export const employeeretrieve = (eid, name, pid, region) => {
       dispatch(ESsuccesssend(result));
     }).catch(() => {
       alert('ESsendinfo fail')
+    });
+  }
+}
+
+///////////////////////get list/////////////////////
+
+export const getaccess = () => {
+  return (dispatch) => {
+    axios.get('/api/access.json').then((res) => {
+      const result = res.data.data;
+      dispatch({
+        type: constants.GET_ACCESS,
+        accesslist: result
+      });
+    }).catch((error) => {
+      console.error('Error fetching access data:', error);
+    });
+  }
+}
+
+export const getmaterial = () => {
+  return (dispatch) => {
+    axios.get('/api/material.json').then((res) => {
+      const result = res.data.data;
+      dispatch({
+        type: constants.GET_MATERIAL,
+        materiallist: result
+      });
+    }).catch((error) => {
+      console.error('Error fetching material data:', error);
+    });
+  }
+}
+
+export const geteqipment = () => {
+  return (dispatch) => {
+    axios.get('/api/equipment.json').then((res) => {
+      const result = res.data.data;
+      dispatch({
+        type: constants.GET_EQUIPMENT,
+        equipmentlist: result
+      });
+    }).catch((error) => {
+      console.error('Error fetching equipment data:', error);
     });
   }
 }
