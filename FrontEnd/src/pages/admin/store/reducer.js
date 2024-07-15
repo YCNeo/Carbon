@@ -18,7 +18,10 @@ const defaultState = {
   EDsend: false,
   EDsendvalue: false,
   ESsend: false,
-  ESsendvalue: false
+  ESsendvalue: false,
+  accesslist: [],
+  materiallist: [],
+  equipmentlist: []
 };
 
 const reducer = (state = defaultState, action) => {
@@ -65,6 +68,12 @@ const reducer = (state = defaultState, action) => {
       return { ...state, EDsendvalue: action.value, EDsend: true };
     case constants.ESSEND:
       return { ...state, ESsendvalue: action.value, ESsend: true };
+    case constants.GET_ACCESS:
+      return { ...state, accesslist: action.accesslist }
+    case constants.GET_MATERIAL:
+      return { ...state, materiallist: action.materiallist }
+    case constants.GET_EQUIPMENT:
+      return { ...state, equipmentlist: action.equipmentlist }
     default:
       return state;
   }

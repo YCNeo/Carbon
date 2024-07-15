@@ -8,11 +8,6 @@ margin: 0 auto;
 overflow: hidden;
 `;
 
-export const AdminHead = styled.div`
-height: 70px;
-border-bottom: 1px solid gray;
-`;
-
 export const AdminContent = styled.div`
 overflow: hidden;
 height: 100%;
@@ -83,11 +78,20 @@ border: none;
 outline: none;
 margin-left: 30px;
 background: #e0e0e0;
-&.bigbox {
-width: 500px;
-height: 250px;
-}
 `;
+
+export const Componentcheckbox = styled.div`
+width: 400px;
+min-height: 250px;
+padding: 0 5px;
+line-height: 30px;
+border-radius: 7px;
+font-size: 18px;
+border: none;
+margin-left: 30px;
+background: #e0e0e0;
+float: left;
+`
 
 export const Componentbutton = styled.div`
 text-align: center;
@@ -127,3 +131,26 @@ background: #f0f0f0;
   background: #e0e0e0;
 }
 `
+export const CheckItem = styled.div`
+display: flex;
+align-items: center;
+margin: 10px 0;
+`;
+
+export const Checkbutton = styled.div`
+height: 20px;
+width: 20px;
+background-color: white;
+border: 1px solid #ccc;
+cursor: pointer;
+display: inline-block;
+margin-right: 10px;
+&.checked::after {
+  content: '✓';
+  display: flex;
+  height: 20px;
+  width: 20px;
+  justify-content: center;
+  align-items: center;
+}
+`;

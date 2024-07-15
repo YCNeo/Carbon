@@ -10,7 +10,6 @@ import Employee from './components/Employee';
 import {
   AdminWrapper,
   AdminIndexlist,
-  AdminHead,
   AdminContent,
   AdminPage,
   Adminpageoption
@@ -58,7 +57,6 @@ class Admin extends Component {
     if (loginstate) {
       return (
         <AdminWrapper>
-          <AdminHead />
           <AdminContent>
             <AdminIndexlist>
               {pages.map(({ id, text }) => (

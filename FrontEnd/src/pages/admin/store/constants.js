@@ -10,3 +10,7 @@ export const EPSEND = 'admin/EPSEND';
 export const ERSEND = 'admin/ERSEND';
 export const EDSEND = 'admin/EDSEND';
 export const ESSEND = 'admin/ESSND';
+
+export const GET_ACCESS= 'admin/GET_ACCESS'
+export const GET_MATERIAL= 'admin/GET_MATERIAL'
+export const GET_EQUIPMENT= 'admin/GET_EQUIPMENT'
