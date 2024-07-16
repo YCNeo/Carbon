@@ -93,7 +93,7 @@ class Createproject extends PureComponent {
 
   componentDidMount() {
     this.props.getmaterial();
-    this.props.geteqipment();
+    this.props.getequipment();
     if (this.props.materiallist) {
       this.setState({ materialChecked: new Array(this.props.materiallist.length).fill(false) });
     }
@@ -118,8 +118,8 @@ const mapDisptchToProps = (dispatch) => {
     getmaterial() {
       dispatch(actionCreators.getmaterial())
     },
-    geteqipment() {
-      dispatch(actionCreators.geteqipment())
+    getequipment() {
+      dispatch(actionCreators.getequipment())
     }
   }
 }

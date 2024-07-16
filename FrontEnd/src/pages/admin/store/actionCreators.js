@@ -1,5 +1,8 @@
 import axios from 'axios'
 import * as constants from './constants';
+import DiffMatchPatch from 'diff-match-patch';
+
+const dmp = new DiffMatchPatch();
 
 export const setadminpage = (page) => ({
   type: constants.SET_ADMIN_PAGE,
@@ -174,7 +177,7 @@ export const getmaterial = () => {
   }
 }
 
-export const geteqipment = () => {
+export const getequipment = () => {
   return (dispatch) => {
     axios.get('/api/equipment.json').then((res) => {
       const result = res.data.data;
@@ -187,3 +190,47 @@ export const geteqipment = () => {
     });
   }
 }
+export const getoldcontent = () => {
+  return (dispatch) => {
+    axios.get('/api/oldcontent.json').then((res) => {
+      const result = res.data.data;
+      dispatch({
+        type: constants.GET_OLD_CONTENT,
+        oldcontent: result.content,
+        approve_pid: result.pid,
+        approve_pmid: result.pmid,
+        approve_time: result.time
+      });
+    }).catch((error) => {
+      console.error('Error fetching oldcontent data:', error);
+    });
+  };
+};
+
+export const getnewcontent = () => {
+  return (dispatch, getState) => {
+    axios.get('/api/newcontent.json').then((res) => {
+      const result = res.data.data;
+      const { oldcontent } = getState().admin;
+      const diff = dmp.diff_main(oldcontent, result.content);
+      dmp.diff_cleanupSemantic(diff);
+      const diffHTML = diff.map(part => {
+        const [op, text] = part;
+        if (op === DiffMatchPatch.DIFF_INSERT) {
+          return `<span style="background-color: 	#00DB00;">${text}</span>`;
+        } else if (op === DiffMatchPatch.DIFF_DELETE) {
+          return `<span style="background-color: 	#FF5151;">${text}</span>`;
+        } else {
+          return text;
+        }
+      }).join('');
+
+      dispatch({
+        type: constants.GET_NEW_CONTENT,
+        newcontent: diffHTML
+      });
+    }).catch((error) => {
+      console.error('Error fetching newcontent data:', error);
+    });
+  };
+};

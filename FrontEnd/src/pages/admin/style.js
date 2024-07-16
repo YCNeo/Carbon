@@ -54,6 +54,14 @@ font-size: 20px;
 export const ComponentoptionWapper = styled.div`
 margin: 20px 0 0 25px;
 overflow: hidden;
+display: flex;
+&.contentwarpper {
+  justify-content: center;
+  margin: 20px 0 0 0;
+}
+&.content {
+  flex-direction: column;
+}
 `;
 
 export const Componentindex = styled.div`
@@ -61,10 +69,22 @@ text-align: center;
 line-height: 30px;
 height: 30px;
 width: 120px;
+margin-right: 30px;
 border-radius: 7px;
 font-size: 18px;
 background: #e0e0e0;
 float: left;
+`;
+
+export const Componentinfo = styled.div`
+padding: 0 5px;
+line-height: 30px;
+min-height: 30px;
+min-width: 320px;
+border-radius: 7px;
+font-size: 18px;
+margin: 3px;
+background: #e0e0e0;
 `;
 
 export const Componentinput = styled.input`
@@ -76,7 +96,6 @@ border-radius: 7px;
 font-size: 18px;
 border: none;
 outline: none;
-margin-left: 30px;
 background: #e0e0e0;
 `;
 
@@ -88,7 +107,6 @@ line-height: 30px;
 border-radius: 7px;
 font-size: 18px;
 border: none;
-margin-left: 30px;
 background: #e0e0e0;
 float: left;
 `

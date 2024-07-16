@@ -21,7 +21,12 @@ const defaultState = {
   ESsendvalue: false,
   accesslist: [],
   materiallist: [],
-  equipmentlist: []
+  equipmentlist: [],
+  approve_pid: "pid",
+  approve_pmid: "pmid",
+  approve_time: "time",
+  oldcontent: "old",
+  newcontent: "new"
 };
 
 const reducer = (state = defaultState, action) => {
@@ -74,6 +79,19 @@ const reducer = (state = defaultState, action) => {
       return { ...state, materiallist: action.materiallist }
     case constants.GET_EQUIPMENT:
       return { ...state, equipmentlist: action.equipmentlist }
+    case constants.GET_OLD_CONTENT:
+      return {
+        ...state,
+        approve_pid: action.pid,
+        approve_pmid: action.pmid,
+        approve_time: action.time,
+        oldcontent: action.oldcontent,
+      }
+    case constants.GET_NEW_CONTENT:
+      return {
+        ...state,
+        newcontent: action.newcontent,
+      }
     default:
       return state;
   }
