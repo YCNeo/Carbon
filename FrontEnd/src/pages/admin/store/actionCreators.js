@@ -190,6 +190,7 @@ export const getequipment = () => {
     });
   }
 }
+
 export const getoldcontent = () => {
   return (dispatch) => {
     axios.get('/api/oldcontent.json').then((res) => {
@@ -197,9 +198,9 @@ export const getoldcontent = () => {
       dispatch({
         type: constants.GET_OLD_CONTENT,
         oldcontent: result.content,
-        approve_pid: result.pid,
-        approve_pmid: result.pmid,
-        approve_time: result.time
+        pid: result.pid,
+        pmid: result.pmid,
+        time: result.time
       });
     }).catch((error) => {
       console.error('Error fetching oldcontent data:', error);
@@ -217,11 +218,11 @@ export const getnewcontent = () => {
       const diffHTML = diff.map(part => {
         const [op, text] = part;
         if (op === DiffMatchPatch.DIFF_INSERT) {
-          return `<span style="background-color: 	#00DB00;">${text}</span>`;
+          return `<span style="background-color: #00DB00;">${text}</span>`;
         } else if (op === DiffMatchPatch.DIFF_DELETE) {
-          return `<span style="background-color: 	#FF5151;">${text}</span>`;
+          return `<span style="background-color: #FF5151;">${text}</span>`;
         } else {
-          return text;
+          return `<span>${text}</span>`;
         }
       }).join('');
 

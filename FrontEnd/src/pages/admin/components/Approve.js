@@ -32,7 +32,7 @@ class Approve extends PureComponent {
         <ComponentoptionWapper className='contentwarpper'>
           <ComponentoptionWapper className='content' >
             <Componentindex>Old Content</Componentindex>
-            <Componentinfo>{oldcontent}</Componentinfo>
+            <Componentinfo dangerouslySetInnerHTML={{ __html: oldcontent }}></Componentinfo>
           </ComponentoptionWapper>
           <ComponentoptionWapper className='content'>
             <Componentindex>New Content</Componentindex>
