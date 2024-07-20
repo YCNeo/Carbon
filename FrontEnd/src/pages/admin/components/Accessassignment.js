@@ -60,12 +60,10 @@ class Accessassignment extends PureComponent {
       </ComponentWapper>
     )
   }
-  
+
   componentDidMount() {
     this.props.getaccess();
-    if (this.props.accesslist) {
-      this.setState({ accessChecked: new Array(this.props.accesslist.length).fill(false) });
-    }
+    this.setState({ accessChecked: new Array(this.props.accesslist.length).fill(false) });
   }
 }
 

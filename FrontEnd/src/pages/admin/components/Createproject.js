@@ -94,12 +94,8 @@ class Createproject extends PureComponent {
   componentDidMount() {
     this.props.getmaterial();
     this.props.getequipment();
-    if (this.props.materiallist) {
-      this.setState({ materialChecked: new Array(this.props.materiallist.length).fill(false) });
-    }
-    if (this.props.equipmentlist) {
-      this.setState({ equipmentChecked: new Array(this.props.equipmentlist.length).fill(false) });
-    }
+    this.setState({ materialChecked: new Array(this.props.materiallist.length).fill(false) });
+    this.setState({ equipmentChecked: new Array(this.props.equipmentlist.length).fill(false) });
   }
 }
 

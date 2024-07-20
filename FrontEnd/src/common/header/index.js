@@ -77,11 +77,12 @@ class Header extends Component {
                 login ?
                   <Jumpbottom onClick={logout}>press to logout</Jumpbottom> :
                   <div>
-                    <Link to='/login'><Jumpbottom onClick={()=>(iforgotpassword(false))}>login</Jumpbottom></Link>
-                    <Jumpbottom onClick={()=>(iforgotpassword(true))}>revisepassword</Jumpbottom>
+                    <Link to='/login'><Jumpbottom onClick={() => (iforgotpassword(false))}>login</Jumpbottom></Link>
+                    <Jumpbottom onClick={() => (iforgotpassword(true))}>revisepassword</Jumpbottom>
                   </div>
               }
-              <Link to='/admin'><Jumpbottom onClick={()=>(iforgotpassword(false))}>admin (need login)</Jumpbottom></Link>
+              <Link to='/admin'><Jumpbottom onClick={() => (iforgotpassword(false))}>admin (need login)</Jumpbottom></Link>
+              <Link to='/statement'><Jumpbottom>statement</Jumpbottom></Link>
             </HeaderWrapper>
           </div>
           :

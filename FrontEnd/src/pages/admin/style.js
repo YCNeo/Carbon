@@ -8,12 +8,6 @@ margin: 0 auto;
 overflow: hidden;
 `;
 
-export const AdminContent = styled.div`
-overflow: hidden;
-height: 100%;
-
-`;
-
 export const AdminIndexlist = styled.div`
 width: 200px;
 height: 100%;
@@ -51,6 +45,7 @@ export const Componenttitle = styled.div`
 width: 300px;
 font-size: 20px;
 `;
+
 export const ComponentoptionWapper = styled.div`
 margin: 20px 0 0 25px;
 overflow: hidden;
@@ -83,7 +78,6 @@ min-height: 30px;
 min-width: 320px;
 border-radius: 7px;
 font-size: 18px;
-margin: 3px;
 background: #e0e0e0;
 `;
 
