@@ -80,7 +80,7 @@ class Statement extends PureComponent {
               onChange={(date) => this.handleDateChange('startDate', date)}
               showTimeSelect
               timeFormat="HH:mm"
-              timeIntervals={15}
+              timeIntervals={30}
               dateFormat="yyyy/MM/dd HH:mm"
               timeCaption="time"
               customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
@@ -93,7 +93,7 @@ class Statement extends PureComponent {
               onChange={(date) => this.handleDateChange('endDate', date)}
               showTimeSelect
               timeFormat="HH:mm"
-              timeIntervals={15}
+              timeIntervals={30}
               dateFormat="yyyy/MM/dd HH:mm"
               timeCaption="time"
               customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}

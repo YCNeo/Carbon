@@ -52,7 +52,7 @@ overflow: hidden;
 display: flex;
 &.contentwarpper {
   justify-content: center;
-  margin: 20px 0 0 0;
+  margin: 0;
 }
 &.content {
   flex-direction: column;
@@ -79,6 +79,9 @@ min-width: 320px;
 border-radius: 7px;
 font-size: 18px;
 background: #e0e0e0;
+&.content {
+margin-top: 20px;
+}
 `;
 
 export const Componentinput = styled.input`

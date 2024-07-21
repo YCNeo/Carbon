@@ -3,7 +3,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export const StatemetnWrapper = styled.div`
 position: relative;
-width: 100%;
 min-height: 100%;
 margin: 0 auto;
 padding: 30px 0 0 30px;
