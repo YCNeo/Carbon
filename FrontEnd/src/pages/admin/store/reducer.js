@@ -25,8 +25,8 @@ const defaultState = {
   approve_pid: "pid",
   approve_pmid: "pmid",
   approve_time: "time",
-  oldcontent: "old",
-  newcontent: "new"
+  oldcontent: "",
+  newcontent: ""
 };
 
 const reducer = (state = defaultState, action) => {
