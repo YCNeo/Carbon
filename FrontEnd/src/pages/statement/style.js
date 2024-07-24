@@ -36,8 +36,8 @@ float: left;
 `;
 
 export const Statementcheckbox = styled.div`
-width: 400px;
-min-height: 250px;
+min-width: 400px;
+height: auto;
 padding: 0 5px;
 line-height: 30px;
 border-radius: 7px;
@@ -129,3 +129,12 @@ export const DatePickerWrapper = styled.div`
   margin-left: 10px;
 }
 `;
+
+export const Chartselect = styled.div`
+margin-left: 10px;
+display: flex;
+`;
+
+export const Option = styled.div`
+width: 70px;
+`

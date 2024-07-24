@@ -12,15 +12,33 @@ import {
   Statementbutton,
   CheckItem,
   Checkbutton,
-  DatePickerWrapper
+  DatePickerWrapper,
+  Chartselect,
+  Option
 } from './style';
 
 class Statement extends PureComponent {
   state = {
     projectChecked: [],
+    chart: 0,
+    chartlist: [
+      { id: 1, name: "bar chart" },
+      { id: 2, name: "line chart" },
+      { id: 3, name: "pie chart" }
+    ],
+    option: [
+      { id: 0, name: "select an option" },
+      { id: 1, name: "time" },
+      { id: 2, name: "carbon emission" },
+      { id: 3, name: "project id" },
+      { id: 4, name: "factory number" },
+      { id: 5, name: "option5" }
+    ],
     startDate: new Date(),
     endDate: new Date(),
-    customTimeInput: ""
+    customTimeInput: "",
+    selectedOption1: "",
+    selectedOption2: ""
   };
 
   handleCheckButtonClick = (index) => {
@@ -39,10 +57,22 @@ class Statement extends PureComponent {
     this.setState({ [field]: event.target.value });
   };
 
+  setchart = (id) => {
+    this.setState({ chart: id });
+  }
+
+  handleSelectChange1 = (event) => {
+    this.setState({ selectedOption1: event.target.value });
+  };
+
+  handleSelectChange2 = (event) => {
+    this.setState({ selectedOption2: event.target.value });
+  };
+
   render() {
     const { projectlist } = this.props;
-    const { projectChecked, startDate, endDate, customTimeInput } = this.state;
-    
+    const { projectChecked, startDate, endDate, customTimeInput, chart, chartlist, option, selectedOption1, selectedOption2 } = this.state;
+
     const CustomTimeInput = ({ value, onChange }) => (
       <input
         value={value}
@@ -102,9 +132,41 @@ class Statement extends PureComponent {
         </StatementoptionWapper>
         <StatementoptionWapper>
           <Statementindex>生成圖表</Statementindex>
+          <Statementcheckbox>
+            {
+              chartlist.map((item) => (
+                <CheckItem key={item.id} >
+                  <Checkbutton
+                    onClick={() => this.setchart(item.id)}
+                    className={chart === item.id ? 'checked' : ''}
+                  ></Checkbutton>
+                  <Option>{item.name}</Option>
+                  <Chartselect>
+                    {item.id === 3 ? "classification basis" : "x-axis:"}
+                    &nbsp;&nbsp;
+                    <select value={selectedOption1} onChange={this.handleSelectChange1}>
+                      {option.map(opt => (
+                        <option key={opt.id} value={opt.id}>{opt.name}</option>
+                      ))}
+                    </select>
+                  </Chartselect>
+                  {item.id === 3 ? '' :
+                    <Chartselect>
+                      y-axis:&nbsp;&nbsp;
+                      <select value={selectedOption2} onChange={this.handleSelectChange2}>
+                        {option.map(opt => (
+                          <option key={opt.id} value={opt.id}>{opt.name}</option>
+                        ))}
+                      </select>
+                    </Chartselect>
+                  }
+                </CheckItem>
+              ))
+            }
+          </Statementcheckbox>
         </StatementoptionWapper>
         <StatementoptionWapper>
-          <Statementbutton onClick={() => this.props.sendinfo(startDate,endDate)}>Create</Statementbutton>
+          <Statementbutton onClick={() => this.props.sendinfo(chart, selectedOption1, selectedOption2)}>Create</Statementbutton>
         </StatementoptionWapper>
       </StatemetnWrapper>
     )
@@ -125,8 +187,8 @@ const mapDispatchToProps = (dispatch) => {
     getproject() {
       dispatch(actionCreators.getproject())
     },
-    sendinfo(a,b) {
-      console.log(a,b);
+    sendinfo(a, b, c) {
+      console.log(a, b, c);
     }
   }
 }
