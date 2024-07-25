@@ -132,7 +132,7 @@ color: red;
 }
 `;
 
-export const Adminemployeepageoption = styled.div`
+export const Projectmanagementinnerpageoption = styled.div`
 position: relative;
 float: left;
 height: 35px;
@@ -167,5 +167,50 @@ margin-right: 10px;
   width: 20px;
   justify-content: center;
   align-items: center;
+}
+`;
+
+export const DatePickerWrapper = styled.div`
+  .react-datepicker {
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+  }
+
+  .react-datepicker__header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .react-datepicker__day-name, 
+  .react-datepicker__day, 
+  .react-datepicker__time-name {
+    color: #000;
+  }
+
+  .react-datepicker__day--selected, 
+  .react-datepicker__day--keyboard-selected {
+    background-color: #0066cc;
+    color: #fff;
+  }
+
+  .react-datepicker__day--today {
+    background-color: #ffeb3b;
+  }
+
+  .react-datepicker__input-container input {
+    width: 170px;
+    height: 27px;
+    margin-right: 30px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .custom-time-input {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10px;
 }
 `;

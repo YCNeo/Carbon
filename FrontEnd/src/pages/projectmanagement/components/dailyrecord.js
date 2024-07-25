@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import {
   ComponentWapper,
   Componentindex,
@@ -8,18 +10,19 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Sendresult,
-  Adminemployeepageoption
+  Projectmanagementinnerpageoption,
+  DatePickerWrapper,
 } from '../style';
 
 class Dailyrecord extends PureComponent {
   state = {
     hoveredBox: null,
+    Date: new Date(),
+    customTimeInput: "",
     pages: [
       { id: 1, text: 'Post' },
       { id: 2, text: 'Revise' },
-      { id: 3, text: 'Delete' },
-      { id: 4, text: 'Retieve' },
+      { id: 3, text: 'Retieve' },
     ]
   };
 
@@ -35,116 +38,121 @@ class Dailyrecord extends PureComponent {
     switch (page) {
       case 1:
         {
-          const { EPsend, EPsendvalue } = this.props;
+          const { Date, customTimeInput } = this.state;
+          const CustomTimeInput = ({ value, onChange }) => (
+            <input
+              value={value}
+              onChange={onChange}
+              placeholder="HH:mm"
+              className="custom-time-input"
+            />
+          );
+
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
-                <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentindex>Date</Componentindex>
+                <DatePickerWrapper>
+                  <DatePicker
+                    selected={Date}
+                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    dateFormat="yyyy/MM/dd HH:mm"
+                    timeCaption="time"
+                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                  />
+                </DatePickerWrapper>
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentindex>Gender</Componentindex>
+                <Componentindex>Equipment</Componentindex>
                 <Componentinput ref={(input) => { this.gender = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentindex>Phone</Componentindex>
-                <Componentinput ref={(input) => { this.phone = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentindex>Mail</Componentindex>
-                <Componentinput ref={(input) => { this.mail = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentindex>Region</Componentindex>
-                <Componentinput ref={(input) => { this.region = input }} />
+                <Componentindex>Material</Componentindex>
+                <Componentinput ref={(input) => { this.gender = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
-                {EPsend ? (EPsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
               </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
       case 2:
         {
-          const { ERsend, ERsendvalue } = this.props;
+          const { Date, customTimeInput } = this.state;
+          const CustomTimeInput = ({ value, onChange }) => (
+            <input
+              value={value}
+              onChange={onChange}
+              placeholder="HH:mm"
+              className="custom-time-input"
+            />
+          );
+
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
-                <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.eid = input }} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper >
-                <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentindex>Date</Componentindex>
+                <DatePickerWrapper>
+                  <DatePicker
+                    selected={Date}
+                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    dateFormat="yyyy/MM/dd HH:mm"
+                    timeCaption="time"
+                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                  />
+                </DatePickerWrapper>
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentindex>Gender</Componentindex>
+                <Componentindex>Equipment</Componentindex>
                 <Componentinput ref={(input) => { this.gender = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentindex>Phone</Componentindex>
-                <Componentinput ref={(input) => { this.phone = input }} />
+                <Componentindex>Material</Componentindex>
+                <Componentinput ref={(input) => { this.gender = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentindex>Mail</Componentindex>
-                <Componentinput ref={(input) => { this.mail = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentindex>Region</Componentindex>
-                <Componentinput ref={(input) => { this.region = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeerevise(this.eid, this.name, this.gender, this.phone, this.mail, this.region)}>Revise</Componentbutton>
-                {ERsend ? (ERsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
+                <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
       case 3:
         {
-          const { EDsend, EDsendvalue } = this.props;
-          return (
-            <ComponentWapper>
-              <ComponentoptionWapper >
-                <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.eid = input }} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper>
-                <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeedelete(this.eid, this.name)}>Delete</Componentbutton>
-                {EDsend ? (EDsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
-              </ComponentoptionWapper>
-            </ComponentWapper>
+          const { Date, customTimeInput } = this.state;
+          const CustomTimeInput = ({ value, onChange }) => (
+            <input
+              value={value}
+              onChange={onChange}
+              placeholder="HH:mm"
+              className="custom-time-input"
+            />
           );
-        }
-      case 4:
-        {
-          const { ESsend, ESsendvalue } = this.props;
+
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
-                <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.eid = input }} />
+                <Componentindex>Date</Componentindex>
+                <DatePickerWrapper>
+                  <DatePicker
+                    selected={Date}
+                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    dateFormat="yyyy/MM/dd HH:mm"
+                    timeCaption="time"
+                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                  />
+                </DatePickerWrapper>
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentindex>PID</Componentindex>
-                <Componentinput ref={(input) => { this.pid = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentindex>Region</Componentindex>
-                <Componentinput ref={(input) => { this.region = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeeretrieve(this.eid, this.name, this.pid, this.region)}>Post</Componentbutton>
-                {ESsend ? (ESsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
+                <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -154,6 +162,13 @@ class Dailyrecord extends PureComponent {
     }
   }
 
+  handleCheckButtonClick = (index) => {
+    this.setState((prevState) => {
+      const newAccessChecked = [...prevState.accessChecked];
+      newAccessChecked[index] = !newAccessChecked[index];
+      return { accessChecked: newAccessChecked };
+    });
+  };
 
   render() {
     const { setpage, employeepage } = this.props;
@@ -163,7 +178,7 @@ class Dailyrecord extends PureComponent {
         <Componenttitle>Access Assignment</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Adminemployeepageoption
+            <Projectmanagementinnerpageoption
               key={id}
               onClick={() => setpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
@@ -171,7 +186,7 @@ class Dailyrecord extends PureComponent {
               className={employeepage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
-            </Adminemployeepageoption>
+            </Projectmanagementinnerpageoption>
           ))}
         </ComponentoptionWapper>
         {this.whichpage(employeepage)}
@@ -181,15 +196,7 @@ class Dailyrecord extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  employeepage: state.admin.employeepage,
-  EPsend: state.admin.EPsend,
-  EPsendvalue: state.admin.EPsendvalue,
-  ERsend: state.admin.ERsend,
-  ERsendvalue: state.admin.ERsendvalue,
-  EDsend: state.admin.EDsend,
-  EDsendvalue: state.admin.EDsendvalue,
-  ESsend: state.admin.ESsend,
-  ESsendvalue: state.admin.ESsendvalue
+  employeepage: state.admin.employeepage
 })
 
 const mapDisptchToProps = (dispatch) => {
@@ -211,5 +218,6 @@ const mapDisptchToProps = (dispatch) => {
     }
   }
 }
+
 
 export default connect(mapStateToProps, mapDisptchToProps)(Dailyrecord);

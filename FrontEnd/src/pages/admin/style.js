@@ -124,14 +124,6 @@ color: red;
 }
 `;
 
-export const Sendresult = styled.div`
-color: #00DB00;
-margin: 30px;
-&.fail {
-color: red;
-}
-`;
-
 export const Adminemployeepageoption = styled.div`
 position: relative;
 float: left;

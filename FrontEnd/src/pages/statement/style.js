@@ -84,7 +84,6 @@ margin-right: 10px;
 }
 `;
 
-
 export const DatePickerWrapper = styled.div`
   .react-datepicker {
     font-family: Arial, sans-serif;

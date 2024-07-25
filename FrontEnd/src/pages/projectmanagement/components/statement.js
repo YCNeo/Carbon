@@ -9,7 +9,7 @@ import {
   Componenttitle,
   ComponentoptionWapper,
   Sendresult,
-  Adminemployeepageoption
+  Projectmanagementpageoption
 } from '../style';
 
 class Employee extends PureComponent {
@@ -163,7 +163,7 @@ class Employee extends PureComponent {
         <Componenttitle>Access Assignment</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Adminemployeepageoption
+            <Projectmanagementpageoption
               key={id}
               onClick={() => setpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
@@ -171,7 +171,7 @@ class Employee extends PureComponent {
               className={employeepage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
-            </Adminemployeepageoption>
+            </Projectmanagementpageoption>
           ))}
         </ComponentoptionWapper>
         {this.whichpage(employeepage)}

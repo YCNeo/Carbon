@@ -7,13 +7,12 @@ import {
   Componentinfo,
   Componentbutton,
   Componenttitle,
-  ComponentoptionWapper,
-  Sendresult
+  ComponentoptionWapper
 } from '../style';
 
 class Approve extends PureComponent {
   render() {
-    const { Asend, Asendvalue, approve_pid, approve_pmid, approve_time, oldcontent, newcontent } = this.props;
+    const { approve_pid, approve_pmid, approve_time, oldcontent, newcontent } = this.props;
     return (
       <ComponentWapper>
         <Componenttitle>Approve</Componenttitle>
@@ -32,7 +31,7 @@ class Approve extends PureComponent {
         <ComponentoptionWapper className='contentwarpper'>
           <ComponentoptionWapper className='content' >
             <Componentindex>Old Content</Componentindex>
-            <Componentinfo className='content 'dangerouslySetInnerHTML={{ __html: oldcontent }}></Componentinfo>
+            <Componentinfo className='content ' dangerouslySetInnerHTML={{ __html: oldcontent }}></Componentinfo>
           </ComponentoptionWapper>
           <ComponentoptionWapper className='content'>
             <Componentindex>New Content</Componentindex>
@@ -42,7 +41,6 @@ class Approve extends PureComponent {
         <ComponentoptionWapper>
           <Componentbutton onClick={() => this.props.Asendinfo(1)}>Accept</Componentbutton>
           <Componentbutton onClick={() => this.props.Asendinfo(0)} className='reject' >Reject</Componentbutton>
-          {Asend ? (Asendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
         </ComponentoptionWapper>
       </ComponentWapper>
     )
@@ -55,8 +53,6 @@ class Approve extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  Asend: state.admin.Asend,
-  Asendvalue: state.admin.Asendvalue,
   approve_pid: state.admin.approve_pid,
   approve_pmid: state.admin.approve_pmid,
   approve_time: state.admin.approve_time,

@@ -8,16 +8,106 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Componentcheckbox,
-  Sendresult,
-  Checkbutton,
-  CheckItem
+  Projectmanagementinnerpageoption
 } from '../style';
 
 class Member extends PureComponent {
   state = {
-    accessChecked: []
+    hoveredBox: null,
+    pages: [
+      { id: 1, text: 'Post' },
+      { id: 2, text: 'Revise' },
+      { id: 3, text: 'Delete' },
+      { id: 4, text: 'Retieve' },
+    ]
   };
+
+  handleMouseEnter = (id) => {
+    this.setState({ hoveredBox: id });
+  };
+
+  handleMouseLeave = () => {
+    this.setState({ hoveredBox: null });
+  };
+
+  whichpage(page) {
+    switch (page) {
+      case 1:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentindex>EID</Componentindex>
+                <Componentinput ref={(input) => { this.name = input }} />
+              </ComponentoptionWapper >
+              <ComponentoptionWapper>
+                <Componentindex>Position</Componentindex>
+                <Componentinput ref={(input) => { this.gender = input }} />
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          );
+        }
+      case 2:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentindex>EID</Componentindex>
+                <Componentinput ref={(input) => { this.name = input }} />
+              </ComponentoptionWapper >
+              <ComponentoptionWapper>
+                <Componentindex>Position</Componentindex>
+                <Componentinput ref={(input) => { this.gender = input }} />
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.employeerevise(this.eid, this.name, this.gender, this.phone, this.mail, this.region)}>Revise</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          );
+        }
+      case 3:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentindex>EID</Componentindex>
+                <Componentinput ref={(input) => { this.eid = input }} />
+              </ComponentoptionWapper >
+              <ComponentoptionWapper>
+                <Componentbutton className='reject ' onClick={() => this.props.employeedelete(this.eid, this.name)}>Remove</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          );
+        }
+      case 4:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentindex>EID</Componentindex>
+                <Componentinput ref={(input) => { this.eid = input }} />
+              </ComponentoptionWapper >
+              <ComponentoptionWapper>
+                <Componentindex>Name</Componentindex>
+                <Componentinput ref={(input) => { this.name = input }} />
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentindex>Position</Componentindex>
+                <Componentinput ref={(input) => { this.gender = input }} />
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.employeeretrieve(this.eid, this.name, this.pid, this.region)}>Post</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          );
+        }
+      default:
+        return;
+    }
+  }
 
   handleCheckButtonClick = (index) => {
     this.setState((prevState) => {
@@ -28,59 +118,50 @@ class Member extends PureComponent {
   };
 
   render() {
-    const { CUsend, CUsendvalue, accesslist } = this.props;
-    const { accessChecked } = this.state;
-
+    const { setpage, employeepage } = this.props;
+    const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
-        <Componenttitle>Create User</Componenttitle>
+        <Componenttitle>Access Assignment</Componenttitle>
         <ComponentoptionWapper>
-          <Componentindex>User Name</Componentindex>
-          <Componentinput ref={(input) => { this.user_name = input }} />
+          {pages.map(({ id, text }) => (
+            <Projectmanagementinnerpageoption
+              key={id}
+              onClick={() => setpage(id)}
+              onMouseEnter={() => this.handleMouseEnter(id)}
+              onMouseLeave={this.handleMouseLeave}
+              className={employeepage === id || hoveredBox === id ? 'mousein' : ''}
+            >
+              {text}
+            </Projectmanagementinnerpageoption>
+          ))}
         </ComponentoptionWapper>
-        <ComponentoptionWapper>
-          <Componentindex>Access</Componentindex>
-          <Componentcheckbox>
-            {
-              accesslist.map((item, index) => (
-                <CheckItem key={item.id} className='name'>
-                  <Checkbutton
-                    onClick={() => this.handleCheckButtonClick(index)}
-                    className={accessChecked[index] ? 'checked' : ''}
-                  ></Checkbutton>
-                  {item.name}
-                </CheckItem>
-              ))
-            }
-          </Componentcheckbox>
-        </ComponentoptionWapper>
-        <ComponentoptionWapper>
-          <Componentbutton onClick={() => this.props.CUsendinfo(this.user_name, accessChecked)}>Create</Componentbutton>
-          {CUsend ? (CUsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
-        </ComponentoptionWapper>
+        {this.whichpage(employeepage)}
       </ComponentWapper>
     )
-  }
-
-  componentDidMount() {
-    this.props.getaccess();
-    this.setState({ accessChecked: new Array(this.props.accesslist.length).fill(false) });
   }
 }
 
 const mapStateToProps = (state) => ({
-  CUsend: state.admin.CUsend,
-  CUsendvalue: state.admin.CUsendvalue,
-  accesslist: state.admin.accesslist
+  employeepage: state.admin.employeepage
 })
 
 const mapDisptchToProps = (dispatch) => {
   return {
-    CUsendinfo(user_name, accessChecked) {
-      dispatch(actionCreators.CUsendinfo(user_name.value, accessChecked));
+    setpage(id) {
+      dispatch(actionCreators.setpage(id));
     },
-    getaccess() {
-      dispatch(actionCreators.getaccess())
+    employeepost(name, gender, phone, mail, region) {
+      dispatch(actionCreators.employeepost(name.value, gender.value, phone.value, mail.value, region.value));
+    },
+    employeerevise(eid, name, gender, phone, mail, region) {
+      dispatch(actionCreators.employeerevise(eid.value, name.value, gender.value, phone.value, mail.value, region.value));
+    },
+    employeedelete(eid, name) {
+      dispatch(actionCreators.employeedelete(eid.value, name.value));
+    },
+    employeeretrieve(eid, name, pid, region) {
+      dispatch(actionCreators.employeeretrieve(eid.value, name.value, pid.value, region.value));
     }
   }
 }
