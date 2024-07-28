@@ -38,14 +38,14 @@ class Member extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput ref={(input) => { this.eid = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Position</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
+                <Componentinput ref={(input) => { this.position = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.memberpost(this.eid, this.position)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -56,14 +56,14 @@ class Member extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput ref={(input) => { this.eid = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Position</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
+                <Componentinput ref={(input) => { this.position = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeerevise(this.eid, this.name, this.gender, this.phone, this.mail, this.region)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.memberrevise(this.eid, this.position)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -77,7 +77,7 @@ class Member extends PureComponent {
                 <Componentinput ref={(input) => { this.eid = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton className='reject ' onClick={() => this.props.employeedelete(this.eid, this.name)}>Remove</Componentbutton>
+                <Componentbutton className='reject' onClick={() => this.props.memberremove(this.eid)}>Remove</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -96,10 +96,10 @@ class Member extends PureComponent {
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Position</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
+                <Componentinput ref={(input) => { this.position = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeeretrieve(this.eid, this.name, this.pid, this.region)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.memberretrieve(this.eid, this.name, this.position)}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -109,59 +109,51 @@ class Member extends PureComponent {
     }
   }
 
-  handleCheckButtonClick = (index) => {
-    this.setState((prevState) => {
-      const newAccessChecked = [...prevState.accessChecked];
-      newAccessChecked[index] = !newAccessChecked[index];
-      return { accessChecked: newAccessChecked };
-    });
-  };
-
   render() {
-    const { setpage, employeepage } = this.props;
+    const { setmemberpage, memberpage } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
-        <Componenttitle>Access Assignment</Componenttitle>
+        <Componenttitle>Member</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
             <Projectmanagementinnerpageoption
               key={id}
-              onClick={() => setpage(id)}
+              onClick={() => setmemberpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
               onMouseLeave={this.handleMouseLeave}
-              className={employeepage === id || hoveredBox === id ? 'mousein' : ''}
+              className={memberpage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
             </Projectmanagementinnerpageoption>
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(employeepage)}
+        {this.whichpage(memberpage)}
       </ComponentWapper>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  employeepage: state.admin.employeepage
+  memberpage: state.projectmanagement.memberpage
 })
 
 const mapDisptchToProps = (dispatch) => {
   return {
-    setpage(id) {
-      dispatch(actionCreators.setpage(id));
+    setmemberpage(id) {
+      dispatch(actionCreators.setmemberpage(id));
     },
-    employeepost(name, gender, phone, mail, region) {
-      dispatch(actionCreators.employeepost(name.value, gender.value, phone.value, mail.value, region.value));
+    memberpost(eid, position) {
+      dispatch(actionCreators.memberpost(eid.value, position.value));
     },
-    employeerevise(eid, name, gender, phone, mail, region) {
-      dispatch(actionCreators.employeerevise(eid.value, name.value, gender.value, phone.value, mail.value, region.value));
+    memberrevise(eid, position) {
+      dispatch(actionCreators.memberrevise(eid.value, position.value));
     },
-    employeedelete(eid, name) {
-      dispatch(actionCreators.employeedelete(eid.value, name.value));
+    memberremove(eid) {
+      dispatch(actionCreators.memberremove(eid.value));
     },
-    employeeretrieve(eid, name, pid, region) {
-      dispatch(actionCreators.employeeretrieve(eid.value, name.value, pid.value, region.value));
+    memberretrieve(eid, name, position) {
+      dispatch(actionCreators.memberretrieve(eid.value, name.value, position.value));
     }
   }
 }

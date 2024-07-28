@@ -41,14 +41,14 @@ class Material extends PureComponent {
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Amount</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
+                <Componentinput ref={(input) => { this.amount = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Unit</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
+                <Componentinput ref={(input) => { this.unit = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialpost(this.name, this.amount, this.unit)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -63,14 +63,14 @@ class Material extends PureComponent {
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Amount</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
+                <Componentinput ref={(input) => { this.amount = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Unit</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
+                <Componentinput ref={(input) => { this.unit = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialrevise(this.name, this.amount, this.unit)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -81,10 +81,10 @@ class Material extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.eid = input }} />
+                <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeedelete(this.eid, this.name)}>Remove</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialretrieve(this.name)}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -94,59 +94,48 @@ class Material extends PureComponent {
     }
   }
 
-  handleCheckButtonClick = (index) => {
-    this.setState((prevState) => {
-      const newAccessChecked = [...prevState.accessChecked];
-      newAccessChecked[index] = !newAccessChecked[index];
-      return { accessChecked: newAccessChecked };
-    });
-  };
-
   render() {
-    const { setpage, employeepage } = this.props;
+    const { setmaterialpage, materialpage } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
-        <Componenttitle>Access Assignment</Componenttitle>
+        <Componenttitle>Material</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
             <Projectmanagementinnerpageoption
               key={id}
-              onClick={() => setpage(id)}
+              onClick={() => setmaterialpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
               onMouseLeave={this.handleMouseLeave}
-              className={employeepage === id || hoveredBox === id ? 'mousein' : ''}
+              className={materialpage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
             </Projectmanagementinnerpageoption>
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(employeepage)}
+        {this.whichpage(materialpage)}
       </ComponentWapper>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  employeepage: state.admin.employeepage
+  materialpage: state.projectmanagement.materialpage
 })
 
 const mapDisptchToProps = (dispatch) => {
   return {
-    setpage(id) {
-      dispatch(actionCreators.setpage(id));
+    setmaterialpage(id) {
+      dispatch(actionCreators.setmaterialpage(id));
     },
-    employeepost(name, gender, phone, mail, region) {
-      dispatch(actionCreators.employeepost(name.value, gender.value, phone.value, mail.value, region.value));
+    materialpost(name, amount, unit) {
+      dispatch(actionCreators.materialpost(name.value, amount.value, unit.value));
     },
-    employeerevise(eid, name, gender, phone, mail, region) {
-      dispatch(actionCreators.employeerevise(eid.value, name.value, gender.value, phone.value, mail.value, region.value));
+    materialrevise(name, amount, unit) {
+      dispatch(actionCreators.materialrevise(name.value, amount.value, unit.value));
     },
-    employeedelete(eid, name) {
-      dispatch(actionCreators.employeedelete(eid.value, name.value));
-    },
-    employeeretrieve(eid, name, pid, region) {
-      dispatch(actionCreators.employeeretrieve(eid.value, name.value, pid.value, region.value));
+    materialretrieve(name) {
+      dispatch(actionCreators.materialretrieve(name.value));
     }
   }
 }

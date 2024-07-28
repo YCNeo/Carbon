@@ -34,8 +34,12 @@ class Flow extends PureComponent {
         {
           return (
             <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentindex>EID</Componentindex>
+                <Componentinput ref={(input) => { this.eid = input }} />
+              </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
+                <Componentbutton className='reject' onClick={() => this.props.flowdesign(this.eid)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -44,8 +48,12 @@ class Flow extends PureComponent {
         {
           return (
             <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentindex>EID</Componentindex>
+                <Componentinput ref={(input) => { this.eid = input }} />
+              </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeerevise(this.eid, this.name, this.gender, this.phone, this.mail, this.region)}>Revise</Componentbutton>
+                <Componentbutton className='reject' onClick={() => this.props.flowrevise(this.eid)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -55,62 +63,47 @@ class Flow extends PureComponent {
     }
   }
 
-  handleCheckButtonClick = (index) => {
-    this.setState((prevState) => {
-      const newAccessChecked = [...prevState.accessChecked];
-      newAccessChecked[index] = !newAccessChecked[index];
-      return { accessChecked: newAccessChecked };
-    });
-  };
-
   render() {
-    const { setpage, employeepage } = this.props;
+    const { setflowpage, flowpage } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
-        <Componenttitle>Access Assignment</Componenttitle>
+        <Componenttitle>Flow</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
             <Projectmanagementinnerpageoption
               key={id}
-              onClick={() => setpage(id)}
+              onClick={() => setflowpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
               onMouseLeave={this.handleMouseLeave}
-              className={employeepage === id || hoveredBox === id ? 'mousein' : ''}
+              className={flowpage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
             </Projectmanagementinnerpageoption>
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(employeepage)}
+        {this.whichpage(flowpage)}
       </ComponentWapper>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  employeepage: state.admin.employeepage
+  flowpage: state.projectmanagement.flowpage
 })
 
 const mapDisptchToProps = (dispatch) => {
   return {
-    setpage(id) {
-      dispatch(actionCreators.setpage(id));
+    setflowpage(id) {
+      dispatch(actionCreators.setflowpage(id));
     },
-    employeepost(name, gender, phone, mail, region) {
-      dispatch(actionCreators.employeepost(name.value, gender.value, phone.value, mail.value, region.value));
+    flowdesign(eid) {
+      dispatch(actionCreators.flowdesign(eid.value));
     },
-    employeerevise(eid, name, gender, phone, mail, region) {
-      dispatch(actionCreators.employeerevise(eid.value, name.value, gender.value, phone.value, mail.value, region.value));
-    },
-    employeedelete(eid, name) {
-      dispatch(actionCreators.employeedelete(eid.value, name.value));
-    },
-    employeeretrieve(eid, name, pid, region) {
-      dispatch(actionCreators.employeeretrieve(eid.value, name.value, pid.value, region.value));
+    flowrevise(eid) {
+      dispatch(actionCreators.flowrevise(eid.value));
     }
   }
 }
-
 
 export default connect(mapStateToProps, mapDisptchToProps)(Flow);

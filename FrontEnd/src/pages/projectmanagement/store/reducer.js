@@ -1,16 +1,12 @@
 import * as constants from './constants';
 
 const defaultState = {
-  projectmanagementPagepage: 1,
-  employeepage: 1,
-  accesslist: [],
-  materiallist: [],
-  equipmentlist: [],
-  approve_pid: "pid",
-  approve_pmid: "pmid",
-  approve_time: "time",
-  oldcontent: "",
-  newcontent: ""
+  projectmanagementpage: 1,
+  memberpage: 1,
+  flowpage: 1,
+  materialpage: 1,
+  equipmentpage:1,
+  dailyrecordpage: 1,
 };
 
 const reducer = (state = defaultState, action) => {
@@ -20,30 +16,31 @@ const reducer = (state = defaultState, action) => {
         ...state,
         projectmanagementpage: action.page,
       };
-    case constants.SET_EMPLOYEE_PAGE:
+    case constants.SET_MEMBER_PAGE:
       return {
         ...state,
-        employeepage: action.page,
-      }
-    case constants.GET_ACCESS:
-      return { ...state, accesslist: action.accesslist }
-    case constants.GET_MATERIAL:
-      return { ...state, materiallist: action.materiallist }
-    case constants.GET_EQUIPMENT:
-      return { ...state, equipmentlist: action.equipmentlist }
-    case constants.GET_OLD_CONTENT:
+        memberpage: action.page,
+      };
+    case constants.SET_FLOW_PAGE:
       return {
         ...state,
-        approve_pid: action.pid,
-        approve_pmid: action.pmid,
-        approve_time: action.time,
-        oldcontent: action.oldcontent,
-      }
-    case constants.GET_NEW_CONTENT:
+        flowpage: action.page,
+      };
+    case constants.SET_MATERIAL_PAGE:
       return {
         ...state,
-        newcontent: action.newcontent,
-      }
+        materialpage: action.page,
+      };
+    case constants.SET_EQUIPMENT_PAGE:
+      return {
+        ...state,
+        equipmentpage: action.page,
+      };
+    case constants.SET_DAILY_RECORD_PAGE:
+      return {
+        ...state,
+        dailyrecordpage: action.page,
+      };
     default:
       return state;
   }

@@ -7,7 +7,6 @@ import Flow from './components/flow';
 import Material from './components/material';
 import Equipment from './components/equipment';
 import Dailyrecord from './components/dailyrecord';
-import Statement from './components/statement';
 
 import {
   ProjectmanagementWrapper,
@@ -24,8 +23,7 @@ class Projectmanagement extends Component {
       { id: 2, text: 'Flow' },
       { id: 3, text: 'Material' },
       { id: 4, text: 'Equipment' },
-      { id: 5, text: 'Daily Record' },
-      { id: 6, text: 'Statement' }
+      { id: 5, text: 'Daily Record' }
     ]
   };
 
@@ -47,8 +45,6 @@ class Projectmanagement extends Component {
         return <Equipment />;
       case 5:
         return <Dailyrecord />;
-      case 6:
-        return <Statement />;
       default:
         return <Member />;
     }

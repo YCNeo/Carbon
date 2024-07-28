@@ -74,7 +74,7 @@ class Dailyrecord extends PureComponent {
                 <Componentinput ref={(input) => { this.gender = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -117,7 +117,7 @@ class Dailyrecord extends PureComponent {
                 <Componentinput ref={(input) => { this.gender = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.gender, this.phone, this.mail, this.region)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -152,7 +152,7 @@ class Dailyrecord extends PureComponent {
                 </DatePickerWrapper>
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.gender, this.phone, this.mail, this.region)}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -162,59 +162,48 @@ class Dailyrecord extends PureComponent {
     }
   }
 
-  handleCheckButtonClick = (index) => {
-    this.setState((prevState) => {
-      const newAccessChecked = [...prevState.accessChecked];
-      newAccessChecked[index] = !newAccessChecked[index];
-      return { accessChecked: newAccessChecked };
-    });
-  };
-
   render() {
-    const { setpage, employeepage } = this.props;
+    const { setdailyrecordpage, dailyrecordpage } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
-        <Componenttitle>Access Assignment</Componenttitle>
+        <Componenttitle>Daily Record</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
             <Projectmanagementinnerpageoption
               key={id}
-              onClick={() => setpage(id)}
+              onClick={() => setdailyrecordpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
               onMouseLeave={this.handleMouseLeave}
-              className={employeepage === id || hoveredBox === id ? 'mousein' : ''}
+              className={dailyrecordpage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
             </Projectmanagementinnerpageoption>
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(employeepage)}
+        {this.whichpage(dailyrecordpage)}
       </ComponentWapper>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  employeepage: state.admin.employeepage
+  dailyrecordpage: state.projectmanagement.dailyrecordpage
 })
 
 const mapDisptchToProps = (dispatch) => {
   return {
-    setpage(id) {
-      dispatch(actionCreators.setpage(id));
+    setdailyrecordpage(id) {
+      dispatch(actionCreators.setdailyrecordpage(id));
     },
-    employeepost(name, gender, phone, mail, region) {
-      dispatch(actionCreators.employeepost(name.value, gender.value, phone.value, mail.value, region.value));
+    equipmentpost(name, amount, unit) {
+      dispatch(actionCreators.equipmentpost(name.value, amount.value, unit.value));
     },
-    employeerevise(eid, name, gender, phone, mail, region) {
-      dispatch(actionCreators.employeerevise(eid.value, name.value, gender.value, phone.value, mail.value, region.value));
+    equipmentrevise(name, amount, unit) {
+      dispatch(actionCreators.equipmentrevise(name.value, amount.value, unit.value));
     },
-    employeedelete(eid, name) {
-      dispatch(actionCreators.employeedelete(eid.value, name.value));
-    },
-    employeeretrieve(eid, name, pid, region) {
-      dispatch(actionCreators.employeeretrieve(eid.value, name.value, pid.value, region.value));
+    equipmentretrieve(name) {
+      dispatch(actionCreators.equipmentretrieve(name.value));
     }
   }
 }

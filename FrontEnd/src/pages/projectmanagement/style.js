@@ -18,7 +18,7 @@ export const ProjectmanagementPage = styled.div`
 margin: 0px auto auto 200px;
 padding: 30px 0 0 30px;
 border-left: 1px solid gray;
-height: 100%;
+min-height: 80vh;
 `;
 
 export const Projectmanagementpageoption = styled.div`
