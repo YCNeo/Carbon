@@ -72,23 +72,16 @@
 | API purpoes | Input(type)                                   | Ouput(type)           | Tri | Remark |
 | ----------- | --------------------------------------------- | --------------------- | --- | ------ |
 | Post        | `name(string)`, `amount(int)`, `Unit(number)` | success(detail), fail | B   | x      |
-| Remove      | `name(string)`, `amount(int)`, `Unit(number)` | success, fail         | B   | x      |
+| Revise      | `EQID(string)`, `amount(int)`, `Unit(number)` | success, fail         | B   | x      |
 | retrieve    | `name(string)`                                | Equipment(List)       | B   | x      |
 
 
 #### Daily Record
-| API purpoes | Input(type)                                                                                                                                             | Ouput(type)          | Tri | Remark |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | --- | ------ |
-| Post        | `date(date)`, `Equipment(string)`, `Material(string)`, `EQMamount(int)`, `EQMUnit(number)`,`MATamount(int)`, `MATUnit(number)` , `runtime(int)_unit:hr` | success(detil), fail | B   | x      |
-| Revise      | `date(date)`, `Equipment(string)`, `Material(string)`, `EQMamount(int)`, `EQMUnit(number)`, `MATamount(int)`, `MATUnit(number)`, `runtime(int)_unit:hr` | success(detil), fail | B   | x      |
-| retrieve    | `date(date)`                                                                                                                                            | Record(List)         | B   | x      |
-
-
-#### Statement
-| API purpoes | Input(type)                        | Ouput(type)     | Tri | Remark |
-| ----------- | ---------------------------------- | --------------- | --- | ------ |
-| retrieve    | `startDate(date)`, `endDate(date)` | embedding table | B   | x      |
-| export      | `table(sheet)`                     | excel or pdf    | B   | x      |
+| API purpoes | Input(type)                                                                                                                                                | Ouput(type)          | Tri | Remark |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | --- | ------ |
+| Post        | `date(date)`, `Equipment(string)`, `Material(string)`, `EQMamount(int)`, `EQMRuntime(number)`,`MATamount(int)`, `MATUnit(number)` , `runtime(int)_unit:hr` | success(detil), fail | B   | x      |
+| Revise      | `date(date)`, `Equipment(string)`, `Material(string)`, `EQMamount(int)`, `EQMRuntime(number)`, `MATamount(int)`, `MATUnit(number)`, `runtime(int)_unit:hr` | success(detil), fail | B   | x      |
+| retrieve    | `date(date)`                                                                                                                                               | Record(List)         | B   | x      |
 
 
 # PPE
@@ -104,12 +97,12 @@
 
 
 #### Material
-| API purpoes   | Input(type)                                                                                                                           | Ouput(type)                  | Tri | Remark           |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | --- | ---------------- |
-| Post          | `name(string)`, `Supplier(string)`, `amount(int)`, `Unit(number)`, `factor(float)`, `PurchaseDate(date)`, `age(int)`, `ageUnit(year)` | success(return detail), fail | B   | x                |
-| Delete        | x                                                                                                                                     | success, fail                | B   | x                |
-| retrieve      | `MID(string)`, `name(string)`, `Supplier(string)`                                                                                     | Marerial(List)               | B   | x                |
-| Disposal list | x                                                                                                                                     | Disposal(List)               | B   | 根據報廢日期排序 |
+| API purpoes   | Input(type)                                                                                                                                            | Ouput(type)                  | Tri | Remark           |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | --- | ---------------- |
+| Post          | `name(string)`, `Supplier(string)`, `amount(int)`, `Unit(number)`, `factor(float)`, `PurchaseDate(date)`, `age(int)`, `ageUnit(year)`, `EXPDate(date)` | success(return detail), fail | B   | x                |
+| Delete        | `MID(string)`                                                                                                                                          | success, fail                | B   | x                |
+| retrieve      | `MID(string)`, `name(string)`, `Supplier(string)`                                                                                                      | Marerial(List)               | B   | x                |
+| Disposal list | x                                                                                                                                                      | Disposal(List)               | B   | 根據報廢日期排序 |
 
 
 # Statement
