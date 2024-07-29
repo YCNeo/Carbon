@@ -4,58 +4,72 @@ import { actionCreators } from '../store';
 import {
   ComponentWapper,
   Componentindex,
-  Componentinput,
+  Componentinfo,
   Componentbutton,
   Componenttitle,
-  ComponentoptionWapper,
-  Sendresult
+  ComponentoptionWapper
 } from '../style';
 
 class Approve extends PureComponent {
   render() {
-    const { Asend, Asendvalue } = this.props;
+    const { approve_pid, approve_pmid, approve_time, oldcontent, newcontent } = this.props;
     return (
       <ComponentWapper>
         <Componenttitle>Approve</Componenttitle>
         <ComponentoptionWapper>
           <Componentindex>Project ID</Componentindex>
-          <Componentinput ref={(input) => { this.project_id = input }} />
+          <Componentinfo>{approve_pid}</Componentinfo>
         </ComponentoptionWapper>
         <ComponentoptionWapper>
           <Componentindex>PM ID</Componentindex>
-          <Componentinput ref={(input) => { this.pm_id = input }} />
+          <Componentinfo>{approve_pmid}</Componentinfo>
         </ComponentoptionWapper>
         <ComponentoptionWapper>
           <Componentindex>Time</Componentindex>
-          <Componentinput className='bigbox' ref={(input) => { this.time = input }} />
+          <Componentinfo>{approve_time}</Componentinfo>
+        </ComponentoptionWapper>
+        <ComponentoptionWapper className='contentwarpper'>
+          <ComponentoptionWapper className='content' >
+            <Componentindex>Old Content</Componentindex>
+            <Componentinfo className='content ' dangerouslySetInnerHTML={{ __html: oldcontent }}></Componentinfo>
+          </ComponentoptionWapper>
+          <ComponentoptionWapper className='content'>
+            <Componentindex>New Content</Componentindex>
+            <Componentinfo className='content' dangerouslySetInnerHTML={{ __html: newcontent }}></Componentinfo>
+          </ComponentoptionWapper>
         </ComponentoptionWapper>
         <ComponentoptionWapper>
-          <Componentindex>Old Content</Componentindex>
-          <Componentinput className='bigbox' ref={(input) => { this.old_content = input }} />
-        </ComponentoptionWapper>
-        <ComponentoptionWapper>
-          <Componentindex>New Content</Componentindex>
-          <Componentinput className='bigbox' ref={(input) => { this.new_content = input }} />
-        </ComponentoptionWapper>
-        <ComponentoptionWapper>
-          <Componentbutton onClick={() => this.props.Asendinfo(1, this.project_id, this.pm_id, this.time, this.old_content, this.new_content)}>Accept</Componentbutton>
-          <Componentbutton onClick={() => this.props.Asendinfo(0, this.project_id, this.pm_id, this.time, this.old_content, this.new_content)} className='reject' >Reject</Componentbutton>
-          {Asend ? (Asendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
+          <Componentbutton onClick={() => this.props.Asendinfo(1)}>Accept</Componentbutton>
+          <Componentbutton onClick={() => this.props.Asendinfo(0)} className='reject' >Reject</Componentbutton>
         </ComponentoptionWapper>
       </ComponentWapper>
     )
   }
+
+  componentDidMount() {
+    this.props.getnewcontent();
+    this.props.getoldcontent();
+  }
 }
 
 const mapStateToProps = (state) => ({
-  Asend: state.admin.Asend,
-  Asendvalue: state.admin.Asendvalue
+  approve_pid: state.admin.approve_pid,
+  approve_pmid: state.admin.approve_pmid,
+  approve_time: state.admin.approve_time,
+  oldcontent: state.admin.oldcontent,
+  newcontent: state.admin.newcontent,
 })
 
 const mapDisptchToProps = (dispatch) => {
   return {
-    Asendinfo(type, project_id, pm_id, time, old_content, new_content) {
-      dispatch(actionCreators.Asendinfo(type, project_id.value, pm_id.value, time.value, old_content.value, new_content.value));
+    Asendinfo(type) {
+      dispatch(actionCreators.Asendinfo(type));
+    },
+    getoldcontent() {
+      dispatch(actionCreators.getoldcontent())
+    },
+    getnewcontent() {
+      dispatch(actionCreators.getnewcontent())
     }
   }
 }
