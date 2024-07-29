@@ -40,10 +40,10 @@ export const revisepassword = (old_password, new_password, comfirm_new_password)
         const result = res.data.data;
         if (result) {
           const hash1 = CryptoJS.SHA256(new_password).toString(CryptoJS.enc.Hex);
-          const salt = CryptoJS.lib.WordArray.random(16).toString(CryptoJS.enc.Hex);
-          const hash2 = CryptoJS.SHA512(salt + hash1).toString(CryptoJS.enc.Hex);
-          const salt_hash2 = `${salt}:${hash2}`;
-          axios./*正是對接時用post*/get('/api/login.json', { salt_hash2 })
+          //const salt = CryptoJS.lib.WordArray.random(16).toString(CryptoJS.enc.Hex);
+          //const hash2 = CryptoJS.SHA512(salt + hash1).toString(CryptoJS.enc.Hex);
+          //const salt_hash2 = `${salt}:${hash2}`;
+          axios./*正是對接時用post*/get('/api/login.json', { hash1 })
           dispatch(changelogin())
         } else {
           alert('舊密碼錯誤')

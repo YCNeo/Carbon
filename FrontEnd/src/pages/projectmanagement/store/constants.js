@@ -1,0 +1,6 @@
+export const SET_PROJECTMANAGEMENT_PAGE = 'admin/SET_PROJECTMANAGEMENT_PAGE';
+export const SET_MEMBER_PAGE = 'admin/SET_MEMBER_PAGE';
+export const SET_FLOW_PAGE = 'admin/SET_FLOW_PAGE';
+export const SET_MATERIAL_PAGE = 'admin/SET_MATERIAL_PAGE';
+export const SET_EQUIPMENT_PAGE = 'admin/SET_EQUIPMENT_PAGE';
+export const SET_DAILY_RECORD_PAGE = 'admin/SET_DAILY_RECORD_PAGE';

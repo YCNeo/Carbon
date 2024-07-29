@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const AdminWrapper = styled.div`
+export const ProjectmanagementWrapper = styled.div`
 position: relative;
 width: 100%;
 min-height: 100%;
@@ -8,20 +8,20 @@ margin: 0 auto;
 overflow: hidden;
 `;
 
-export const AdminIndexlist = styled.div`
+export const ProjectmanagementIndexlist = styled.div`
 width: 200px;
 height: 100%;
 float: left;
 `;
 
-export const AdminPage = styled.div`
+export const ProjectmanagementPage = styled.div`
 margin: 0px auto auto 200px;
 padding: 30px 0 0 30px;
 border-left: 1px solid gray;
-height: 100%;
+min-height: 80vh;
 `;
 
-export const Adminpageoption = styled.div`
+export const Projectmanagementpageoption = styled.div`
 position: relative;
 margin: 1px 10px;
 border-radius: 7px;
@@ -124,7 +124,15 @@ color: red;
 }
 `;
 
-export const Adminemployeepageoption = styled.div`
+export const Sendresult = styled.div`
+color: #00DB00;
+margin: 30px;
+&.fail {
+color: red;
+}
+`;
+
+export const Projectmanagementinnerpageoption = styled.div`
 position: relative;
 float: left;
 height: 35px;
@@ -159,5 +167,50 @@ margin-right: 10px;
   width: 20px;
   justify-content: center;
   align-items: center;
+}
+`;
+
+export const DatePickerWrapper = styled.div`
+  .react-datepicker {
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+  }
+
+  .react-datepicker__header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .react-datepicker__day-name, 
+  .react-datepicker__day, 
+  .react-datepicker__time-name {
+    color: #000;
+  }
+
+  .react-datepicker__day--selected, 
+  .react-datepicker__day--keyboard-selected {
+    background-color: #0066cc;
+    color: #fff;
+  }
+
+  .react-datepicker__day--today {
+    background-color: #ffeb3b;
+  }
+
+  .react-datepicker__input-container input {
+    width: 170px;
+    height: 27px;
+    margin-right: 30px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .custom-time-input {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10px;
 }
 `;

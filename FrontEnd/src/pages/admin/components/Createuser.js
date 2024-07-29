@@ -9,7 +9,6 @@ import {
   Componenttitle,
   ComponentoptionWapper,
   Componentcheckbox,
-  Sendresult,
   Checkbutton,
   CheckItem
 } from '../style';
@@ -28,7 +27,7 @@ class Createuser extends PureComponent {
   };
 
   render() {
-    const { CUsend, CUsendvalue, accesslist } = this.props;
+    const { accesslist } = this.props;
     const { accessChecked } = this.state;
 
     return (
@@ -56,7 +55,6 @@ class Createuser extends PureComponent {
         </ComponentoptionWapper>
         <ComponentoptionWapper>
           <Componentbutton onClick={() => this.props.CUsendinfo(this.user_name, accessChecked)}>Create</Componentbutton>
-          {CUsend ? (CUsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
         </ComponentoptionWapper>
       </ComponentWapper>
     )
@@ -64,15 +62,11 @@ class Createuser extends PureComponent {
 
   componentDidMount() {
     this.props.getaccess();
-    if (this.props.accesslist) {
-      this.setState({ accessChecked: new Array(this.props.accesslist.length).fill(false) });
-    }
+    this.setState({ accessChecked: new Array(this.props.accesslist.length).fill(false) });
   }
 }
 
 const mapStateToProps = (state) => ({
-  CUsend: state.admin.CUsend,
-  CUsendvalue: state.admin.CUsendvalue,
   accesslist: state.admin.accesslist
 })
 

@@ -8,7 +8,6 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Sendresult,
   Adminemployeepageoption
 } from '../style';
 
@@ -35,7 +34,6 @@ class Employee extends PureComponent {
     switch (page) {
       case 1:
         {
-          const { EPsend, EPsendvalue } = this.props;
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
@@ -60,14 +58,12 @@ class Employee extends PureComponent {
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentbutton onClick={() => this.props.employeepost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
-                {EPsend ? (EPsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
               </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
       case 2:
         {
-          const { ERsend, ERsendvalue } = this.props;
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
@@ -96,14 +92,12 @@ class Employee extends PureComponent {
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentbutton onClick={() => this.props.employeerevise(this.eid, this.name, this.gender, this.phone, this.mail, this.region)}>Revise</Componentbutton>
-                {ERsend ? (ERsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
               </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
       case 3:
         {
-          const { EDsend, EDsendvalue } = this.props;
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
@@ -116,14 +110,12 @@ class Employee extends PureComponent {
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentbutton onClick={() => this.props.employeedelete(this.eid, this.name)}>Delete</Componentbutton>
-                {EDsend ? (EDsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
               </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
       case 4:
         {
-          const { ESsend, ESsendvalue } = this.props;
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
@@ -144,7 +136,6 @@ class Employee extends PureComponent {
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentbutton onClick={() => this.props.employeeretrieve(this.eid, this.name, this.pid, this.region)}>Post</Componentbutton>
-                {ESsend ? (ESsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -182,14 +173,6 @@ class Employee extends PureComponent {
 
 const mapStateToProps = (state) => ({
   employeepage: state.admin.employeepage,
-  EPsend: state.admin.EPsend,
-  EPsendvalue: state.admin.EPsendvalue,
-  ERsend: state.admin.ERsend,
-  ERsendvalue: state.admin.ERsendvalue,
-  EDsend: state.admin.EDsend,
-  EDsendvalue: state.admin.EDsendvalue,
-  ESsend: state.admin.ESsend,
-  ESsendvalue: state.admin.ESsendvalue
 })
 
 const mapDisptchToProps = (dispatch) => {

@@ -1,13 +1,15 @@
 import { Component } from 'react'
-import Header from './common/header';
-import store from './store';
-import Admin from './pages/admin'
-import Login from './pages/login'
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import store from './store';
+import Header from './common/header';
 import Home from './pages/home';
+import Login from './pages/login'
+import Admin from './pages/admin'
+import Statement from './pages/statement'
 import Detail from './pages/detail';
+import Projectmanagement from './pages/projectmanagement';
 
 class App extends Component {
   render() {
@@ -20,6 +22,8 @@ class App extends Component {
             <Route path='/home' element={<Home />}></Route>
             <Route path='/login' element={<Login />}></Route>
             <Route path='/admin' element={<Admin />}></Route>
+            <Route path='/statement' element={<Statement />}></Route>
+            <Route path='/projectmanagement' element={<Projectmanagement />}></Route>
             <Route path='/detail/:id' element={<Detail />}></Route>
           </Routes>
         </BrowserRouter>

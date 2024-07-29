@@ -9,7 +9,6 @@ import {
   Componenttitle,
   ComponentoptionWapper,
   Componentcheckbox,
-  Sendresult,
   Checkbutton,
   CheckItem
 } from '../style';
@@ -37,7 +36,7 @@ class Createproject extends PureComponent {
   };
 
   render() {
-    const { CPsend, CPsendvalue, materiallist, equipmentlist } = this.props;
+    const { materiallist, equipmentlist } = this.props;
     const { materialChecked, equipmentChecked } = this.state;
 
     return (
@@ -85,7 +84,6 @@ class Createproject extends PureComponent {
         </ComponentoptionWapper>
         <ComponentoptionWapper>
           <Componentbutton onClick={() => this.props.CPsendinfo(this.project_name, this.pm_id, materialChecked, equipmentChecked)}>Create</Componentbutton>
-          {CPsend ? (CPsendvalue ? <Sendresult>success</Sendresult> : <Sendresult className='fail'>fail</Sendresult>) : null}
         </ComponentoptionWapper>
       </ComponentWapper>
     )
@@ -93,19 +91,13 @@ class Createproject extends PureComponent {
 
   componentDidMount() {
     this.props.getmaterial();
-    this.props.geteqipment();
-    if (this.props.materiallist) {
-      this.setState({ materialChecked: new Array(this.props.materiallist.length).fill(false) });
-    }
-    if (this.props.equipmentlist) {
-      this.setState({ equipmentChecked: new Array(this.props.equipmentlist.length).fill(false) });
-    }
+    this.props.getequipment();
+    this.setState({ materialChecked: new Array(this.props.materiallist.length).fill(false) });
+    this.setState({ equipmentChecked: new Array(this.props.equipmentlist.length).fill(false) });
   }
 }
 
 const mapStateToProps = (state) => ({
-  CPsend: state.admin.CPsend,
-  CPsendvalue: state.admin.CPsendvalue,
   materiallist: state.admin.materiallist,
   equipmentlist: state.admin.equipmentlist
 })
@@ -118,8 +110,8 @@ const mapDisptchToProps = (dispatch) => {
     getmaterial() {
       dispatch(actionCreators.getmaterial())
     },
-    geteqipment() {
-      dispatch(actionCreators.geteqipment())
+    getequipment() {
+      dispatch(actionCreators.getequipment())
     }
   }
 }
