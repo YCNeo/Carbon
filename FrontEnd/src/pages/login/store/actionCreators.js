@@ -27,6 +27,11 @@ export const login = (account, password) => {
       } else {
         dispatch(failtologin());
       }
+      const token = res.data.JWT;
+      localStorage.setItem('jwtToken', token);// put
+      console.log("get:"+token);
+      const token1 = localStorage.getItem('jwtToken');// take
+      console.log("take:"+token1);
     }).catch(() => {
       alert('登錄資訊獲取失敗')
     });

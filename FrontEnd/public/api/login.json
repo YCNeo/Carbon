@@ -1,4 +1,5 @@
 {
   "success": true,
-  "data": true
+  "data": true,
+  "JWT": "123456789"
 }
