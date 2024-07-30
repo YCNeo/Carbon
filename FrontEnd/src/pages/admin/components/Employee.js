@@ -190,8 +190,13 @@ const mapDisptchToProps = (dispatch) => {
       dispatch(actionCreators.employeedelete(eid.value, name.value));
     },
     employeeretrieve(eid, name, pid, region) {
-      dispatch(actionCreators.employeeretrieve(eid.value, name.value, pid.value, region.value));
+      const eidValue = eid.value || null;
+      const nameValue = name.value || null;
+      const pidValue = pid.value || null;
+      const regionValue = region.value || null;
+      dispatch(actionCreators.employeeretrieve(eidValue, nameValue, pidValue, regionValue));
     }
+    
   }
 }
 

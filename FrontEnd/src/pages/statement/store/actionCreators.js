@@ -14,3 +14,14 @@ export const getproject = () => {
     });
   }
 }
+
+export const sendinfo = (projectChecked, startDate, endDate, chart, selectedOption1, selectedOption2) => {
+  return (dispatch) => {
+    axios./*正是對接時用post*/get('/api/AAinfo.json', { projectChecked, startDate, endDate, chart, selectedOption1, selectedOption2 }).then((res) => {
+      const result = res.data.data;
+      result? alert('success'):alert('fail')
+    }).catch(() => {
+      alert('AAsendinfo fail')
+    });
+  }
+}

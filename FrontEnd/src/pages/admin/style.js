@@ -18,7 +18,7 @@ export const AdminPage = styled.div`
 margin: 0px auto auto 200px;
 padding: 30px 0 0 30px;
 border-left: 1px solid gray;
-height: 100%;
+min-height: 80vh;
 `;
 
 export const Adminpageoption = styled.div`
@@ -36,8 +36,7 @@ cursor: pointer;
 `
 
 export const ComponentWapper = styled.div`
-overflow: hidden;
-height: auto;
+height: 100%;
 width: auto;
 `;
 
@@ -48,8 +47,8 @@ font-size: 20px;
 
 export const ComponentoptionWapper = styled.div`
 margin: 20px 0 0 25px;
-overflow: hidden;
 display: flex;
+align-items: center;
 &.contentwarpper {
   justify-content: center;
   margin: 0;
@@ -120,7 +119,10 @@ cursor: pointer;
 float: left;
 background: #d0d0d0;
 &.reject {
-color: red;
+  color: red;
+}
+&.selectall {
+  margin: 0 0 0 30px;
 }
 `;
 
@@ -138,26 +140,34 @@ background: #f0f0f0;
   background: #e0e0e0;
 }
 `
-export const CheckItem = styled.div`
-display: flex;
-align-items: center;
-margin: 10px 0;
-`;
 
-export const Checkbutton = styled.div`
-height: 20px;
-width: 20px;
-background-color: white;
-border: 1px solid #ccc;
-cursor: pointer;
-display: inline-block;
-margin-right: 10px;
-&.checked::after {
-  content: '✓';
-  display: flex;
-  height: 20px;
-  width: 20px;
-  justify-content: center;
-  align-items: center;
-}
-`;
+export const customStyles = {
+  container: (provided) => ({
+    ...provided,
+    width: '350px',
+  }),
+  control: (provided) => ({
+    ...provided,
+    border: '1px solid #ccc',
+    boxShadow: 'none',
+    '&:hover': {
+      border: '1px solid #aaa',
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    zIndex: 1000, //on top
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? '#ddd' : '#fff',
+    color: state.isSelected ? '#333' : '#000',
+    '&:hover': {
+      backgroundColor: '#f0f0f0',
+    },
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: '#333',
+  }),
+};

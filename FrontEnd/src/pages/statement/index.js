@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import Select from 'react-select';
 import { actionCreators } from './store';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -10,6 +11,8 @@ import {
   Statementindex,
   Statementcheckbox,
   Statementbutton,
+  customStyles,
+  customStyles2,
   CheckItem,
   Checkbutton,
   DatePickerWrapper,
@@ -19,7 +22,8 @@ import {
 
 class Statement extends PureComponent {
   state = {
-    projectChecked: [],
+    selectedProject: null,
+    allProjectSelected: false,
     chart: 0,
     chartlist: [
       { id: 1, name: "bar chart" },
@@ -27,25 +31,32 @@ class Statement extends PureComponent {
       { id: 3, name: "pie chart" }
     ],
     option: [
-      { id: 0, name: "select an option" },
-      { id: 1, name: "time" },
-      { id: 2, name: "carbon emission" },
-      { id: 3, name: "project id" },
-      { id: 4, name: "factory number" },
-      { id: 5, name: "option5" }
+      { value: 1, label: "time" },
+      { value: 2, label: "carbon emission" },
+      { value: 3, label: "project value" },
+      { value: 4, label: "factory number" },
+      { value: 5, label: "option5" }
     ],
     startDate: new Date(),
     endDate: new Date(),
     customTimeInput: "",
-    selectedOption1: "",
-    selectedOption2: ""
+    selectedOption1: 1,
+    selectedOption2: 1
   };
 
-  handleCheckButtonClick = (index) => {
-    this.setState((prevState) => {
-      const newProjectChecked = [...prevState.projectChecked];
-      newProjectChecked[index] = !newProjectChecked[index];
-      return { projectChecked: newProjectChecked };
+  handleSelectChange = (selectedOptions) => {
+    this.setState({ selectedProject: selectedOptions });
+  };
+
+  handleSelectAll = () => {
+    const { projectlist } = this.props;
+    const projectOptions = projectlist.map(item => ({
+      value: item.id,
+      label: item.name
+    }));
+    this.setState({
+      selectedProject: projectOptions,
+      allProjectSelected: true
     });
   };
 
@@ -61,17 +72,22 @@ class Statement extends PureComponent {
     this.setState({ chart: id });
   }
 
-  handleSelectChange1 = (event) => {
-    this.setState({ selectedOption1: event.target.value });
+  handleSelectChange1 = (selectedOptions) => {
+    this.setState({ selectedOption1: selectedOptions });
   };
 
-  handleSelectChange2 = (event) => {
-    this.setState({ selectedOption2: event.target.value });
+  handleSelectChange2 = (selectedOptions) => {
+    this.setState({ selectedOption2: selectedOptions });
   };
 
   render() {
     const { projectlist } = this.props;
-    const { projectChecked, startDate, endDate, customTimeInput, chart, chartlist, option, selectedOption1, selectedOption2 } = this.state;
+    const { selectedProject, startDate, endDate, customTimeInput, chart, chartlist, option, selectedOption1, selectedOption2 } = this.state;
+
+    const projectOptions = projectlist.map(item => ({
+      value: item.id,
+      label: item.name
+    }));
 
     const CustomTimeInput = ({ value, onChange }) => (
       <input
@@ -88,19 +104,16 @@ class Statement extends PureComponent {
         <Statementtitle className='text'>查詢條件：</Statementtitle>
         <StatementoptionWapper>
           <Statementindex>Project name</Statementindex>
-          <Statementcheckbox>
-            {
-              projectlist.map((item, index) => (
-                <CheckItem key={item.id} className='name'>
-                  <Checkbutton
-                    onClick={() => this.handleCheckButtonClick(index)}
-                    className={projectChecked[index] ? 'checked' : ''}
-                  ></Checkbutton>
-                  {item.name}
-                </CheckItem>
-              ))
-            }
-          </Statementcheckbox>
+          <Select
+            placeholder="Select project"
+            closeMenuOnSelect={false}
+            options={projectOptions}
+            isMulti
+            value={selectedProject}
+            onChange={this.handleSelectChange}
+            styles={customStyles}
+          />
+          <Statementbutton className='selectall' onClick={this.handleSelectAll}>Select All</Statementbutton>
         </StatementoptionWapper>
         <StatementoptionWapper>
           <Statementindex>Start From</Statementindex>
@@ -144,20 +157,24 @@ class Statement extends PureComponent {
                   <Chartselect>
                     {item.id === 3 ? "classification basis" : "x-axis:"}
                     &nbsp;&nbsp;
-                    <select value={selectedOption1} onChange={this.handleSelectChange1}>
-                      {option.map(opt => (
-                        <option key={opt.id} value={opt.id}>{opt.name}</option>
-                      ))}
-                    </select>
+                    <Select
+                      placeholder="Select x"
+                      options={option}
+                      value={selectedOption1}
+                      onChange={this.handleSelectChange1}
+                      styles={customStyles2}
+                    />
                   </Chartselect>
                   {item.id === 3 ? '' :
                     <Chartselect>
                       y-axis:&nbsp;&nbsp;
-                      <select value={selectedOption2} onChange={this.handleSelectChange2}>
-                        {option.map(opt => (
-                          <option key={opt.id} value={opt.id}>{opt.name}</option>
-                        ))}
-                      </select>
+                      <Select
+                        placeholder="Select y"
+                        options={option}
+                        value={selectedOption2}
+                        onChange={this.handleSelectChange2}
+                        styles={customStyles2}
+                      />
                     </Chartselect>
                   }
                 </CheckItem>
@@ -166,7 +183,7 @@ class Statement extends PureComponent {
           </Statementcheckbox>
         </StatementoptionWapper>
         <StatementoptionWapper>
-          <Statementbutton onClick={() => this.props.sendinfo(chart, selectedOption1, selectedOption2)}>Create</Statementbutton>
+          <Statementbutton onClick={() => this.props.sendinfo(selectedProject, startDate, endDate, chart, selectedOption1, selectedOption2)}>Create</Statementbutton>
         </StatementoptionWapper>
       </StatemetnWrapper>
     )
@@ -174,7 +191,6 @@ class Statement extends PureComponent {
 
   componentDidMount() {
     this.props.getproject();
-    this.setState({ projectChecked: new Array(this.props.projectlist.length).fill(false) });
   }
 }
 
@@ -187,8 +203,9 @@ const mapDispatchToProps = (dispatch) => {
     getproject() {
       dispatch(actionCreators.getproject())
     },
-    sendinfo(a, b, c) {
-      console.log(a, b, c);
+    sendinfo(selectedProject, startDate, endDate, chart, selectedOption1, selectedOption2) {
+      const projectChecked = selectedProject ? selectedProject.map(option => option.value) : [];
+      dispatch(actionCreators.sendinfo(projectChecked, startDate, endDate, chart, selectedOption1, selectedOption2))
     }
   }
 }

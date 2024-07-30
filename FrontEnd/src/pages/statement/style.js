@@ -3,10 +3,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export const StatemetnWrapper = styled.div`
 position: relative;
-min-height: 100%;
+min-height: 80vh;
 margin: 0 auto;
 padding: 30px 0 0 30px;
-overflow: hidden;
 `;
 
 export const Statementtitle = styled.div`
@@ -19,8 +18,8 @@ font-size: 20px;
 
 export const StatementoptionWapper = styled.div`
 margin: 20px 0 0 25px;
-overflow: hidden;
 display: flex;
+align-items: center;
 `;
 
 export const Statementindex = styled.div`
@@ -58,6 +57,9 @@ font-size: 18px;
 cursor: pointer;
 float: left;
 background: #d0d0d0;
+&.selectall {
+  margin: 0 0 0 30px;
+}
 `;
 
 export const CheckItem = styled.div`
@@ -132,8 +134,47 @@ export const DatePickerWrapper = styled.div`
 export const Chartselect = styled.div`
 margin-left: 10px;
 display: flex;
+align-items: center;
 `;
 
 export const Option = styled.div`
 width: 70px;
 `
+
+export const customStyles = {
+  container: (provided) => ({
+    ...provided,
+    width: '350px',
+  }),
+  control: (provided) => ({
+    ...provided,
+    border: '1px solid #ccc',
+    boxShadow: 'none',
+    '&:hover': {
+      border: '1px solid #aaa',
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    zIndex: 1000, //on top
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? '#ddd' : '#fff',
+    color: state.isSelected ? '#333' : '#000',
+    '&:hover': {
+      backgroundColor: '#f0f0f0',
+    },
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: '#333',
+  }),
+};
+
+export const customStyles2 = {
+  container: (provided) => ({
+    ...provided,
+    width: '200px',
+  })
+}

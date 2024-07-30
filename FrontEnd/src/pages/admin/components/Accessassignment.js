@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import Select from 'react-select';
 import { actionCreators } from '../store';
 import {
   ComponentWapper,
@@ -8,27 +9,39 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Componentcheckbox,
-  Checkbutton,
-  CheckItem
+  customStyles
 } from '../style';
 
 class Accessassignment extends PureComponent {
   state = {
-    accessChecked: []
+    selectedAccess: null,
+    allAccessSelected: false,
   };
 
-  handleCheckButtonClick = (index) => {
-    this.setState((prevState) => {
-      const newAccessChecked = [...prevState.accessChecked];
-      newAccessChecked[index] = !newAccessChecked[index];
-      return { accessChecked: newAccessChecked };
+  handleSelectChange = (selectedOptions) => {
+    this.setState({ selectedAccess: selectedOptions });
+  };
+
+  handleSelectAll = () => {
+    const { accesslist } = this.props;
+    const accessOptions = accesslist.map(item => ({
+      value: item.id,
+      label: item.name
+    }));
+    this.setState({
+      selectedAccess: accessOptions,
+      allAccessSelected: true
     });
   };
 
   render() {
     const { accesslist } = this.props;
-    const { accessChecked } = this.state;
+    const { selectedAccess } = this.state;
+
+    const accessOptions = accesslist.map(item => ({
+      value: item.id,
+      label: item.name
+    }));
 
     return (
       <ComponentWapper>
@@ -39,21 +52,21 @@ class Accessassignment extends PureComponent {
         </ComponentoptionWapper>
         <ComponentoptionWapper>
           <Componentindex>Access</Componentindex>
-          <Componentcheckbox>
-            {
-              accesslist.map((item, index) => (
-                <CheckItem key={item.id} className='name'>
-                  <Checkbutton
-                    onClick={() => this.handleCheckButtonClick(index)}
-                    className={accessChecked[index] ? 'checked' : ''}
-                  ></Checkbutton>
-                  {item.name}
-                </CheckItem>
-              ))
-            }
-          </Componentcheckbox>        </ComponentoptionWapper>
+          <Select
+            placeholder="Select access"
+            closeMenuOnSelect={false}
+            options={accessOptions}
+            isMulti
+            value={selectedAccess}
+            onChange={this.handleSelectChange}
+            styles={customStyles}
+          />
+          <Componentbutton className='selectall' onClick={this.handleSelectAll}>
+            Select All
+          </Componentbutton>
+        </ComponentoptionWapper>
         <ComponentoptionWapper>
-          <Componentbutton onClick={() => this.props.AAsendinfo(this.user_id, accessChecked)}>Assign</Componentbutton>
+          <Componentbutton onClick={() => this.props.AAsendinfo(this.user_id, selectedAccess)}>Assign</Componentbutton>
         </ComponentoptionWapper>
       </ComponentWapper>
     )
@@ -61,18 +74,18 @@ class Accessassignment extends PureComponent {
 
   componentDidMount() {
     this.props.getaccess();
-    this.setState({ accessChecked: new Array(this.props.accesslist.length).fill(false) });
   }
 }
 
 const mapStateToProps = (state) => ({
   accesslist: state.admin.accesslist
-})
+});
 
 const mapDisptchToProps = (dispatch) => {
   return {
-    AAsendinfo(user_id, accessChecked) {
-      dispatch(actionCreators.AAsendinfo(user_id.value, accessChecked));
+    AAsendinfo(user_id, selectedAccess) {
+      const accessChecked = selectedAccess ? selectedAccess.map(option => option.value) : [];
+      dispatch(actionCreators.CUsendinfo(user_id.value, accessChecked));
     },
     getaccess() {
       dispatch(actionCreators.getaccess())
