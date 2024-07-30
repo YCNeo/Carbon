@@ -12,10 +12,13 @@ const failtologin = () => ({
   value: true
 })
 
-export const logout = () => ({
-  type: constants.LOGOUT,
-  value: false
-})
+export const logout = () => {
+  localStorage.removeItem('jwtToken');
+  return {
+    type: constants.LOGOUT,
+    value: false
+  };
+};
 
 export const login = (account, password) => {
   return (dispatch) => {
@@ -30,8 +33,8 @@ export const login = (account, password) => {
       const token = res.data.JWT;
       localStorage.setItem('jwtToken', token);// put
       console.log("get:"+token);
-      const token1 = localStorage.getItem('jwtToken');// take
-      console.log("take:"+token1);
+      //const token1 = localStorage.getItem('jwtToken');// take
+      //console.log("take:"+token1);
     }).catch(() => {
       alert('登錄資訊獲取失敗')
     });
