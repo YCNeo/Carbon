@@ -21,9 +21,14 @@ class Equipment extends PureComponent {
     hoveredBox: null,
     pages: [
       { id: 1, text: 'Post' },
-      { id: 2, text: 'Revise' },
-      { id: 3, text: 'Retieve' },
-    ]
+      { id: 2, text: 'Retrieve' },
+      { id: 3, text: 'Post Repair' },
+      { id: 4, text: 'Repair Log' },
+      { id: 5, text: 'Dispoal List' },
+    ],
+    startDate: new Date(),
+    endDate: new Date(),
+    customTimeInput: "",
   };
 
   handleMouseEnter = (id) => {
@@ -34,10 +39,28 @@ class Equipment extends PureComponent {
     this.setState({ hoveredBox: null });
   };
 
+  handleDateChange = (field, date) => {
+    this.setState({ [field]: date });
+  };
+
+  handleTimeInputChange = (field, event) => {
+    this.setState({ [field]: event.target.value });
+  };
+
   whichpage(page) {
     switch (page) {
       case 1:
         {
+          const { startDate, endDate, customTimeInput } = this.state;
+          const CustomTimeInput = ({ value, onChange }) => (
+            <input
+              value={value}
+              onChange={onChange}
+              placeholder="HH:mm"
+              className="custom-time-input"
+            />
+          );
+
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
@@ -45,15 +68,55 @@ class Equipment extends PureComponent {
                 <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
+                <Componentindex>Supplier Name</Componentindex>
+                <Componentinput ref={(input) => { this.supplier_name = input }} />
+              </ComponentoptionWapper>
+              <ComponentoptionWapper >
                 <Componentindex>Amount</Componentindex>
                 <Componentinput ref={(input) => { this.amount = input }} />
-              </ComponentoptionWapper>
+              </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Unit</Componentindex>
                 <Componentinput ref={(input) => { this.unit = input }} />
               </ComponentoptionWapper>
+              <ComponentoptionWapper >
+                <Componentindex>Factor</Componentindex>
+                <Componentinput ref={(input) => { this.factor = input }} />
+              </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.amount, this.unit)}>Post</Componentbutton>
+                <Componentindex>Purchase Date</Componentindex>
+                <DatePickerWrapper>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => this.handleDateChange('startDate', date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    dateFormat="yyyy/MM/dd HH:mm"
+                    timeCaption="time"
+                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                  />
+                </DatePickerWrapper>
+                <Componentindex>Disposal Date</Componentindex>
+                <DatePickerWrapper>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    dateFormat="yyyy/MM/dd HH:mm"
+                    timeCaption="time"
+                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                  />
+                </DatePickerWrapper>
+              </ComponentoptionWapper>
+              <ComponentoptionWapper >
+                <Componentindex>Age</Componentindex>
+                <Componentinput ref={(input) => { this.age = input }} />
+              </ComponentoptionWapper >
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.supplier_name, this.amount, this.unit, this.factor, startDate, endDate, this.age)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -67,15 +130,19 @@ class Equipment extends PureComponent {
                 <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentindex>Amount</Componentindex>
-                <Componentinput ref={(input) => { this.amount = input }} />
+                <Componentindex>Supplier Name</Componentindex>
+                <Componentinput ref={(input) => { this.supplier_name = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentindex>Unit</Componentindex>
-                <Componentinput ref={(input) => { this.unit = input }} />
+                <Componentindex>EquipID</Componentindex>
+                <Componentinput ref={(input) => { this.equip_id = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentrevise(this.name, this.amount, this.unit)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.equipmentretrieve(this.name, this.supplier_name, this.equip_id)}>Retrieve</Componentbutton>
+              </ComponentoptionWapper>
+              <ComponentoptionWapper><Componentcheckbox>eqipment detail</Componentcheckbox></ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentbutton className='reject' onClick={() => this.props.equipmentdelete()}>Delete</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -85,12 +152,36 @@ class Equipment extends PureComponent {
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
-                <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentindex>Repair Date</Componentindex>
+                <Componentinput ref={(input) => { this.repair_date = input }} />
+              </ComponentoptionWapper >
+              <ComponentoptionWapper >
+                <Componentindex>EqupiID</Componentindex>
+                <Componentinput ref={(input) => { this.equip_id = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentretrieve(this.name)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => this.props.equipmentpostrepair(this.repair_date, this.equip_id)}>post</Componentbutton>
               </ComponentoptionWapper>
+            </ComponentWapper>
+          );
+        }
+      case 4:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentcheckbox>repair list</Componentcheckbox>
+              </ComponentoptionWapper >
+            </ComponentWapper>
+          );
+        }
+      case 5:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentcheckbox>disposal list</Componentcheckbox>
+              </ComponentoptionWapper >
             </ComponentWapper>
           );
         }
@@ -133,14 +224,17 @@ const mapDisptchToProps = (dispatch) => {
     setequipmentpage(id) {
       dispatch(actionCreators.setequipmentpage(id));
     },
-    equipmentpost(name, amount, unit) {
-      dispatch(actionCreators.equipmentpost(name.value, amount.value, unit.value));
+    equipmentpost(name, supplier_name, amount, unit, factor, startDate, endDate, age) {
+      dispatch(actionCreators.equipmentpost(name.value, supplier_name.value, amount.value, unit.value, factor.value, startDate, endDate, age.value));
     },
-    equipmentrevise(name, amount, unit) {
-      dispatch(actionCreators.equipmentrevise(name.value, amount.value, unit.value));
+    equipmentretrieve(name, supplier_name, equip_id) {
+      dispatch(actionCreators.equipmentretrieve(name.value, supplier_name.value, equip_id.value));
     },
-    equipmentretrieve(name) {
-      dispatch(actionCreators.equipmentretrieve(name.value));
+    equipmentdelete() {
+      console.log('delete');
+    },
+    equipmentpostrepair(repair_date, equip_id) {
+      dispatch(actionCreators.equipmentretrieve(repair_date.value, equip_id.value));
     }
   }
 }

@@ -21,12 +21,11 @@ class Material extends PureComponent {
     hoveredBox: null,
     pages: [
       { id: 1, text: 'Post' },
-      { id: 2, text: 'Retrieve' },
-      { id: 3, text: 'Post Repair' },
-      { id: 4, text: 'Repair Log' },
-      { id: 5, text: 'Dispoal List' },
+      { id: 2, text: 'Retieve' },
+      { id: 3, text: 'Disposal list' }
     ],
     startDate: new Date(),
+    disposaltDate: new Date(),
     endDate: new Date(),
     customTimeInput: "",
   };
@@ -51,7 +50,7 @@ class Material extends PureComponent {
     switch (page) {
       case 1:
         {
-          const { startDate, endDate, customTimeInput } = this.state;
+          const { startDate, disposaltDate, endDate, customTimeInput } = this.state;
           const CustomTimeInput = ({ value, onChange }) => (
             <input
               value={value}
@@ -84,7 +83,7 @@ class Material extends PureComponent {
                 <Componentinput ref={(input) => { this.factor = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentindex>Start From</Componentindex>
+                <Componentindex>Purchase Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
                     selected={startDate}
@@ -97,10 +96,10 @@ class Material extends PureComponent {
                     customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
                   />
                 </DatePickerWrapper>
-                <Componentindex>End At</Componentindex>
+                <Componentindex>Disposal Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
-                    selected={endDate}
+                    selected={disposaltDate}
                     onChange={(date) => this.handleDateChange('endDate', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
@@ -116,7 +115,22 @@ class Material extends PureComponent {
                 <Componentinput ref={(input) => { this.age = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialpost(this.name, this.supplier_name, this.amount, this.unit, this.factor, endDate, startDate, this.age)}>Post</Componentbutton>
+                <Componentindex>Disposal Date</Componentindex>
+                <DatePickerWrapper>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    dateFormat="yyyy/MM/dd HH:mm"
+                    timeCaption="time"
+                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                  />
+                </DatePickerWrapper>
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.materialpost(this.name, this.supplier_name, this.amount, this.unit, this.factor, startDate, disposaltDate, this.age, endDate)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -134,13 +148,13 @@ class Material extends PureComponent {
                 <Componentinput ref={(input) => { this.supplier_name = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentindex>EquipID</Componentindex>
-                <Componentinput ref={(input) => { this.equip_id = input }} />
+                <Componentindex>MID</Componentindex>
+                <Componentinput ref={(input) => { this.m_id = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialretrieve(this.name, this.supplier_name, this.equip_id)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialretrieve(this.name, this.supplier_name, this.m_id)}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
-              <ComponentoptionWapper><Componentcheckbox>eqipment detail</Componentcheckbox></ComponentoptionWapper>
+              <ComponentoptionWapper><Componentcheckbox>material detail</Componentcheckbox></ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentbutton className='reject' onClick={() => this.props.materialdelete()}>Delete</Componentbutton>
               </ComponentoptionWapper>
@@ -152,36 +166,8 @@ class Material extends PureComponent {
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
-                <Componentindex>Repair Date</Componentindex>
-                <Componentinput ref={(input) => { this.repair_date = input }} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper >
-                <Componentindex>EqupiID</Componentindex>
-                <Componentinput ref={(input) => { this.equip_id = input }} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialpostrepair(this.repair_date, this.equip_id)}>post</Componentbutton>
-              </ComponentoptionWapper>
-            </ComponentWapper>
-          );
-        }
-      case 4:
-        {
-          return (
-            <ComponentWapper>
-              <ComponentoptionWapper >
-                <Componentcheckbox>repair list</Componentcheckbox>
-              </ComponentoptionWapper >
-            </ComponentWapper>
-          );
-        }
-      case 5:
-        {
-          return (
-            <ComponentWapper>
-              <ComponentoptionWapper >
                 <Componentcheckbox>disposal list</Componentcheckbox>
-              </ComponentoptionWapper >
+              </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
@@ -224,20 +210,15 @@ const mapDisptchToProps = (dispatch) => {
     setmaterialpage(id) {
       dispatch(actionCreators.setmaterialpage(id));
     },
-    materialpost(name, supplier_name, amount, unit, factor, startDate, endDate, age) {
-      dispatch(actionCreators.materialpost(name.value, supplier_name.value, amount.value, unit.value, factor.value, startDate, endDate, age.value));
+    materialpost(name, supplier_name, amount, unit, factor, startDate, disposaltDate, age, endDate) {
+      dispatch(actionCreators.materialpost(name.value, supplier_name.value, amount.value, unit.value, factor.value, startDate, disposaltDate, age.value, endDate));
     },
-    materialretrieve(name, supplier_name, equip_id) {
-      dispatch(actionCreators.materialretrieve(name.value, supplier_name.value, equip_id.value));
-      console.log(name.value, supplier_name.value, equip_id.value);
+    materialretrieve(name, supplier_name, m_id) {
+      dispatch(actionCreators.materialretrieve(name.value, supplier_name.value, m_id.value));
     },
     materialdelete() {
       console.log('delete');
     },
-    materialpostrepair(repair_date, equip_id) {
-      dispatch(actionCreators.materialretrieve(repair_date.value, equip_id.value));
-      console.log(repair_date.value, equip_id.value);
-    }
   }
 }
 
