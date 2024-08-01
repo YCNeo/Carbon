@@ -10,6 +10,7 @@ import Admin from './pages/admin'
 import Statement from './pages/statement'
 import Detail from './pages/detail';
 import Projectmanagement from './pages/projectmanagement';
+import PPE from './pages/ppe';
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
             <Route path='/admin' element={<Admin />}></Route>
             <Route path='/statement' element={<Statement />}></Route>
             <Route path='/projectmanagement' element={<Projectmanagement />}></Route>
+            <Route path='/ppe' element={<PPE />}></Route>
             <Route path='/detail/:id' element={<Detail />}></Route>
           </Routes>
         </BrowserRouter>

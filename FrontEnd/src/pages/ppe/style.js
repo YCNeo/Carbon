@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const AdminWrapper = styled.div`
+export const PPEWrapper = styled.div`
 position: relative;
 width: 100%;
 min-height: 100%;
@@ -8,20 +8,20 @@ margin: 0 auto;
 overflow: hidden;
 `;
 
-export const AdminIndexlist = styled.div`
+export const PPEIndexlist = styled.div`
 width: 200px;
 height: 100%;
 float: left;
 `;
 
-export const AdminPage = styled.div`
+export const PPEPage = styled.div`
 margin: 0px auto auto 200px;
 padding: 30px 0 0 30px;
 border-left: 1px solid gray;
 min-height: 80vh;
 `;
 
-export const Adminpageoption = styled.div`
+export const PPEpageoption = styled.div`
 position: relative;
 margin: 1px 10px;
 border-radius: 7px;
@@ -36,7 +36,8 @@ cursor: pointer;
 `
 
 export const ComponentWapper = styled.div`
-height: 100%;
+overflow: hidden;
+height: auto;
 width: auto;
 `;
 
@@ -47,6 +48,7 @@ font-size: 20px;
 
 export const ComponentoptionWapper = styled.div`
 margin: 20px 0 0 25px;
+overflow: hidden;
 display: flex;
 align-items: center;
 &.contentwarpper {
@@ -95,6 +97,18 @@ outline: none;
 background: #e0e0e0;
 `;
 
+export const Componentcheckbox = styled.div`
+width: 400px;
+min-height: 250px;
+padding: 0 5px;
+line-height: 30px;
+border-radius: 7px;
+font-size: 18px;
+border: none;
+background: #e0e0e0;
+float: left;
+`
+
 export const Componentbutton = styled.div`
 text-align: center;
 margin: 20px 30px 0 0;
@@ -107,14 +121,19 @@ cursor: pointer;
 float: left;
 background: #d0d0d0;
 &.reject {
-  color: red;
-}
-&.selectall {
-  margin: 0 0 0 30px;
+color: red;
 }
 `;
 
-export const Adminemployeepageoption = styled.div`
+export const Sendresult = styled.div`
+color: #00DB00;
+margin: 30px;
+&.fail {
+color: red;
+}
+`;
+
+export const PPEinnerpageoption = styled.div`
 position: relative;
 float: left;
 height: 35px;
@@ -128,34 +147,71 @@ background: #f0f0f0;
   background: #e0e0e0;
 }
 `
+export const CheckItem = styled.div`
+display: flex;
+align-items: center;
+margin: 10px 0;
+`;
 
-export const customStyles = {
-  container: (provided) => ({
-    ...provided,
-    width: '350px',
-  }),
-  control: (provided) => ({
-    ...provided,
-    border: '1px solid #ccc',
-    boxShadow: 'none',
-    '&:hover': {
-      border: '1px solid #aaa',
-    },
-  }),
-  menu: (provided) => ({
-    ...provided,
-    zIndex: 1000, //on top
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    backgroundColor: state.isSelected ? '#ddd' : '#fff',
-    color: state.isSelected ? '#333' : '#000',
-    '&:hover': {
-      backgroundColor: '#f0f0f0',
-    },
-  }),
-  singleValue: (provided) => ({
-    ...provided,
-    color: '#333',
-  }),
-};
+export const Checkbutton = styled.div`
+height: 20px;
+width: 20px;
+background-color: white;
+border: 1px solid #ccc;
+cursor: pointer;
+display: inline-block;
+margin-right: 10px;
+&.checked::after {
+  content: '✓';
+  display: flex;
+  height: 20px;
+  width: 20px;
+  justify-content: center;
+  align-items: center;
+}
+`;
+
+export const DatePickerWrapper = styled.div`
+  .react-datepicker {
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+  }
+
+  .react-datepicker__header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .react-datepicker__day-name, 
+  .react-datepicker__day, 
+  .react-datepicker__time-name {
+    color: #000;
+  }
+
+  .react-datepicker__day--selected, 
+  .react-datepicker__day--keyboard-selected {
+    background-color: #0066cc;
+    color: #fff;
+  }
+
+  .react-datepicker__day--today {
+    background-color: #ffeb3b;
+  }
+
+  .react-datepicker__input-container input {
+    width: 170px;
+    height: 27px;
+    margin-right: 30px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .custom-time-input {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+`;

@@ -89,6 +89,7 @@ class Header extends Component {
               <Link to='/admin'><Jumpbottom onClick={() => (iforgotpassword(false))}>admin (need login)</Jumpbottom></Link>
               <Link to='/statement'><Jumpbottom>statement</Jumpbottom></Link>
               <Link to='/projectmanagement'><Jumpbottom>project management</Jumpbottom></Link>
+              <Link to='/ppe'><Jumpbottom>PPE</Jumpbottom></Link>
               <button onClick={() => (this.getjwp())}>get JWT</button>
             </HeaderWrapper>
           </div>

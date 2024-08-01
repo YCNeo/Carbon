@@ -30,11 +30,7 @@ export const setdailyrecordpage = (page) => ({
   type: constants.SET_DAILY_RECORD_PAGE,
   page
 });
-/////////
-export const setpage = (page) => ({
-  type: constants.SET_MEMBER_PAGE,
-  page
-});
+
 ///////////////////////////member///////////////////////////////////////
 export const memberpost = (eid, position) => {
   return (dispatch) => {
