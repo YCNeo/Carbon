@@ -50,6 +50,7 @@ export const ComponentoptionWapper = styled.div`
 margin: 20px 0 0 25px;
 overflow: hidden;
 display: flex;
+align-items: center;
 &.contentwarpper {
   justify-content: center;
   margin: 0;

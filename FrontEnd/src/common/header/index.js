@@ -62,6 +62,11 @@ class Header extends Component {
     this.setState({ cheatpage: !cheatpage })
   }
 
+  getjwp = () => {
+    const token1 = localStorage.getItem('jwtToken');// take
+    console.log("take:" + token1);
+  }
+
   render() {
     const { focused, handleinputfocus, handleinputblur, list, login, logout, iforgotpassword } = this.props;
     const { cheatpage } = this.state;
@@ -84,6 +89,8 @@ class Header extends Component {
               <Link to='/admin'><Jumpbottom onClick={() => (iforgotpassword(false))}>admin (need login)</Jumpbottom></Link>
               <Link to='/statement'><Jumpbottom>statement</Jumpbottom></Link>
               <Link to='/projectmanagement'><Jumpbottom>project management</Jumpbottom></Link>
+              <Link to='/ppe'><Jumpbottom>PPE</Jumpbottom></Link>
+              <button onClick={() => (this.getjwp())}>get JWT</button>
             </HeaderWrapper>
           </div>
           :
