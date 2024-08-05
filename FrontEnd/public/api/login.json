@@ -1,5 +1,5 @@
 {
-  "success": true,
-  "data": true,
-  "JWT": "123456789"
+  "success": true,  
+  "JWT": "123456789",
+  "first_login": true
 }
