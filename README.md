@@ -6,7 +6,11 @@
 * [meeting record](https://www.notion.so/carbon-c5fb74f4e603481fa5678fa39fa2badb?pvs=4)
 * Run all Docker
    ```sh
-   docker compose up -d
+   docker compose up -d --build
+   ```
+   ```
+  npm install
+  npm start
    ```
 
 ### FrontEnd
