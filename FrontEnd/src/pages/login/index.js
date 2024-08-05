@@ -20,10 +20,11 @@ class Login extends Component {
           {forgetpassword ?
             <LoginBox>
               <Logintitle>修改密碼</Logintitle>
+              <Input placeholder='user name' ref={(input) => { this.uid = input }} />
               <Input placeholder='原密碼' ref={(input) => { this.old_password = input }} />
               <Input placeholder='新密碼' ref={(input) => { this.new_password = input }} type='password' />
               <Input placeholder='再次確認新密碼' ref={(input) => { this.comfirm_new_password = input }} type='password' />
-              <Botton onClick={() => revisepassword(this.old_password, this.new_password, this.comfirm_new_password)}>確認</Botton>
+              <Botton onClick={() => revisepassword(this.uid, this.old_password, this.new_password, this.comfirm_new_password)}>確認</Botton>
               {loginfailstate ? <Loginfail>修改失敗</Loginfail> : null}
             </LoginBox>
             :
@@ -54,8 +55,8 @@ const mapDisptchToProps = (dispatch) => {
     login(account, password) {
       dispatch(actionCreators.login(account.value, password.value))
     },
-    revisepassword(old_password, new_password, comfirm_new_password) {
-      dispatch(actionCreators.revisepassword(old_password.value, new_password.value, comfirm_new_password.value))
+    revisepassword(uid, old_password, new_password, comfirm_new_password) {
+      dispatch(actionCreators.revisepassword(uid.value, old_password.value, new_password.value, comfirm_new_password.value))
     }
   }
 }

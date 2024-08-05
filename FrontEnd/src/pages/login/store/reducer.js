@@ -16,6 +16,8 @@ const reducer = (state = defaultState, action) => {
       return { ...state, loginfail: action.value }
     case constants.FORGET_PASSWORD_PAGE:
       return { ...state, forgetpassword: action.value }
+    case constants.FIRST_LOGIN:
+      return { ...state, forgetpassword: action.value }
     default:
       return state;
   }

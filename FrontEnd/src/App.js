@@ -10,7 +10,7 @@ import Admin from './pages/admin'
 import Statement from './pages/statement'
 import Detail from './pages/detail';
 import Projectmanagement from './pages/projectmanagement';
-import PPE from './pages/PPE';
+import PPE from './pages/ppe';
 
 class App extends Component {
   render() {
