@@ -32,7 +32,7 @@ export const login = (account, password) => {
       }
       const token = res.data.JWT;
       localStorage.setItem('jwtToken', token);// put
-      console.log("get:"+token);
+      console.log("get:" + token);
       //const token1 = localStorage.getItem('jwtToken');// take
       //console.log("take:"+token1);
     }).catch(() => {
