@@ -11,6 +11,7 @@ import Statement from './pages/statement'
 import Detail from './pages/detail';
 import Projectmanagement from './pages/projectmanagement';
 import PPE from './pages/ppe';
+import ESG from './pages/esg';
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
             <Route path='/statement' element={<Statement />}></Route>
             <Route path='/projectmanagement' element={<Projectmanagement />}></Route>
             <Route path='/ppe' element={<PPE />}></Route>
+            <Route path='/esg' element={<ESG />}></Route>
             <Route path='/detail/:id' element={<Detail />}></Route>
           </Routes>
         </BrowserRouter>

@@ -90,6 +90,7 @@ class Header extends Component {
               <Link to='/statement'><Jumpbottom>statement</Jumpbottom></Link>
               <Link to='/projectmanagement'><Jumpbottom>project management</Jumpbottom></Link>
               <Link to='/ppe'><Jumpbottom>PPE</Jumpbottom></Link>
+              <Link to='/esg'><Jumpbottom>ESG</Jumpbottom></Link>
               <button onClick={() => (this.getjwp())}>get JWT</button>
             </HeaderWrapper>
           </div>

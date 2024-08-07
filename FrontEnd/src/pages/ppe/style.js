@@ -147,6 +147,7 @@ background: #f0f0f0;
   background: #e0e0e0;
 }
 `
+
 export const CheckItem = styled.div`
 display: flex;
 align-items: center;
