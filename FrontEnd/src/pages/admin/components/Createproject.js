@@ -128,8 +128,19 @@ const mapStateToProps = (state) => ({
 const mapDisptchToProps = (dispatch) => {
   return {
     CPsendinfo(project_name, pm_id, selectedMaterial, selectedEquipment) {
-      const materialChecked = selectedMaterial ? selectedMaterial.map(option => option.value) : [];
-      const equipmentChecked = selectedEquipment ? selectedEquipment.map(option => option.value) : [];
+      const materialChecked = selectedMaterial
+        ? selectedMaterial.map(option => {
+          const { value: id, label: name } = option;
+          return { id, name };
+        })
+        : [];
+
+      const equipmentChecked = selectedEquipment
+        ? selectedEquipment.map(option => {
+          const { value: id, label: name } = option;
+          return { id, name };
+        })
+        : [];
       dispatch(actionCreators.CPsendinfo(project_name.value, pm_id.value, materialChecked, equipmentChecked));
     },
     getmaterial() {

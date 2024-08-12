@@ -27,6 +27,7 @@ class Equipment extends PureComponent {
       { id: 5, text: 'Dispoal List' },
     ],
     startDate: new Date(),
+    disposalDate: new Date(),
     endDate: new Date(),
     customTimeInput: "",
   };
@@ -51,7 +52,7 @@ class Equipment extends PureComponent {
     switch (page) {
       case 1:
         {
-          const { startDate, endDate, customTimeInput } = this.state;
+          const { startDate, disposalDate, endDate, customTimeInput } = this.state;
           const CustomTimeInput = ({ value, onChange }) => (
             <input
               value={value}
@@ -100,8 +101,8 @@ class Equipment extends PureComponent {
                 <Componentindex>Disposal Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
-                    selected={endDate}
-                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    selected={disposalDate}
+                    onChange={(date) => this.handleDateChange('disposalDate', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
@@ -116,7 +117,22 @@ class Equipment extends PureComponent {
                 <Componentinput ref={(input) => { this.age = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.supplier_name, this.amount, this.unit, this.factor, startDate, endDate, this.age)}>Post</Componentbutton>
+                <Componentindex>Expire Date</Componentindex>
+                <DatePickerWrapper>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    dateFormat="yyyy/MM/dd HH:mm"
+                    timeCaption="time"
+                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                  />
+                </DatePickerWrapper>
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.supplier_name, this.amount, this.unit, this.factor, startDate, disposalDate, this.age, endDate)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -224,8 +240,8 @@ const mapDisptchToProps = (dispatch) => {
     setequipmentpage(id) {
       dispatch(actionCreators.setequipmentpage(id));
     },
-    equipmentpost(name, supplier_name, amount, unit, factor, startDate, endDate, age) {
-      dispatch(actionCreators.equipmentpost(name.value, supplier_name.value, amount.value, unit.value, factor.value, startDate, endDate, age.value));
+    equipmentpost(name, supplier_name, amount, unit, factor, startDate, disposalDate, age, endDate) {
+      dispatch(actionCreators.equipmentpost(name.value, supplier_name.value, amount.value, unit.value, factor.value, startDate, disposalDate, age.value, endDate));
     },
     equipmentretrieve(name, supplier_name, equip_id) {
       dispatch(actionCreators.equipmentretrieve(name.value, supplier_name.value, equip_id.value));
@@ -234,7 +250,7 @@ const mapDisptchToProps = (dispatch) => {
       console.log('delete');
     },
     equipmentpostrepair(repair_date, equip_id) {
-      dispatch(actionCreators.equipmentretrieve(repair_date.value, equip_id.value));
+      dispatch(actionCreators.equipmentpostrepair(repair_date.value, equip_id.value));
     }
   }
 }

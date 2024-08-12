@@ -1,6 +1,9 @@
 import axios from 'axios'
 import * as constants from './constants';
 
+const API_URL = 'http://localhost:8000/';
+//axios.post(`${API_URL}/login`,{...     //測試替換部分
+
 export const getproject = () => {
   return (dispatch) => {
     axios.get('/api/access.json').then((res) => {
@@ -15,9 +18,9 @@ export const getproject = () => {
   }
 }
 
-export const sendinfo = (projectChecked, startDate, endDate, chart, selectedOption1, selectedOption2) => {
+export const sendinfo = (PID, startDate, endDate, chartType) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/AAinfo.json', { projectChecked, startDate, endDate, chart, selectedOption1, selectedOption2 }).then((res) => {
+    axios./*正是對接時用post*/get('/api/AAinfo.json', { PID, startDate, endDate, chartType }).then((res) => {
       const result = res.data.data;
       result? alert('success'):alert('fail')
     }).catch(() => {

@@ -39,6 +39,10 @@ class Equipment extends PureComponent {
                 <Componentindex>Name</Componentindex>
                 <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
+              <ComponentoptionWapper >
+                <Componentindex>EQID</Componentindex>
+                <Componentinput ref={(input) => { this.eqid = input }} />
+              </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Amount</Componentindex>
                 <Componentinput ref={(input) => { this.amount = input }} />
@@ -48,7 +52,7 @@ class Equipment extends PureComponent {
                 <Componentinput ref={(input) => { this.unit = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.amount, this.unit)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.eqid, this.amount, this.unit)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -61,6 +65,10 @@ class Equipment extends PureComponent {
                 <Componentindex>Name</Componentindex>
                 <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
+              <ComponentoptionWapper >
+                <Componentindex>EQID</Componentindex>
+                <Componentinput ref={(input) => { this.eqid = input }} />
+              </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Amount</Componentindex>
                 <Componentinput ref={(input) => { this.amount = input }} />
@@ -70,7 +78,7 @@ class Equipment extends PureComponent {
                 <Componentinput ref={(input) => { this.unit = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentrevise(this.name, this.amount, this.unit)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.equipmentrevise(this.name, this.eqid, this.amount, this.unit)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -83,8 +91,12 @@ class Equipment extends PureComponent {
                 <Componentindex>Name</Componentindex>
                 <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
+              <ComponentoptionWapper >
+                <Componentindex>EQID</Componentindex>
+                <Componentinput ref={(input) => { this.eqid = input }} />
+              </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentretrieve(this.name)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => this.props.equipmentretrieve(this.name, this.eqid)}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -128,14 +140,14 @@ const mapDisptchToProps = (dispatch) => {
     setequipmentpage(id) {
       dispatch(actionCreators.setequipmentpage(id));
     },
-    equipmentpost(name, amount, unit) {
-      dispatch(actionCreators.equipmentpost(name.value, amount.value, unit.value));
+    equipmentpost(name, eqid, amount, unit) {
+      dispatch(actionCreators.equipmentpost(name.value, eqid.value, amount.value, unit.value));
     },
-    equipmentrevise(name, amount, unit) {
-      dispatch(actionCreators.equipmentrevise(name.value, amount.value, unit.value));
+    equipmentrevise(name, eqid, amount, unit) {
+      dispatch(actionCreators.equipmentrevise(name.value, eqid.value, amount.value, unit.value));
     },
-    equipmentretrieve(name) {
-      dispatch(actionCreators.equipmentretrieve(name.value));
+    equipmentretrieve(name, eqid) {
+      dispatch(actionCreators.equipmentretrieve(name.value, eqid.value));
     }
   }
 }

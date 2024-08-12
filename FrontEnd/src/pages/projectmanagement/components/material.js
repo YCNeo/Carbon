@@ -39,6 +39,10 @@ class Material extends PureComponent {
                 <Componentindex>Name</Componentindex>
                 <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
+              <ComponentoptionWapper >
+                <Componentindex>MID</Componentindex>
+                <Componentinput ref={(input) => { this.mid = input }} />
+              </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Amount</Componentindex>
                 <Componentinput ref={(input) => { this.amount = input }} />
@@ -48,7 +52,7 @@ class Material extends PureComponent {
                 <Componentinput ref={(input) => { this.unit = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialpost(this.name, this.amount, this.unit)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialpost(this.name, this.mid, this.amount, this.unit)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -61,6 +65,10 @@ class Material extends PureComponent {
                 <Componentindex>Name</Componentindex>
                 <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
+              <ComponentoptionWapper >
+                <Componentindex>MID</Componentindex>
+                <Componentinput ref={(input) => { this.mid = input }} />
+              </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Amount</Componentindex>
                 <Componentinput ref={(input) => { this.amount = input }} />
@@ -70,7 +78,7 @@ class Material extends PureComponent {
                 <Componentinput ref={(input) => { this.unit = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialrevise(this.name, this.amount, this.unit)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialrevise(this.name, this.mid, this.amount, this.unit)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -83,8 +91,12 @@ class Material extends PureComponent {
                 <Componentindex>Name</Componentindex>
                 <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
+              <ComponentoptionWapper >
+                <Componentindex>MID</Componentindex>
+                <Componentinput ref={(input) => { this.mid = input }} />
+              </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialretrieve(this.name)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialretrieve(this.name, this.mid)}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -128,14 +140,14 @@ const mapDisptchToProps = (dispatch) => {
     setmaterialpage(id) {
       dispatch(actionCreators.setmaterialpage(id));
     },
-    materialpost(name, amount, unit) {
-      dispatch(actionCreators.materialpost(name.value, amount.value, unit.value));
+    materialpost(name, mid, amount, unit) {
+      dispatch(actionCreators.materialpost(name.value, mid.value, amount.value, unit.value));
     },
-    materialrevise(name, amount, unit) {
-      dispatch(actionCreators.materialrevise(name.value, amount.value, unit.value));
+    materialrevise(name, mid, amount, unit) {
+      dispatch(actionCreators.materialrevise(name.value, mid.value, amount.value, unit.value));
     },
-    materialretrieve(name) {
-      dispatch(actionCreators.materialretrieve(name.value));
+    materialretrieve(name, mid) {
+      dispatch(actionCreators.materialretrieve(name.value, mid.value));
     }
   }
 }

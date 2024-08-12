@@ -84,7 +84,12 @@ const mapStateToProps = (state) => ({
 const mapDisptchToProps = (dispatch) => {
   return {
     AAsendinfo(user_id, selectedAccess) {
-      const accessChecked = selectedAccess ? selectedAccess.map(option => option.value) : [];
+      const accessChecked = selectedAccess
+        ? selectedAccess.map(option => {
+          const { value: id, label: name } = option;
+          return { id, name };
+        })
+        : [];
       dispatch(actionCreators.CUsendinfo(user_id.value, accessChecked));
     },
     getaccess() {

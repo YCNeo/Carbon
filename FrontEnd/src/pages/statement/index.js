@@ -183,7 +183,7 @@ class Statement extends PureComponent {
           </Statementcheckbox>
         </StatementoptionWapper>
         <StatementoptionWapper>
-          <Statementbutton onClick={() => this.props.sendinfo(selectedProject, startDate, endDate, chart, selectedOption1, selectedOption2)}>Create</Statementbutton>
+          <Statementbutton onClick={() => this.props.sendinfo(selectedProject, startDate, endDate, chart)}>Create</Statementbutton>
         </StatementoptionWapper>
       </StatemetnWrapper>
     )
@@ -203,9 +203,14 @@ const mapDispatchToProps = (dispatch) => {
     getproject() {
       dispatch(actionCreators.getproject())
     },
-    sendinfo(selectedProject, startDate, endDate, chart, selectedOption1, selectedOption2) {
-      const projectChecked = selectedProject ? selectedProject.map(option => option.value) : [];
-      dispatch(actionCreators.sendinfo(projectChecked, startDate, endDate, chart, selectedOption1, selectedOption2))
+    sendinfo(selectedProject, startDate, endDate, chart) {
+      const projectChecked = selectedProject
+        ? selectedProject.map(option => {
+          const { value: id, label: name } = option;
+          return { id, name };
+        })
+        : [];
+      dispatch(actionCreators.sendinfo(projectChecked, startDate, endDate, chart))
     }
   }
 }

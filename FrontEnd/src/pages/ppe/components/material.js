@@ -25,7 +25,7 @@ class Material extends PureComponent {
       { id: 3, text: 'Disposal list' }
     ],
     startDate: new Date(),
-    disposaltDate: new Date(),
+    disposalDate: new Date(),
     endDate: new Date(),
     customTimeInput: "",
   };
@@ -50,7 +50,7 @@ class Material extends PureComponent {
     switch (page) {
       case 1:
         {
-          const { startDate, disposaltDate, endDate, customTimeInput } = this.state;
+          const { startDate, disposalDate, endDate, customTimeInput } = this.state;
           const CustomTimeInput = ({ value, onChange }) => (
             <input
               value={value}
@@ -99,8 +99,8 @@ class Material extends PureComponent {
                 <Componentindex>Disposal Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
-                    selected={disposaltDate}
-                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    selected={disposalDate}
+                    onChange={(date) => this.handleDateChange('disposalDate', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
@@ -115,7 +115,7 @@ class Material extends PureComponent {
                 <Componentinput ref={(input) => { this.age = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentindex>Disposal Date</Componentindex>
+                <Componentindex>Expire Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
                     selected={endDate}
@@ -130,7 +130,7 @@ class Material extends PureComponent {
                 </DatePickerWrapper>
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialpost(this.name, this.supplier_name, this.amount, this.unit, this.factor, startDate, disposaltDate, this.age, endDate)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialpost(this.name, this.supplier_name, this.amount, this.unit, this.factor, startDate, disposalDate, this.age, endDate)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -210,8 +210,8 @@ const mapDisptchToProps = (dispatch) => {
     setmaterialpage(id) {
       dispatch(actionCreators.setmaterialpage(id));
     },
-    materialpost(name, supplier_name, amount, unit, factor, startDate, disposaltDate, age, endDate) {
-      dispatch(actionCreators.materialpost(name.value, supplier_name.value, amount.value, unit.value, factor.value, startDate, disposaltDate, age.value, endDate));
+    materialpost(name, supplier_name, amount, unit, factor, startDate, disposalDate, age, endDate) {
+      dispatch(actionCreators.materialpost(name.value, supplier_name.value, amount.value, unit.value, factor.value, startDate, disposalDate, age.value, endDate));
     },
     materialretrieve(name, supplier_name, m_id) {
       dispatch(actionCreators.materialretrieve(name.value, supplier_name.value, m_id.value));
