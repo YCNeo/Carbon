@@ -89,7 +89,7 @@ class BoundaryEdition extends PureComponent {
                 <Componentinput ref={(input) => { this.address = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.boundary_editionrevise(this.name, this.address)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.boundary_editionrevise(this.bid, this.address)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
