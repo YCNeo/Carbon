@@ -29,7 +29,7 @@ export const logout = () => {
 export const login = (user, ori_password) => {
   return (dispatch) => {
     const password = CryptoJS.SHA256(ori_password).toString(CryptoJS.enc.Hex);
-    //axios.post(`${API_URL}/login`, { account, password }).then((res) => {                //back end ok
+    // axios.post(`${API_URL}/login`, { user, password }).then((res) => {                //back end ok
     axios./*正是對接時用post*/get('/api/login.json', { user, password }).then((res) => {    //backend not ok
       const result = res.data.success;
       if (result) {
