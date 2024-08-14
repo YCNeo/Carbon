@@ -8,7 +8,9 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Projectmanagementinnerpageoption
+  Projectmanagementinnerpageoption,
+  FlowWapper,
+  Description
 } from '../style';
 
 class Flow extends PureComponent {
@@ -17,6 +19,9 @@ class Flow extends PureComponent {
     pages: [
       { id: 1, text: 'Design' },
       { id: 2, text: 'Revise' }
+    ],
+    steps: [
+      { equipment: '', material: '', description: '' } // Initial step
     ]
   };
 
@@ -28,36 +33,72 @@ class Flow extends PureComponent {
     this.setState({ hoveredBox: null });
   };
 
+  addStep = () => {
+    this.setState((prevState) => ({
+      steps: [...prevState.steps, { equipment: '', material: '', description: '' }]
+    }));
+  };
+
+  handleChange = (index, field, value) => {
+    const newSteps = [...this.state.steps];
+    newSteps[index][field] = value;
+    this.setState({ steps: newSteps });
+  };
+
   whichpage(page) {
     switch (page) {
       case 1:
-        {
-          return (
-            <ComponentWapper>
-              <ComponentoptionWapper >
-                <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.eid = input }} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper>
-                <Componentbutton className='reject' onClick={() => this.props.flowdesign(this.eid)}>Post</Componentbutton>
+        return (
+          <ComponentWapper>
+            {this.state.steps.map((step, index) => (
+              <ComponentoptionWapper className='flow' key={index}>
+                <Componentindex>Step {index + 1}</Componentindex>
+                <FlowWapper className='step'>
+                  <FlowWapper>
+                    <Componentindex>Equipment</Componentindex>
+                    <Componentinput
+                      className='flow'
+                      value={step.equipment}
+                      onChange={(e) => this.handleChange(index, 'equipment', e.target.value)}
+                    />
+                    <Componentindex>Material</Componentindex>
+                    <Componentinput
+                      className='flow'
+                      value={step.material}
+                      onChange={(e) => this.handleChange(index, 'material', e.target.value)}
+                    />
+                  </FlowWapper>
+                  <FlowWapper>
+                    <Componentindex>Description</Componentindex>
+                    <Description
+                      className='big'
+                      value={step.description}
+                      onChange={(e) => this.handleChange(index, 'description', e.target.value)}
+                    />
+                  </FlowWapper>
+                </FlowWapper>
               </ComponentoptionWapper>
-            </ComponentWapper>
-          );
-        }
+            ))}
+            <ComponentoptionWapper>
+              <Componentbutton className='addstep' onClick={this.addStep}>Add Step</Componentbutton>
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentbutton onClick={() => this.props.flowdesign(this.state.steps)}>Post</Componentbutton>
+            </ComponentoptionWapper>
+          </ComponentWapper>
+        );
       case 2:
-        {
-          return (
-            <ComponentWapper>
-              <ComponentoptionWapper >
-                <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.eid = input }} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper>
-                <Componentbutton className='reject' onClick={() => this.props.flowrevise(this.eid)}>Post</Componentbutton>
-              </ComponentoptionWapper>
-            </ComponentWapper>
-          );
-        }
+        return (
+          <ComponentWapper>
+            <ComponentoptionWapper>
+              <Componentindex>EID</Componentindex>
+              <Description ref={(input) => { this.eid = input }} />
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentbutton onClick={() => this.props.flowrevise(this.eid)}>Post</Componentbutton>
+            </ComponentoptionWapper>
+          </ComponentWapper>
+        );
       default:
         return;
     }
@@ -97,8 +138,8 @@ const mapDisptchToProps = (dispatch) => {
     setflowpage(id) {
       dispatch(actionCreators.setflowpage(id));
     },
-    flowdesign(eid) {
-      dispatch(actionCreators.flowdesign(eid.value));
+    flowdesign(steps) {
+      dispatch(actionCreators.flowdesign(steps));
     },
     flowrevise(eid) {
       dispatch(actionCreators.flowrevise(eid.value));

@@ -58,6 +58,9 @@ align-items: center;
 &.content {
   flex-direction: column;
 }
+&.flow {
+  align-items: flex-start;
+}
 `;
 
 export const Componentindex = styled.div`
@@ -72,19 +75,6 @@ background: #e0e0e0;
 float: left;
 `;
 
-export const Componentinfo = styled.div`
-padding: 0 5px;
-line-height: 30px;
-min-height: 30px;
-min-width: 320px;
-border-radius: 7px;
-font-size: 18px;
-background: #e0e0e0;
-&.content {
-margin-top: 20px;
-}
-`;
-
 export const Componentinput = styled.input`
 padding: 0 5px;
 line-height: 30px;
@@ -95,6 +85,10 @@ font-size: 18px;
 border: none;
 outline: none;
 background: #e0e0e0;
+margin-right: 30px;
+&.flow {
+  width: 200px;
+}
 `;
 
 export const Componentcheckbox = styled.div`
@@ -122,6 +116,9 @@ float: left;
 background: #d0d0d0;
 &.reject {
 color: red;
+}
+&.addstep {
+  margin-left: 780px;
 }
 `;
 
@@ -215,3 +212,29 @@ export const DatePickerWrapper = styled.div`
   margin-left: 10px;
 }
 `;
+
+export const FlowWapper = styled.div`
+display: flex;
+margin-bottom: 20px;
+&.step {
+  padding-top: 0px;
+  flex-direction: column;
+  margin: 0;
+}
+`
+
+export const Description = styled.textarea`
+width: 590px; 
+height: 150px; 
+white-space: pre-wrap; 
+overflow-wrap: break-word;
+padding: 0 5px;
+line-height: 30px;
+border-radius: 7px;
+font-size: 18px;
+border: none;
+outline: none;
+background: #e0e0e0;
+resize: none;
+font-family: Arial, sans-serif;
+`
