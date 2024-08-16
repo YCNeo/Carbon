@@ -73,6 +73,9 @@ border-radius: 7px;
 font-size: 18px;
 background: #e0e0e0;
 float: left;
+&.blank {
+  background: white;
+}
 `;
 
 export const Componentinput = styled.input`
@@ -88,6 +91,9 @@ background: #e0e0e0;
 margin-right: 30px;
 &.flow {
   width: 200px;
+}
+&.small {
+  width: 70px;
 }
 `;
 
@@ -119,6 +125,9 @@ color: red;
 }
 &.addstep {
   margin-left: 780px;
+}
+&.addstepDailyrecord {
+  margin-left: 605px;
 }
 `;
 
@@ -221,6 +230,10 @@ margin-bottom: 20px;
   flex-direction: column;
   margin: 0;
 }
+&.dailyrecord {
+  align-items: center;
+  margin: 0;
+}
 `
 
 export const Description = styled.textarea`
@@ -237,4 +250,7 @@ outline: none;
 background: #e0e0e0;
 resize: none;
 font-family: Arial, sans-serif;
+&.short {
+  width: 570px;
+}
 `

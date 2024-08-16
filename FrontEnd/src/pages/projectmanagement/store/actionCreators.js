@@ -79,9 +79,9 @@ export const memberretrieve = (EID, name, position) => {
   }
 }
 ///////////////////////////flow//////////////////////////////////////////
-export const flowdesign = (eid) => {
+export const flowdesign = (steps) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { eid }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { steps }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -90,9 +90,9 @@ export const flowdesign = (eid) => {
   }
 }
 
-export const flowrevise = (eid) => {
+export const flowrevise = (steps) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { eid }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { steps }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -144,6 +144,7 @@ export const equipmentpost = (name, EQID, amount, unit) => {
     });
   }
 }
+
 export const equipmentrevise = (name, EQID, amount, unit) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { name, EQID, amount, unit }).then((res) => {
@@ -154,10 +155,47 @@ export const equipmentrevise = (name, EQID, amount, unit) => {
     });
   }
 }
+
 export const equipmentretrieve = (name, EQID) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { name, EQID }).then((res) => {
       const result = res.data.data;
+      result ? alert('success') : alert('fail')
+    }).catch((error) => {
+      console.error('Error fetching material data:', error);
+    });
+  }
+}
+///////////////////////////daily record/////////////////////////////////////
+
+export const dailyrecordpost = (date, equipment, material, description) => {
+  return (dispatch) => {
+    axios./*正是對接時用post*/get('/api/member.json', { date, equipment, material, description }).then((res) => {
+      const result = res.data.data;
+      result ? alert('success') : alert('fail')
+    }).catch((error) => {
+      console.error('Error fetching material data:', error);
+    });
+  }
+}
+
+export const dailyrecordretrieve = (date) => {
+  return (dispatch) => {
+    axios./*正是對接時用post*/get('/api/member.json', { date }).then((res) => {
+      const result = res.data.data;
+      result ? alert('success') : alert('fail')
+    }).catch((error) => {
+      console.error('Error fetching material data:', error);
+    });
+  }
+}
+
+export const dailyrecordrevise = (date, equipment, material, description) => {
+  return (dispatch) => {
+    axios./*正是對接時用post*/get('/api/member.json', { date, equipment, material, description }).then((res) => {
+      const result = res.data.data;
+      console.log(date,equipment,material,description);
+      
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);

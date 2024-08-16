@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { act, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store';
 import DatePicker from 'react-datepicker';
@@ -12,6 +12,8 @@ import {
   ComponentoptionWapper,
   Projectmanagementinnerpageoption,
   DatePickerWrapper,
+  FlowWapper,
+  Description
 } from '../style';
 
 class Dailyrecord extends PureComponent {
@@ -23,7 +25,14 @@ class Dailyrecord extends PureComponent {
       { id: 1, text: 'Post' },
       { id: 2, text: 'Revise' },
       { id: 3, text: 'Retieve' },
-    ]
+    ],
+    equipment: [
+      { name: '', amount: '', runtime: '' }
+    ],
+    material: [
+      { name: '', amount: '', unit: '' }
+    ],
+    description: ''
   };
 
   handleMouseEnter = (id) => {
@@ -32,6 +41,38 @@ class Dailyrecord extends PureComponent {
 
   handleMouseLeave = () => {
     this.setState({ hoveredBox: null });
+  };
+
+  handleDateChange = (field, date) => {
+    this.setState({ [field]: date });
+  };
+
+  handleTimeInputChange = (field, event) => {
+    this.setState({ [field]: event.target.value });
+  };
+
+  addStepM = () => {
+    this.setState((prevState) => ({
+      material: [...prevState.material, { name: '', amount: '', unit: '' }]
+    }));
+  };
+
+  handleChangeM = (index, field, value) => {
+    const newSteps = [...this.state.material];
+    newSteps[index][field] = value;
+    this.setState({ material: newSteps });
+  };
+
+  addStepE = () => {
+    this.setState((prevState) => ({
+      equipment: [...prevState.equipment, { name: '', amount: '', runtime: '' }]
+    }));
+  };
+
+  handleChangeE = (index, field, value) => {
+    const newSteps = [...this.state.equipment];
+    newSteps[index][field] = value;
+    this.setState({ equipment: newSteps });
   };
 
   whichpage(page) {
@@ -55,7 +96,7 @@ class Dailyrecord extends PureComponent {
                 <DatePickerWrapper>
                   <DatePicker
                     selected={Date}
-                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    onChange={(date) => this.handleDateChange('Date', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
@@ -65,16 +106,71 @@ class Dailyrecord extends PureComponent {
                   />
                 </DatePickerWrapper>
               </ComponentoptionWapper >
+              {this.state.equipment.map((step, index) => (
+                <ComponentoptionWapper className='flow' key={index}>
+                  {index === 0 ? <Componentindex>Equipment</Componentindex> : <Componentindex className='blank' />}
+                  <FlowWapper className='dailyrecord'>
+                    {index + 1}:&nbsp;&nbsp;
+                    <Componentinput
+                      className='flow'
+                      value={step.name}
+                      onChange={(e) => this.handleChangeE(index, 'name', e.target.value)}
+                    />
+                    amount:&nbsp;&nbsp;
+                    <Componentinput
+                      className='small'
+                      value={step.amount}
+                      onChange={(e) => this.handleChangeE(index, 'amount', e.target.value)}
+                    />
+                    runtime:&nbsp;&nbsp;
+                    <Componentinput
+                      className='small'
+                      value={step.runtime}
+                      onChange={(e) => this.handleChangeE(index, 'runtime', e.target.value)}
+                    />
+                  </FlowWapper>
+                </ComponentoptionWapper>
+              ))}
               <ComponentoptionWapper>
-                <Componentindex>Equipment</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
+                <Componentbutton className='addstepDailyrecord' onClick={this.addStepE}>Add Step</Componentbutton>
+              </ComponentoptionWapper>
+              {this.state.material.map((step, index) => (
+                <ComponentoptionWapper className='flow' key={index}>
+                  {index === 0 ? <Componentindex>Materail</Componentindex> : <Componentindex className='blank' />}
+                  <FlowWapper className='dailyrecord'>
+                    {index + 1}:&nbsp;&nbsp;
+                    <Componentinput
+                      className='flow'
+                      value={step.name}
+                      onChange={(e) => this.handleChangeM(index, 'name', e.target.value)}
+                    />
+                    amount:&nbsp;&nbsp;
+                    <Componentinput
+                      className='small'
+                      value={step.amount}
+                      onChange={(e) => this.handleChangeM(index, 'amount', e.target.value)}
+                    />
+                    unit:&nbsp;&nbsp;
+                    <Componentinput
+                      className='small'
+                      value={step.unit}
+                      onChange={(e) => this.handleChangeM(index, 'unit', e.target.value)}
+                    />
+                  </FlowWapper>
+                </ComponentoptionWapper>
+              ))}
+              <ComponentoptionWapper>
+                <Componentbutton className='addstepDailyrecord' onClick={this.addStepM}>Add Step</Componentbutton>
+              </ComponentoptionWapper>
+              <ComponentoptionWapper className='flow'>
+                <Componentindex>Description</Componentindex>
+                <Description
+                  className='short'
+                  value={this.state.description}
+                  onChange={(e) => this.setState({ description: e.target.value })}></Description>
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentindex>Material</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.gender, this.phone, this.mail, this.region)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.dailyrecordpost(this.state.Date, this.state.equipment, this.state.material, this.state.description)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -98,7 +194,7 @@ class Dailyrecord extends PureComponent {
                 <DatePickerWrapper>
                   <DatePicker
                     selected={Date}
-                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    onChange={(date) => this.handleDateChange('Date', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
@@ -108,16 +204,71 @@ class Dailyrecord extends PureComponent {
                   />
                 </DatePickerWrapper>
               </ComponentoptionWapper >
+              {this.state.equipment.map((step, index) => (
+                <ComponentoptionWapper className='flow' key={index}>
+                  {index === 0 ? <Componentindex>Equipment</Componentindex> : <Componentindex className='blank' />}
+                  <FlowWapper className='dailyrecord'>
+                    {index + 1}:&nbsp;&nbsp;
+                    <Componentinput
+                      className='flow'
+                      value={step.name}
+                      onChange={(e) => this.handleChangeE(index, 'name', e.target.value)}
+                    />
+                    amount:&nbsp;&nbsp;
+                    <Componentinput
+                      className='small'
+                      value={step.amount}
+                      onChange={(e) => this.handleChangeE(index, 'amount', e.target.value)}
+                    />
+                    runtime:&nbsp;&nbsp;
+                    <Componentinput
+                      className='small'
+                      value={step.runtime}
+                      onChange={(e) => this.handleChangeE(index, 'runtime', e.target.value)}
+                    />
+                  </FlowWapper>
+                </ComponentoptionWapper>
+              ))}
               <ComponentoptionWapper>
-                <Componentindex>Equipment</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
+                <Componentbutton className='addstepDailyrecord' onClick={this.addStepE}>Add Step</Componentbutton>
+              </ComponentoptionWapper>
+              {this.state.material.map((step, index) => (
+                <ComponentoptionWapper className='flow' key={index}>
+                  {index === 0 ? <Componentindex>Materail</Componentindex> : <Componentindex className='blank' />}
+                  <FlowWapper className='dailyrecord'>
+                    {index + 1}:&nbsp;&nbsp;
+                    <Componentinput
+                      className='flow'
+                      value={step.name}
+                      onChange={(e) => this.handleChangeM(index, 'name', e.target.value)}
+                    />
+                    amount:&nbsp;&nbsp;
+                    <Componentinput
+                      className='small'
+                      value={step.amount}
+                      onChange={(e) => this.handleChangeM(index, 'amount', e.target.value)}
+                    />
+                    unit:&nbsp;&nbsp;
+                    <Componentinput
+                      className='small'
+                      value={step.unit}
+                      onChange={(e) => this.handleChangeM(index, 'unit', e.target.value)}
+                    />
+                  </FlowWapper>
+                </ComponentoptionWapper>
+              ))}
+              <ComponentoptionWapper>
+                <Componentbutton className='addstepDailyrecord' onClick={this.addStepM}>Add Step</Componentbutton>
+              </ComponentoptionWapper>
+              <ComponentoptionWapper className='flow'>
+                <Componentindex>Description</Componentindex>
+                <Description
+                  className='short'
+                  value={this.state.description}
+                  onChange={(e) => this.setState({ description: e.target.value })}></Description>
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentindex>Material</Componentindex>
-                <Componentinput ref={(input) => { this.gender = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.gender, this.phone, this.mail, this.region)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.dailyrecordrevise(this.state.Date, this.state.equipment, this.state.material, this.state.description)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -141,7 +292,7 @@ class Dailyrecord extends PureComponent {
                 <DatePickerWrapper>
                   <DatePicker
                     selected={Date}
-                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    onChange={(date) => this.handleDateChange('Date', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
@@ -152,7 +303,7 @@ class Dailyrecord extends PureComponent {
                 </DatePickerWrapper>
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.gender, this.phone, this.mail, this.region)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => this.props.dailyrecordretrieve(this.state.Date)}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -196,14 +347,14 @@ const mapDisptchToProps = (dispatch) => {
     setdailyrecordpage(id) {
       dispatch(actionCreators.setdailyrecordpage(id));
     },
-    equipmentpost(name, amount, unit) {
-      dispatch(actionCreators.equipmentpost(name.value, amount.value, unit.value));
+    dailyrecordpost(date, equipment, material, description) {
+      dispatch(actionCreators.dailyrecordpost(date, equipment, material, description))
     },
-    equipmentrevise(name, amount, unit) {
-      dispatch(actionCreators.equipmentrevise(name.value, amount.value, unit.value));
+    dailyrecordrevise(date, equipment, material, description) {
+      dispatch(actionCreators.dailyrecordrevise(date, equipment, material, description));
     },
-    equipmentretrieve(name) {
-      dispatch(actionCreators.equipmentretrieve(name.value));
+    dailyrecordretrieve(date) {
+      dispatch(actionCreators.dailyrecordretrieve(date));
     }
   }
 }

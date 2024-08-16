@@ -21,7 +21,7 @@ class Flow extends PureComponent {
       { id: 2, text: 'Revise' }
     ],
     steps: [
-      { equipment: '', material: '', description: '' } // Initial step
+      { equipment: '', material: '', description: '' }
     ]
   };
 
@@ -71,7 +71,6 @@ class Flow extends PureComponent {
                   <FlowWapper>
                     <Componentindex>Description</Componentindex>
                     <Description
-                      className='big'
                       value={step.description}
                       onChange={(e) => this.handleChange(index, 'description', e.target.value)}
                     />
@@ -90,12 +89,39 @@ class Flow extends PureComponent {
       case 2:
         return (
           <ComponentWapper>
+            {this.state.steps.map((step, index) => (
+              <ComponentoptionWapper className='flow' key={index}>
+                <Componentindex>Step {index + 1}</Componentindex>
+                <FlowWapper className='step'>
+                  <FlowWapper>
+                    <Componentindex>Equipment</Componentindex>
+                    <Componentinput
+                      className='flow'
+                      value={step.equipment}
+                      onChange={(e) => this.handleChange(index, 'equipment', e.target.value)}
+                    />
+                    <Componentindex>Material</Componentindex>
+                    <Componentinput
+                      className='flow'
+                      value={step.material}
+                      onChange={(e) => this.handleChange(index, 'material', e.target.value)}
+                    />
+                  </FlowWapper>
+                  <FlowWapper>
+                    <Componentindex>Description</Componentindex>
+                    <Description
+                      value={step.description}
+                      onChange={(e) => this.handleChange(index, 'description', e.target.value)}
+                    />
+                  </FlowWapper>
+                </FlowWapper>
+              </ComponentoptionWapper>
+            ))}
             <ComponentoptionWapper>
-              <Componentindex>EID</Componentindex>
-              <Description ref={(input) => { this.eid = input }} />
+              <Componentbutton className='addstep' onClick={this.addStep}>Add Step</Componentbutton>
             </ComponentoptionWapper>
             <ComponentoptionWapper>
-              <Componentbutton onClick={() => this.props.flowrevise(this.eid)}>Post</Componentbutton>
+              <Componentbutton onClick={() => this.props.flowrevise(this.state.steps)}>Post</Componentbutton>
             </ComponentoptionWapper>
           </ComponentWapper>
         );
@@ -141,8 +167,8 @@ const mapDisptchToProps = (dispatch) => {
     flowdesign(steps) {
       dispatch(actionCreators.flowdesign(steps));
     },
-    flowrevise(eid) {
-      dispatch(actionCreators.flowrevise(eid.value));
+    flowrevise(steps) {
+      dispatch(actionCreators.flowrevise(steps));
     }
   }
 }
