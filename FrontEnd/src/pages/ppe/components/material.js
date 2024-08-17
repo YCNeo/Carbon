@@ -12,7 +12,6 @@ import {
   ComponentoptionWapper,
   PPEinnerpageoption,
   DatePickerWrapper,
-
   Componentcheckbox
 } from '../style';
 
@@ -21,13 +20,15 @@ class Material extends PureComponent {
     hoveredBox: null,
     pages: [
       { id: 1, text: 'Post' },
-      { id: 2, text: 'Retieve' },
-      { id: 3, text: 'Disposal list' }
+      { id: 2, text: 'Delete' },
+      { id: 3, text: 'Retieve' },
+      { id: 4, text: 'Disposal list' }
     ],
     startDate: new Date(),
     disposalDate: new Date(),
     endDate: new Date(),
     customTimeInput: "",
+    display: false
   };
 
   handleMouseEnter = (id) => {
@@ -144,6 +145,24 @@ class Material extends PureComponent {
                 <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
+                <Componentindex>MID</Componentindex>
+                <Componentinput ref={(input) => { this.m_id = input }} />
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.materialdelete(this.name, this.m_id)}>Delete</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          )
+        }
+      case 3:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentindex>Name</Componentindex>
+                <Componentinput ref={(input) => { this.name = input }} />
+              </ComponentoptionWapper >
+              <ComponentoptionWapper>
                 <Componentindex>Supplier Name</Componentindex>
                 <Componentinput ref={(input) => { this.supplier_name = input }} />
               </ComponentoptionWapper>
@@ -152,16 +171,23 @@ class Material extends PureComponent {
                 <Componentinput ref={(input) => { this.m_id = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialretrieve(this.name, this.supplier_name, this.m_id)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => {this.props.materialretrieve(this.name, this.supplier_name, this.m_id); this.setState({ display: true });}}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
-              <ComponentoptionWapper><Componentcheckbox>material detail</Componentcheckbox></ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentbutton className='reject' onClick={() => this.props.materialdelete()}>Delete</Componentbutton>
-              </ComponentoptionWapper>
+              {this.state.display ?
+                <div>
+                  <ComponentoptionWapper>
+                    <Componentcheckbox>list</Componentcheckbox>
+                  </ComponentoptionWapper>
+                  <ComponentoptionWapper>
+                    <Componentbutton onClick={()=>{this.props.setmaterialpage(2)}} className='reject'>Delete</Componentbutton>
+                  </ComponentoptionWapper>
+                </div>
+                :
+                ''}
             </ComponentWapper>
           );
         }
-      case 3:
+      case 4:
         {
           return (
             <ComponentWapper>
@@ -216,8 +242,8 @@ const mapDisptchToProps = (dispatch) => {
     materialretrieve(name, supplier_name, m_id) {
       dispatch(actionCreators.materialretrieve(name.value, supplier_name.value, m_id.value));
     },
-    materialdelete() {
-      console.log('delete');
+    materialdelete(name, m_id) {
+      dispatch(actionCreators.materialdelete(name.value, m_id.value));
     },
   }
 }

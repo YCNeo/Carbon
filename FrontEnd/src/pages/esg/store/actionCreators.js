@@ -64,6 +64,16 @@ export const boundary_editionrevise = (BID, address) => {
   }
 }
 
+export const boundary_editiondelete = (BID) => {
+  return (dispatch) => {
+    axios./*正是對接時用post*/get('/api/member.json', { BID }).then((res) => {
+      const result = res.data.data;
+      result ? alert('success') : alert('fail')
+    }).catch((error) => {
+      console.error('Error fetching material data:', error);
+    });
+  }
+}
 /////////////////////////////source////////////////////////////
 
 export const sourcepost = (EName, form, MName, category) => {

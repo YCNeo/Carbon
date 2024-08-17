@@ -8,6 +8,7 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
+  Componentcheckbox,
   Projectmanagementinnerpageoption
 } from '../style';
 
@@ -18,7 +19,8 @@ class Equipment extends PureComponent {
       { id: 1, text: 'Post' },
       { id: 2, text: 'Revise' },
       { id: 3, text: 'Retieve' },
-    ]
+    ],
+    display: false
   };
 
   handleMouseEnter = (id) => {
@@ -96,8 +98,19 @@ class Equipment extends PureComponent {
                 <Componentinput ref={(input) => { this.eqid = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentretrieve(this.name, this.eqid)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.equipmentretrieve(this.name, this.eqid); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
+              {this.state.display ?
+                <div>
+                  <ComponentoptionWapper>
+                    <Componentcheckbox>list</Componentcheckbox>
+                  </ComponentoptionWapper>
+                  <ComponentoptionWapper>
+                    <Componentbutton onClick={() => { this.props.setequipmentpage(2) }}>revise</Componentbutton>
+                  </ComponentoptionWapper>
+                </div>
+                :
+                ''}
             </ComponentWapper>
           );
         }

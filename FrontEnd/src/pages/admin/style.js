@@ -114,6 +114,18 @@ background: #d0d0d0;
 }
 `;
 
+export const Componentcheckbox = styled.div`
+width: 400px;
+min-height: 250px;
+padding: 0 5px;
+line-height: 30px;
+border-radius: 7px;
+font-size: 18px;
+border: none;
+background: #e0e0e0;
+float: left;
+`
+
 export const Adminemployeepageoption = styled.div`
 position: relative;
 float: left;

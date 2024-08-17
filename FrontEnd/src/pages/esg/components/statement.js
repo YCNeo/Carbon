@@ -8,6 +8,7 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
+  Componentcheckbox,
   ESGinnerpageoption
 } from '../style';
 
@@ -16,7 +17,8 @@ class Statement extends PureComponent {
     hoveredBox: null,
     pages: [
       { id: 1, text: 'Retrieve' },
-    ]
+    ],
+    display: false
   };
 
   handleMouseEnter = (id) => {
@@ -47,8 +49,16 @@ class Statement extends PureComponent {
                 <Componentinput ref={(input) => { this.category = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.statementretrieve(this.ename, this.form, this, this.category)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => {this.props.statementretrieve(this.ename, this.form, this, this.category); this.setState({ display: true });}}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
+              {this.state.display ?
+                <div>
+                  <ComponentoptionWapper>
+                    <Componentcheckbox>list</Componentcheckbox>
+                  </ComponentoptionWapper>
+                </div>
+                :
+                ''}
             </ComponentWapper>
           );
         }

@@ -1,4 +1,4 @@
-import React, { act, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store';
 import DatePicker from 'react-datepicker';
@@ -10,6 +10,7 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
+  Componentcheckbox,
   Projectmanagementinnerpageoption,
   DatePickerWrapper,
   FlowWapper,
@@ -32,7 +33,8 @@ class Dailyrecord extends PureComponent {
     material: [
       { name: '', amount: '', unit: '' }
     ],
-    description: ''
+    description: '',
+    display: false
   };
 
   handleMouseEnter = (id) => {
@@ -303,8 +305,19 @@ class Dailyrecord extends PureComponent {
                 </DatePickerWrapper>
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.dailyrecordretrieve(this.state.Date)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.dailyrecordretrieve(this.state.Date); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
+              {this.state.display ?
+                <div>
+                  <ComponentoptionWapper>
+                    <Componentcheckbox>list</Componentcheckbox>
+                  </ComponentoptionWapper>
+                  <ComponentoptionWapper>
+                    <Componentbutton onClick={() => { this.props.setdailyrecordpage(2) }}>revise</Componentbutton>
+                  </ComponentoptionWapper>
+                </div>
+                :
+                ''}
             </ComponentWapper>
           );
         }
