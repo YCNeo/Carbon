@@ -1,6 +1,9 @@
 import axios from 'axios'
 import * as constants from './constants';
 
+const API_URL = 'http://localhost:8000/';
+//axios.post(`${API_URL}/login`,{...     //測試替換部分
+
 export const setesgpage = (page) => ({
   type: constants.SET_ESG_PAGE,
   page
@@ -39,9 +42,9 @@ export const boundary_editionpost = (name, address, type) => {
   }
 }
 
-export const boundary_editionretrieve = (bid, name, type) => {
+export const boundary_editionretrieve = (BID, name, type) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { bid, name, type }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { BID, name, type }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -50,9 +53,9 @@ export const boundary_editionretrieve = (bid, name, type) => {
   }
 }
 
-export const boundary_editionrevise = (name, address) => {
+export const boundary_editionrevise = (BID, address) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { name, address }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { BID, address }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -61,11 +64,21 @@ export const boundary_editionrevise = (name, address) => {
   }
 }
 
+export const boundary_editiondelete = (BID) => {
+  return (dispatch) => {
+    axios./*正是對接時用post*/get('/api/member.json', { BID }).then((res) => {
+      const result = res.data.data;
+      result ? alert('success') : alert('fail')
+    }).catch((error) => {
+      console.error('Error fetching material data:', error);
+    });
+  }
+}
 /////////////////////////////source////////////////////////////
 
-export const sourcepost = (ename, form, ingredient, category) => {
+export const sourcepost = (EName, form, MName, category) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { ename, form, ingredient, category }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { EName, form, MName, category }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -74,9 +87,9 @@ export const sourcepost = (ename, form, ingredient, category) => {
   }
 }
 
-export const sourceretrieve = (ename, form, ingredient, category) => {
+export const sourceretrieve = (EName, form, MName, category) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { ename, form, ingredient, category }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { EName, form, MName, category }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -85,9 +98,9 @@ export const sourceretrieve = (ename, form, ingredient, category) => {
   }
 }
 
-export const sourcedelete = (sid) => {
+export const sourcedelete = (SID) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { sid }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { SID }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -96,9 +109,9 @@ export const sourcedelete = (sid) => {
   }
 }
 
-export const sourcerevise = (ename, form, ingredient, category) => {
+export const sourcerevise = (EName, form, MName, category) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { ename, form, ingredient, category }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { EName, form, MName, category }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -109,9 +122,9 @@ export const sourcerevise = (ename, form, ingredient, category) => {
 
 /////////////////////////////statement////////////////////////////
 
-export const statementretrieve = (ename, form, category) => {
+export const statementretrieve = (EName, form, category) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { ename, form, category }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { category, form, EName }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {

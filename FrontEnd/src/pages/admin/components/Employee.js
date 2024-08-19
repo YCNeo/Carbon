@@ -8,6 +8,7 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
+  Componentcheckbox,
   Adminemployeepageoption
 } from '../style';
 
@@ -19,7 +20,8 @@ class Employee extends PureComponent {
       { id: 2, text: 'Revise' },
       { id: 3, text: 'Delete' },
       { id: 4, text: 'Retieve' },
-    ]
+    ],
+    display: false
   };
 
   handleMouseEnter = (id) => {
@@ -135,8 +137,20 @@ class Employee extends PureComponent {
                 <Componentinput ref={(input) => { this.region = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.employeeretrieve(this.eid, this.name, this.pid, this.region)}>Post</Componentbutton>
+                <Componentbutton onClick={() => { this.props.employeeretrieve(this.eid, this.name, this.pid, this.region); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
+              {this.state.display ?
+                <div>
+                  <ComponentoptionWapper>
+                    <Componentcheckbox>list</Componentcheckbox>
+                  </ComponentoptionWapper>
+                  <ComponentoptionWapper>
+                    <Componentbutton onClick={() => { this.props.setpage(2) }}>revise</Componentbutton>
+                    <Componentbutton onClick={() => { this.props.setpage(3) }} className='reject'>Delete</Componentbutton>
+                  </ComponentoptionWapper>
+                </div>
+                :
+                ''}
             </ComponentWapper>
           );
         }
@@ -144,7 +158,6 @@ class Employee extends PureComponent {
         return;
     }
   }
-
 
   render() {
     const { setpage, employeepage } = this.props;
@@ -196,7 +209,6 @@ const mapDisptchToProps = (dispatch) => {
       const regionValue = region.value || null;
       dispatch(actionCreators.employeeretrieve(eidValue, nameValue, pidValue, regionValue));
     }
-    
   }
 }
 

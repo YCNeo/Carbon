@@ -1,6 +1,9 @@
 import axios from 'axios'
 import * as constants from './constants';
 
+const API_URL = 'http://localhost:8000/';
+//axios.post(`${API_URL}/login`,{...     //測試替換部分
+
 export const setprojectmanagementpage = (page) => ({
   type: constants.SET_PROJECTMANAGEMENT_PAGE,
   page
@@ -32,9 +35,9 @@ export const setdailyrecordpage = (page) => ({
 });
 
 ///////////////////////////member///////////////////////////////////////
-export const memberpost = (eid, position) => {
+export const memberpost = (EID, position) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { eid, position }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { EID, position }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -43,9 +46,9 @@ export const memberpost = (eid, position) => {
   }
 }
 
-export const memberrevise = (eid, position) => {
+export const memberrevise = (EID, position) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { eid, position }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { EID, position }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -54,9 +57,9 @@ export const memberrevise = (eid, position) => {
   }
 }
 
-export const memberremove = (eid) => {
+export const memberremove = (EID) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { eid }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { EID }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -65,9 +68,9 @@ export const memberremove = (eid) => {
   }
 }
 
-export const memberretrieve = (eid, name, position) => {
+export const memberretrieve = (EID, name, position) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { eid, name, position }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { EID, name, position }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -76,9 +79,9 @@ export const memberretrieve = (eid, name, position) => {
   }
 }
 ///////////////////////////flow//////////////////////////////////////////
-export const flowdesign = (eid) => {
+export const flowdesign = (steps) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { eid }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { steps }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -87,9 +90,9 @@ export const flowdesign = (eid) => {
   }
 }
 
-export const flowrevise = (eid) => {
+export const flowrevise = (steps) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { eid }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { steps }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -98,9 +101,9 @@ export const flowrevise = (eid) => {
   }
 }
 ///////////////////////////material//////////////////////////////////////
-export const materialpost = (name, amount, unit) => {
+export const materialpost = (name, MID, amount, unit) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { name, amount, unit }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { name, MID, amount, unit }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -109,9 +112,9 @@ export const materialpost = (name, amount, unit) => {
   }
 }
 
-export const materialrevise = (name, amount, unit) => {
+export const materialrevise = (name, MID, amount, unit) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { name, amount, unit }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { name, MID, amount, unit }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -120,9 +123,9 @@ export const materialrevise = (name, amount, unit) => {
   }
 }
 
-export const materialretrieve = (name) => {
+export const materialretrieve = (name, MID) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { name }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { name, MID }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -131,9 +134,9 @@ export const materialretrieve = (name) => {
   }
 }
 ///////////////////////////equipment/////////////////////////////////////
-export const equipmentpost = (name, amount, unit) => {
+export const equipmentpost = (name, EQID, amount, unit) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { name, amount, unit }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { name, EQID, amount, unit }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -141,9 +144,10 @@ export const equipmentpost = (name, amount, unit) => {
     });
   }
 }
-export const equipmentrevise = (name, amount, unit) => {
+
+export const equipmentrevise = (name, EQID, amount, unit) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { name, amount, unit }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { name, EQID, amount, unit }).then((res) => {
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
@@ -151,10 +155,47 @@ export const equipmentrevise = (name, amount, unit) => {
     });
   }
 }
-export const equipmentretrieve = (name) => {
+
+export const equipmentretrieve = (name, EQID) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { name }).then((res) => {
+    axios./*正是對接時用post*/get('/api/member.json', { name, EQID }).then((res) => {
       const result = res.data.data;
+      result ? alert('success') : alert('fail')
+    }).catch((error) => {
+      console.error('Error fetching material data:', error);
+    });
+  }
+}
+///////////////////////////daily record/////////////////////////////////////
+
+export const dailyrecordpost = (date, equipment, material, description) => {
+  return (dispatch) => {
+    axios./*正是對接時用post*/get('/api/member.json', { date, equipment, material, description }).then((res) => {
+      const result = res.data.data;
+      result ? alert('success') : alert('fail')
+    }).catch((error) => {
+      console.error('Error fetching material data:', error);
+    });
+  }
+}
+
+export const dailyrecordretrieve = (date) => {
+  return (dispatch) => {
+    axios./*正是對接時用post*/get('/api/member.json', { date }).then((res) => {
+      const result = res.data.data;
+      result ? alert('success') : alert('fail')
+    }).catch((error) => {
+      console.error('Error fetching material data:', error);
+    });
+  }
+}
+
+export const dailyrecordrevise = (date, equipment, material, description) => {
+  return (dispatch) => {
+    axios./*正是對接時用post*/get('/api/member.json', { date, equipment, material, description }).then((res) => {
+      const result = res.data.data;
+      console.log(date,equipment,material,description);
+      
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);

@@ -8,6 +8,7 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
+  Componentcheckbox,
   ESGinnerpageoption
 } from '../style';
 
@@ -19,7 +20,8 @@ class Source extends PureComponent {
       { id: 2, text: 'Revise' },
       { id: 3, text: 'Delete' },
       { id: 4, text: 'Retrieve' },
-    ]
+    ],
+    display: false
   };
 
   handleMouseEnter = (id) => {
@@ -120,8 +122,20 @@ class Source extends PureComponent {
                 <Componentinput ref={(input) => { this.category = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.sourceretrieve(this.ename, this.form, this.ingredient, this, this.category)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.sourceretrieve(this.ename, this.form, this.ingredient, this, this.category); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
+              {this.state.display ?
+                <div>
+                  <ComponentoptionWapper>
+                    <Componentcheckbox>list</Componentcheckbox>
+                  </ComponentoptionWapper>
+                  <ComponentoptionWapper>
+                    <Componentbutton onClick={() => { this.props.setsourcepage(2) }}>revise</Componentbutton>
+                    <Componentbutton onClick={() => { this.props.setsourcepage(3) }} className='reject'>Delete</Componentbutton>
+                  </ComponentoptionWapper>
+                </div>
+                :
+                ''}
             </ComponentWapper>
           );
         }

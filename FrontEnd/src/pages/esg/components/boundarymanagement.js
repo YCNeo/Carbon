@@ -8,6 +8,7 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
+  Componentcheckbox,
   ESGinnerpageoption
 } from '../style';
 
@@ -17,8 +18,10 @@ class BoundaryEdition extends PureComponent {
     pages: [
       { id: 1, text: 'Post' },
       { id: 2, text: 'Retrieve' },
-      { id: 3, text: 'Revise' }
-    ]
+      { id: 3, text: 'Revise' },
+      { id: 4, text: 'Delete' }
+    ],
+    display: false
   };
 
   handleMouseEnter = (id) => {
@@ -71,8 +74,20 @@ class BoundaryEdition extends PureComponent {
                 <Componentinput ref={(input) => { this.type = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.boundary_editionretrieve(this.bid, this.name, this.type)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.boundary_editionretrieve(this.bid, this.name, this.type); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
+              {this.state.display ?
+                <div>
+                  <ComponentoptionWapper>
+                    <Componentcheckbox>list</Componentcheckbox>
+                  </ComponentoptionWapper>
+                  <ComponentoptionWapper>
+                    <Componentbutton onClick={() => { this.props.setboundary_editionpage(3) }}>revise</Componentbutton>
+                    <Componentbutton onClick={() => { this.props.setboundary_editionpage(4) }} className='reject'>Delete</Componentbutton>
+                  </ComponentoptionWapper>
+                </div>
+                :
+                ''}
             </ComponentWapper>
           );
         }
@@ -85,7 +100,7 @@ class BoundaryEdition extends PureComponent {
                 <Componentinput ref={(input) => { this.bid = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-              <Componentindex>Address</Componentindex>
+                <Componentindex>Address</Componentindex>
                 <Componentinput ref={(input) => { this.address = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
@@ -93,6 +108,20 @@ class BoundaryEdition extends PureComponent {
               </ComponentoptionWapper>
             </ComponentWapper>
           );
+        }
+      case 4:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentindex>BID</Componentindex>
+                <Componentinput ref={(input) => { this.bid = input }} />
+              </ComponentoptionWapper >
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.boundary_editiondelete(this.bid)}>Delete</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          )
         }
       default:
         return;
@@ -141,6 +170,9 @@ const mapDisptchToProps = (dispatch) => {
     },
     boundary_editionrevise(bid, address) {
       dispatch(actionCreators.boundary_editionrevise(bid.value, address.value));
+    },
+    boundary_editiondelete(bid) {
+      dispatch(actionCreators.boundary_editiondelete(bid.value));
     }
   }
 }

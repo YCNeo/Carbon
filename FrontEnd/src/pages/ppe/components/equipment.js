@@ -12,7 +12,6 @@ import {
   ComponentoptionWapper,
   PPEinnerpageoption,
   DatePickerWrapper,
-
   Componentcheckbox
 } from '../style';
 
@@ -21,14 +20,17 @@ class Equipment extends PureComponent {
     hoveredBox: null,
     pages: [
       { id: 1, text: 'Post' },
-      { id: 2, text: 'Retrieve' },
-      { id: 3, text: 'Post Repair' },
-      { id: 4, text: 'Repair Log' },
-      { id: 5, text: 'Dispoal List' },
+      { id: 2, text: 'Delete' },
+      { id: 3, text: 'Retrieve' },
+      { id: 4, text: 'Post Repair' },
+      { id: 5, text: 'Repair Log' },
+      { id: 6, text: 'Dispoal List' },
     ],
     startDate: new Date(),
+    disposalDate: new Date(),
     endDate: new Date(),
     customTimeInput: "",
+    display: false
   };
 
   handleMouseEnter = (id) => {
@@ -51,7 +53,7 @@ class Equipment extends PureComponent {
     switch (page) {
       case 1:
         {
-          const { startDate, endDate, customTimeInput } = this.state;
+          const { startDate, disposalDate, endDate, customTimeInput } = this.state;
           const CustomTimeInput = ({ value, onChange }) => (
             <input
               value={value}
@@ -100,8 +102,8 @@ class Equipment extends PureComponent {
                 <Componentindex>Disposal Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
-                    selected={endDate}
-                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    selected={disposalDate}
+                    onChange={(date) => this.handleDateChange('disposalDate', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
@@ -116,12 +118,41 @@ class Equipment extends PureComponent {
                 <Componentinput ref={(input) => { this.age = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.supplier_name, this.amount, this.unit, this.factor, startDate, endDate, this.age)}>Post</Componentbutton>
+                <Componentindex>Expire Date</Componentindex>
+                <DatePickerWrapper>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={30}
+                    dateFormat="yyyy/MM/dd HH:mm"
+                    timeCaption="time"
+                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                  />
+                </DatePickerWrapper>
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.supplier_name, this.amount, this.unit, this.factor, startDate, disposalDate, this.age, endDate)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
       case 2:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper>
+                <Componentindex>EquipID</Componentindex>
+                <Componentinput ref={(input) => { this.equip_id = input }} />
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.equipmentdelete(this.equip_id)}>Delete</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          );
+        }
+      case 3:
         {
           return (
             <ComponentWapper>
@@ -138,16 +169,23 @@ class Equipment extends PureComponent {
                 <Componentinput ref={(input) => { this.equip_id = input }} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentretrieve(this.name, this.supplier_name, this.equip_id)}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.equipmentretrieve(this.name, this.supplier_name, this.equip_id); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
-              <ComponentoptionWapper><Componentcheckbox>eqipment detail</Componentcheckbox></ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentbutton className='reject' onClick={() => this.props.equipmentdelete()}>Delete</Componentbutton>
-              </ComponentoptionWapper>
+              {this.state.display ?
+                <div>
+                  <ComponentoptionWapper>
+                    <Componentcheckbox>list</Componentcheckbox>
+                  </ComponentoptionWapper>
+                  <ComponentoptionWapper>
+                    <Componentbutton onClick={() => { this.props.setpage(3) }} className='reject'>Delete</Componentbutton>
+                  </ComponentoptionWapper>
+                </div>
+                :
+                ''}
             </ComponentWapper>
           );
         }
-      case 3:
+      case 4:
         {
           return (
             <ComponentWapper>
@@ -165,7 +203,7 @@ class Equipment extends PureComponent {
             </ComponentWapper>
           );
         }
-      case 4:
+      case 5:
         {
           return (
             <ComponentWapper>
@@ -175,7 +213,7 @@ class Equipment extends PureComponent {
             </ComponentWapper>
           );
         }
-      case 5:
+      case 6:
         {
           return (
             <ComponentWapper>
@@ -224,17 +262,17 @@ const mapDisptchToProps = (dispatch) => {
     setequipmentpage(id) {
       dispatch(actionCreators.setequipmentpage(id));
     },
-    equipmentpost(name, supplier_name, amount, unit, factor, startDate, endDate, age) {
-      dispatch(actionCreators.equipmentpost(name.value, supplier_name.value, amount.value, unit.value, factor.value, startDate, endDate, age.value));
+    equipmentpost(name, supplier_name, amount, unit, factor, startDate, disposalDate, age, endDate) {
+      dispatch(actionCreators.equipmentpost(name.value, supplier_name.value, amount.value, unit.value, factor.value, startDate, disposalDate, age.value, endDate));
     },
     equipmentretrieve(name, supplier_name, equip_id) {
       dispatch(actionCreators.equipmentretrieve(name.value, supplier_name.value, equip_id.value));
     },
-    equipmentdelete() {
-      console.log('delete');
+    equipmentdelete(equip_id) {
+      dispatch(actionCreators.equipmentdelete( equip_id.value));
     },
     equipmentpostrepair(repair_date, equip_id) {
-      dispatch(actionCreators.equipmentretrieve(repair_date.value, equip_id.value));
+      dispatch(actionCreators.equipmentpostrepair(repair_date.value, equip_id.value));
     }
   }
 }

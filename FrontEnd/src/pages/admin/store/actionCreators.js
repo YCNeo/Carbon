@@ -4,6 +4,9 @@ import DiffMatchPatch from 'diff-match-patch';
 
 const dmp = new DiffMatchPatch();
 
+const API_URL = 'http://localhost:8000/';
+//axios.post(`${API_URL}/login`,{...     //測試替換部分
+
 export const setadminpage = (page) => ({
   type: constants.SET_ADMIN_PAGE,
   page
@@ -16,33 +19,33 @@ export const setpage = (page) => ({
 
 /////////////////admin///////////////////
 
-export const CUsendinfo = (user_name, accessChecked) => {
+export const CUsendinfo = (name, access) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/CUinfo.json', { user_name, accessChecked }).then((res) => {
+    axios./*正是對接時用post*/get('/api/CUinfo.json', { name, access }).then((res) => {
       const result = res.data.data;
-      result? alert('success'):alert('fail')
+      result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('CUsendinfo fail')
     });
   }
 }
 
-export const AAsendinfo = (user_id, accessChecked) => {
+export const AAsendinfo = (name, access) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/AAinfo.json', { user_id, accessChecked }).then((res) => {
+    axios./*正是對接時用post*/get('/api/AAinfo.json', { name, access }).then((res) => {
       const result = res.data.data;
-      result? alert('success'):alert('fail')
+      result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('AAsendinfo fail')
     });
   }
 }
 
-export const CPsendinfo = (project_id, pm_id, materialChecked, equipmentChecked) => {
+export const CPsendinfo = (projectName, PMID, materialChecked, equipmentChecked) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/CPinfo.json', { project_id, pm_id, materialChecked, equipmentChecked }).then((res) => {
+    axios./*正是對接時用post*/get('/api/CPinfo.json', { projectName, PMID, materialChecked, equipmentChecked }).then((res) => {
       const result = res.data.data;
-      result? alert('success'):alert('fail')
+      result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('CPsendinfo fail')
     });
@@ -54,7 +57,7 @@ export const Asendinfo = (type, project_id, pm_id, material, equipment) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/Ainfo.json', { type, project_id, pm_id, material, equipment }).then((res) => {
       const result = res.data.data;
-      result? alert('success'):alert('fail')
+      result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('Asendinfo fail')
     });
@@ -63,44 +66,44 @@ export const Asendinfo = (type, project_id, pm_id, material, equipment) => {
 
 ///////////////////////////employee//////////////////////////////////////
 
-export const employeepost = (name, gender, phone, mail, region) => {
+export const employeepost = (name, gender, phone, mail, nation) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/Ainfo.json', { name, gender, phone, mail, region }).then((res) => {
+    axios./*正是對接時用post*/get('/api/Ainfo.json', { name, gender, phone, mail, nation }).then((res) => {
       const result = res.data.data;
-      result? alert('success'):alert('fail')
+      result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('EPsendinfo fail')
     });
   }
 }
 
-export const employeerevise = (eid, name, gender, phone, mail, region) => {
+export const employeerevise = (EID, name, gender, phone, mail, nation) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/AAinfo.json', { eid, name, gender, phone, mail, region }).then((res) => {
+    axios./*正是對接時用post*/get('/api/AAinfo.json', { EID, name, gender, phone, mail, nation }).then((res) => {
       const result = res.data.data;
-      result? alert('success'):alert('fail')
+      result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('ERsendinfo fail')
     });
   }
 }
 
-export const employeedelete = (eid, name) => {
+export const employeedelete = (EID, name) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/AAinfo.json', { eid, name }).then((res) => {
+    axios./*正是對接時用post*/get('/api/AAinfo.json', { EID, name }).then((res) => {
       const result = res.data.data;
-      result? alert('success'):alert('fail')
+      result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('EDsendinfo fail')
     });
   }
 }
 
-export const employeeretrieve = (eid, name, pid, region) => {
+export const employeeretrieve = (EID, name, PID, region) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/Ainfo.json', { eid, name, pid, region }).then((res) => {
+    axios./*正是對接時用post*/get('/api/Ainfo.json', { EID, name, PID, region }).then((res) => {
       const result = res.data.data;
-      result? alert('success'):alert('fail')
+      result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('ESsendinfo fail')
     });
