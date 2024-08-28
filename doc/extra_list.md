@@ -13,7 +13,7 @@
 # other
 | API purpoes    | Input(type) | Ouput(type)                         | Tri | Remark |
 | -------------- | ----------- | ----------------------------------- | --- | -------|
-| user info      |             | `project`, `user name`, `authority` | B   |x       |
+| user info      |             | `EID`, `Ename`, `authority`, `PM_rank` | B   |x       |
 | project list   |             | project(list)                       | B   |x       |
 | material list  |             | material(list)                      | B   |x       |
 | equipment list |             | equipment(list)                     | B   |x       |
