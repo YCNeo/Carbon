@@ -48,7 +48,7 @@ font-size: 20px;
 
 export const ComponentoptionWapper = styled.div`
 margin: 20px 0 0 25px;
-overflow: hidden;
+
 display: flex;
 align-items: center;
 &.contentwarpper {
@@ -254,3 +254,35 @@ font-family: Arial, sans-serif;
   width: 570px;
 }
 `
+
+export const customStyles = {
+  container: (provided) => ({
+    ...provided,
+    width: '200px',
+    marginRight: '30px',
+  }),
+  control: (provided) => ({
+    ...provided,
+    border: '1px solid #ccc',
+    boxShadow: 'none',
+    '&:hover': {
+      border: '1px solid #aaa',
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    zIndex: 1000, //on top
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? '#ddd' : '#fff',
+    color: state.isSelected ? '#333' : '#000',
+    '&:hover': {
+      backgroundColor: '#f0f0f0',
+    },
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: '#333',
+  }),
+};

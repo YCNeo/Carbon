@@ -20,7 +20,7 @@ import {
   Maintop,
   Mainpageoption
 } from './style';
-import './index.css'; 
+import './index.css';
 
 class App extends Component {
   state = {
@@ -32,7 +32,9 @@ class App extends Component {
       { id: 3, text: 'PPE', link: 'ppe' },
       { id: 4, text: 'Statement', link: 'statement' },
       { id: 5, text: 'ESG', link: 'esg' }
-    ]
+    ],
+    eid: '',
+    ename: ''
   };
   handleMouseEnter = (index) => {
     this.setState({ hoveredBox: index });
@@ -44,6 +46,11 @@ class App extends Component {
 
   setmainpage = (page) => {
     this.setState({ mainpage: page });
+  }
+
+  getaccess = () => {
+    this.setState({ eid: localStorage.getItem('EID') });
+    this.setState({ ename: localStorage.getItem('Ename') });
   }
 
   render() {
@@ -69,7 +76,7 @@ class App extends Component {
               ))}
             </MainIndexlist>
             <MainWrapper className='context'>
-              <Maintop>123</Maintop>
+              <Maintop>id:&nbsp;{this.state.eid}&nbsp;&nbsp;name:&nbsp;{this.state.ename}</Maintop>
               <Routes>
                 <Route path='/' element={<h1>Home page</h1>}></Route>
                 <Route path='/home' element={<Home />}></Route>
@@ -86,6 +93,10 @@ class App extends Component {
         </BrowserRouter>
       </Provider >
     )
+  }
+
+  componentDidMount() {
+    this.getaccess();
   }
 }
 

@@ -1,5 +1,9 @@
 {
-  "success": true,  
+  "success": true,
   "JWT": "123456789",
-  "first_login": true
+  "first_login": true,
+  "EID": "111111111",
+  "Ename": "hahapiyen",
+  "authority": "admin",
+  "PM_rank": "member"
 }
