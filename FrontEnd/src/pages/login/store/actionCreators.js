@@ -45,10 +45,14 @@ export const login = (user, ori_password) => {
       const token = res.data.JWT;
       localStorage.setItem('jwtToken', token);// put
       console.log("get:" + token);
-      localStorage.setItem('EID', res.data.EID);
-      localStorage.setItem('Ename', res.data.Ename);
-      localStorage.setItem('authority', res.data.authority);
-      localStorage.setItem('PM_rank', res.data.PM_rank);
+      //localStorage.setItem('EID', res.data.EID);
+      //localStorage.setItem('Ename', res.data.Ename);
+      //localStorage.setItem('authority', res.data.authority);
+      //localStorage.setItem('PM_rank', res.data.PM_rank);
+      localStorage.setItem('EID', '1111111111');
+      localStorage.setItem('Ename', 'apple');
+      localStorage.setItem('authority', 'admin');
+      localStorage.setItem('PM_rank', 'member');
       //const token1 = localStorage.getItem('jwtToken');// take
       //console.log("take:"+token1);
     }).catch(() => {
