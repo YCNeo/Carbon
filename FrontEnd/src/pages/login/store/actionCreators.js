@@ -52,7 +52,7 @@ export const login = (user, ori_password) => {
       localStorage.setItem('EID', '1111111111');
       localStorage.setItem('Ename', 'apple');
       localStorage.setItem('authority', 'admin');
-      localStorage.setItem('PM_rank', 'member');
+      localStorage.setItem('PM_rank', 'admin');
       //const token1 = localStorage.getItem('jwtToken');// take
       //console.log("take:"+token1);
     }).catch(() => {
