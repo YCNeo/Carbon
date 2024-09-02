@@ -3,9 +3,10 @@ import styled from 'styled-components';
 export const ProjectmanagementWrapper = styled.div`
 position: relative;
 width: 100%;
-min-height: 100%;
+flex-grow: 1;
 margin: 0 auto;
 overflow: hidden;
+display: flex;
 `;
 
 export const ProjectmanagementIndexlist = styled.div`
@@ -15,10 +16,9 @@ float: left;
 `;
 
 export const ProjectmanagementPage = styled.div`
-margin: 0px auto auto 200px;
 padding: 30px 0 0 30px;
 border-left: 1px solid gray;
-min-height: 80vh;
+flex-grow: 1;
 `;
 
 export const Projectmanagementpageoption = styled.div`
@@ -48,7 +48,7 @@ font-size: 20px;
 
 export const ComponentoptionWapper = styled.div`
 margin: 20px 0 0 25px;
-overflow: hidden;
+
 display: flex;
 align-items: center;
 &.contentwarpper {
@@ -111,7 +111,7 @@ float: left;
 
 export const Componentbutton = styled.div`
 text-align: center;
-margin: 20px 30px 0 0;
+margin: 20px 30px 50px 0;
 line-height: 30px;
 height: 30px;
 width: 120px;
@@ -254,3 +254,35 @@ font-family: Arial, sans-serif;
   width: 570px;
 }
 `
+
+export const customStyles = {
+  container: (provided) => ({
+    ...provided,
+    width: '200px',
+    marginRight: '30px',
+  }),
+  control: (provided) => ({
+    ...provided,
+    border: '1px solid #ccc',
+    boxShadow: 'none',
+    '&:hover': {
+      border: '1px solid #aaa',
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    zIndex: 1000, //on top
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? '#ddd' : '#fff',
+    color: state.isSelected ? '#333' : '#000',
+    '&:hover': {
+      backgroundColor: '#f0f0f0',
+    },
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: '#333',
+  }),
+};

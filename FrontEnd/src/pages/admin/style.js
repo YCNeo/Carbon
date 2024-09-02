@@ -3,9 +3,10 @@ import styled from 'styled-components';
 export const AdminWrapper = styled.div`
 position: relative;
 width: 100%;
-min-height: 100%;
+flex-grow: 1;
 margin: 0 auto;
 overflow: hidden;
+display: flex;
 `;
 
 export const AdminIndexlist = styled.div`
@@ -15,10 +16,9 @@ float: left;
 `;
 
 export const AdminPage = styled.div`
-margin: 0px auto auto 200px;
 padding: 30px 0 0 30px;
 border-left: 1px solid gray;
-min-height: 80vh;
+flex-grow: 1;
 `;
 
 export const Adminpageoption = styled.div`

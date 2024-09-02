@@ -14,34 +14,20 @@ import {
 
 class Createuser extends PureComponent {
   state = {
-    selectedAccess: null,
-    allAccessSelected: false,
+    selectedAccess: '',
+    accessOptions: [
+      { value: "1", label: "admin" },
+      { value: "2", label: "member" },
+      { value: "3", label: "read only" }
+    ]
   };
 
   handleSelectChange = (selectedOptions) => {
     this.setState({ selectedAccess: selectedOptions });
   };
 
-  handleSelectAll = () => {
-    const { accesslist } = this.props;
-    const accessOptions = accesslist.map(item => ({
-      value: item.id,
-      label: item.name
-    }));
-    this.setState({
-      selectedAccess: accessOptions,
-      allAccessSelected: true
-    });
-  };
-
   render() {
-    const { accesslist } = this.props;
     const { selectedAccess } = this.state;
-
-    const accessOptions = accesslist.map(item => ({
-      value: item.id,
-      label: item.name
-    }));
 
     return (
       <ComponentWapper>
@@ -54,16 +40,12 @@ class Createuser extends PureComponent {
           <Componentindex>Access</Componentindex>
           <Select
             placeholder="Select access"
-            closeMenuOnSelect={false}
-            options={accessOptions}
-            isMulti
+            options={this.state.accessOptions}
             value={selectedAccess}
             onChange={this.handleSelectChange}
             styles={customStyles}
+            isDisabled={localStorage.getItem('authority') === 'read_only'}
           />
-          <Componentbutton className='selectall' onClick={this.handleSelectAll}>
-            Select All
-          </Componentbutton>
         </ComponentoptionWapper>
         <ComponentoptionWapper>
           <Componentbutton onClick={() => this.props.CUsendinfo(this.user_name, selectedAccess)}>Create</Componentbutton>
@@ -71,29 +53,15 @@ class Createuser extends PureComponent {
       </ComponentWapper>
     )
   }
-
-  componentDidMount() {
-    this.props.getaccess();
-  }
 }
 
 const mapStateToProps = (state) => ({
-  accesslist: state.admin.accesslist
 });
 
 const mapDisptchToProps = (dispatch) => {
   return {
     CUsendinfo(user_name, selectedAccess) {
-      const accessChecked = selectedAccess
-        ? selectedAccess.map(option => {
-          const { value: id, label: name } = option;
-          return { id, name };
-        })
-        : [];
-      dispatch(actionCreators.CUsendinfo(user_name.value, accessChecked))
-    },
-    getaccess() {
-      dispatch(actionCreators.getaccess())
+      dispatch(actionCreators.CUsendinfo(user_name.value, selectedAccess.label))
     }
   }
 }

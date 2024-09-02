@@ -73,7 +73,6 @@ class Header extends Component {
     return (
       <div>
         {cheatpage ?
-          <div>
             <HeaderWrapper>
               <Navitem>page list</Navitem>
               <Link to='/home' onClick={() => (this.changecheatpage(cheatpage))}><Logo /></Link>
@@ -93,7 +92,6 @@ class Header extends Component {
               <Link to='/esg'><Jumpbottom>ESG</Jumpbottom></Link>
               <button onClick={() => (this.getjwp())}>get JWT</button>
             </HeaderWrapper>
-          </div>
           :
           <HeaderWrapper>
             <div>

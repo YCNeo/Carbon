@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store';
+import Select from 'react-select';
 import {
   ComponentWapper,
   Componentindex,
@@ -10,8 +11,10 @@ import {
   ComponentoptionWapper,
   Projectmanagementinnerpageoption,
   FlowWapper,
-  Description
+  Description,
+  customStyles
 } from '../style';
+import { getequipment, getmaterial } from '../../admin/store/actionCreators';
 
 class Flow extends PureComponent {
   state = {
@@ -48,83 +51,113 @@ class Flow extends PureComponent {
   whichpage(page) {
     switch (page) {
       case 1:
-        return (
-          <ComponentWapper>
-            {this.state.steps.map((step, index) => (
-              <ComponentoptionWapper className='flow' key={index}>
-                <Componentindex>Step {index + 1}</Componentindex>
-                <FlowWapper className='step'>
-                  <FlowWapper>
-                    <Componentindex>Equipment</Componentindex>
-                    <Componentinput
-                      className='flow'
-                      value={step.equipment}
-                      onChange={(e) => this.handleChange(index, 'equipment', e.target.value)}
-                    />
-                    <Componentindex>Material</Componentindex>
-                    <Componentinput
-                      className='flow'
-                      value={step.material}
-                      onChange={(e) => this.handleChange(index, 'material', e.target.value)}
-                    />
+        {
+          const materialOptions = this.props.materiallist.map(item => ({
+            value: item.id,
+            label: item.name
+          }));
+
+          const equipmentOptions = this.props.equipmentlist.map(item => ({
+            value: item.id,
+            label: item.name
+          }));
+          return (
+            <ComponentWapper>
+              {this.state.steps.map((step, index) => (
+                <ComponentoptionWapper className='flow' key={index}>
+                  <Componentindex>Step {index + 1}</Componentindex>
+                  <FlowWapper className='step'>
+                    <FlowWapper>
+                      <Componentindex>Equipment</Componentindex>
+                      <Select
+                        placeholder="Select equipment"
+                        options={equipmentOptions}
+                        value={step.equipment}
+                        onChange={(selectedOption) => this.handleChange(index, 'equipment', selectedOption)}
+                        styles={customStyles}
+                      />
+                      <Componentindex>Material</Componentindex>
+                      <Select
+                        placeholder="Select access"
+                        options={materialOptions}
+                        value={step.material}
+                        onChange={(selectedOption) => this.handleChange(index, 'material', selectedOption)}
+                        styles={customStyles}
+                      />
+                    </FlowWapper>
+                    <FlowWapper>
+                      <Componentindex>Description</Componentindex>
+                      <Description
+                        value={step.description}
+                        onChange={(e) => this.handleChange(index, 'description', e.target.value)}
+                      />
+                    </FlowWapper>
                   </FlowWapper>
-                  <FlowWapper>
-                    <Componentindex>Description</Componentindex>
-                    <Description
-                      value={step.description}
-                      onChange={(e) => this.handleChange(index, 'description', e.target.value)}
-                    />
-                  </FlowWapper>
-                </FlowWapper>
+                </ComponentoptionWapper>
+              ))}
+              <ComponentoptionWapper>
+                <Componentbutton className='addstep' onClick={this.addStep}>Add Step</Componentbutton>
               </ComponentoptionWapper>
-            ))}
-            <ComponentoptionWapper>
-              <Componentbutton className='addstep' onClick={this.addStep}>Add Step</Componentbutton>
-            </ComponentoptionWapper>
-            <ComponentoptionWapper>
-              <Componentbutton onClick={() => this.props.flowdesign(this.state.steps)}>Post</Componentbutton>
-            </ComponentoptionWapper>
-          </ComponentWapper>
-        );
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.flowdesign(this.state.steps)}>Post</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          );
+        }
       case 2:
-        return (
-          <ComponentWapper>
-            {this.state.steps.map((step, index) => (
-              <ComponentoptionWapper className='flow' key={index}>
-                <Componentindex>Step {index + 1}</Componentindex>
-                <FlowWapper className='step'>
-                  <FlowWapper>
-                    <Componentindex>Equipment</Componentindex>
-                    <Componentinput
-                      className='flow'
-                      value={step.equipment}
-                      onChange={(e) => this.handleChange(index, 'equipment', e.target.value)}
-                    />
-                    <Componentindex>Material</Componentindex>
-                    <Componentinput
-                      className='flow'
-                      value={step.material}
-                      onChange={(e) => this.handleChange(index, 'material', e.target.value)}
-                    />
+        {
+          const materialOptions = this.props.materiallist.map(item => ({
+            value: item.id,
+            label: item.name
+          }));
+
+          const equipmentOptions = this.props.equipmentlist.map(item => ({
+            value: item.id,
+            label: item.name
+          }));
+          return (
+            <ComponentWapper>
+              {this.state.steps.map((step, index) => (
+                <ComponentoptionWapper className='flow' key={index}>
+                  <Componentindex>Step {index + 1}</Componentindex>
+                  <FlowWapper className='step'>
+                    <FlowWapper>
+                      <Componentindex>Equipment</Componentindex>
+                      <Select
+                        placeholder="Select equipment"
+                        options={equipmentOptions}
+                        value={step.equipment}
+                        onChange={(selectedOption) => this.handleChange(index, 'equipment', selectedOption)}
+                        styles={customStyles}
+                      />
+                      <Componentindex>Material</Componentindex>
+                      <Select
+                        placeholder="Select access"
+                        options={materialOptions}
+                        value={step.material}
+                        onChange={(selectedOption) => this.handleChange(index, 'material', selectedOption)}
+                        styles={customStyles}
+                      />
+                    </FlowWapper>
+                    <FlowWapper>
+                      <Componentindex>Description</Componentindex>
+                      <Description
+                        value={step.description}
+                        onChange={(e) => this.handleChange(index, 'description', e.target.value)}
+                      />
+                    </FlowWapper>
                   </FlowWapper>
-                  <FlowWapper>
-                    <Componentindex>Description</Componentindex>
-                    <Description
-                      value={step.description}
-                      onChange={(e) => this.handleChange(index, 'description', e.target.value)}
-                    />
-                  </FlowWapper>
-                </FlowWapper>
+                </ComponentoptionWapper>
+              ))}
+              <ComponentoptionWapper>
+                <Componentbutton className='addstep' onClick={this.addStep}>Add Step</Componentbutton>
               </ComponentoptionWapper>
-            ))}
-            <ComponentoptionWapper>
-              <Componentbutton className='addstep' onClick={this.addStep}>Add Step</Componentbutton>
-            </ComponentoptionWapper>
-            <ComponentoptionWapper>
-              <Componentbutton onClick={() => this.props.flowrevise(this.state.steps)}>Post</Componentbutton>
-            </ComponentoptionWapper>
-          </ComponentWapper>
-        );
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.flowrevise(this.state.steps)}>Post</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          );
+        }
       default:
         return;
     }
@@ -153,10 +186,17 @@ class Flow extends PureComponent {
       </ComponentWapper>
     )
   }
+
+  componentDidMount() {
+    getmaterial();
+    getequipment();
+  }
 }
 
 const mapStateToProps = (state) => ({
-  flowpage: state.projectmanagement.flowpage
+  flowpage: state.projectmanagement.flowpage,
+  materiallist: state.admin.materiallist,
+  equipmentlist: state.admin.equipmentlist
 })
 
 const mapDisptchToProps = (dispatch) => {

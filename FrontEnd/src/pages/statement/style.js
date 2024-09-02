@@ -3,8 +3,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export const StatemetnWrapper = styled.div`
 position: relative;
-min-height: 80vh;
-margin: 0 auto;
+flex-grow: 1;
+margin: 0;
 padding: 30px 0 0 30px;
 `;
 

@@ -44,7 +44,10 @@ class Member extends PureComponent {
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Position</Componentindex>
-                <Componentinput ref={(input) => { this.position = input }} />
+                <Componentinput
+                  ref={(input) => { this.position = input }}
+                  readOnly={localStorage.getItem('PM_rank') === 'member'}
+                />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentbutton onClick={() => this.props.memberpost(this.eid, this.position)}>Post</Componentbutton>
@@ -62,7 +65,10 @@ class Member extends PureComponent {
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Position</Componentindex>
-                <Componentinput ref={(input) => { this.position = input }} />
+                <Componentinput
+                  ref={(input) => { this.position = input }}
+                  readOnly={localStorage.getItem('PM_rank') === 'member'}
+                />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentbutton onClick={() => this.props.memberrevise(this.eid, this.position)}>Revise</Componentbutton>
