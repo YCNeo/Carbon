@@ -48,7 +48,7 @@ class Createuser extends PureComponent {
           />
         </ComponentoptionWapper>
         <ComponentoptionWapper>
-          <Componentbutton onClick={() => this.props.CUsendinfo(this.user_name, selectedAccess)}>Create</Componentbutton>
+          <Componentbutton onClick={() => this.props.CUsendinfo(this.user_name, this.state.selectedAccess)}>Create</Componentbutton>
         </ComponentoptionWapper>
       </ComponentWapper>
     )

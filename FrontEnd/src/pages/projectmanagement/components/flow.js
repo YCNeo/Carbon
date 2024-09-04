@@ -5,7 +5,6 @@ import Select from 'react-select';
 import {
   ComponentWapper,
   Componentindex,
-  Componentinput,
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,

@@ -50,28 +50,28 @@ class Admin extends Component {
   }
 
   render() {
-    const { loginstate, setadminpage, adminpage } = this.props;
+    const { setadminpage, adminpage } = this.props;
     const { hoveredBox, pages } = this.state;
 
-    if (loginstate) {
+    if (localStorage.getItem('jwtToken') != null) {
       return (
         <AdminWrapper>
-            <AdminIndexlist>
-              {pages.map(({ id, text }) => (
-                <Adminpageoption
-                  key={id}
-                  onClick={() => setadminpage(id)}
-                  onMouseEnter={() => this.handleMouseEnter(id)}
-                  onMouseLeave={this.handleMouseLeave}
-                  className={adminpage === id || hoveredBox === id ? 'mousein' : ''}
-                >
-                  {text}
-                </Adminpageoption>
-              ))}
-            </AdminIndexlist>
-            <AdminPage>
-              {this.whichpage(adminpage)}
-            </AdminPage>
+          <AdminIndexlist>
+            {pages.map(({ id, text }) => (
+              <Adminpageoption
+                key={id}
+                onClick={() => setadminpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={adminpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Adminpageoption>
+            ))}
+          </AdminIndexlist>
+          <AdminPage>
+            {this.whichpage(adminpage)}
+          </AdminPage>
         </AdminWrapper>
       )
     } else {
@@ -81,7 +81,6 @@ class Admin extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  loginstate: state.login.login,
   adminpage: state.admin.adminpage,
 });
 

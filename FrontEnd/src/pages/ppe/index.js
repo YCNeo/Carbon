@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { actionCreators } from './store';
+import { Navigate } from "react-router-dom";
 
 import Material from './components/material';
 import Equipment from './components/equipment';
@@ -41,27 +42,30 @@ class PPE extends Component {
   render() {
     const { setppepage, ppepage } = this.props;
     const { hoveredBox, pages } = this.state;
-
-    return (
-      <PPEWrapper>
-        <PPEIndexlist>
-          {pages.map(({ id, text }) => (
-            <PPEpageoption
-              key={id}
-              onClick={() => setppepage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={ppepage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </PPEpageoption>
-          ))}
-        </PPEIndexlist>
-        <PPEPage>
-          {this.whichpage(ppepage)}
-        </PPEPage>
-      </PPEWrapper>
-    )
+    if (localStorage.getItem('jwtToken') != null) {
+      return (
+        <PPEWrapper>
+          <PPEIndexlist>
+            {pages.map(({ id, text }) => (
+              <PPEpageoption
+                key={id}
+                onClick={() => setppepage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={ppepage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </PPEpageoption>
+            ))}
+          </PPEIndexlist>
+          <PPEPage>
+            {this.whichpage(ppepage)}
+          </PPEPage>
+        </PPEWrapper>
+      )
+    } else {
+      return <Navigate to='/login' />
+    }
   }
 }
 
