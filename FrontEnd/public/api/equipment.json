@@ -2,39 +2,39 @@
   "success": true,
   "data": [
     {
-      "id": "1",
+      "id": "111111",
       "name": "equipment1"
     },
     {
-      "id": "2",
+      "id": "8222222",
       "name": "equipment2"
     },
     {
-      "id": "3",
+      "id": "6333333333",
       "name": "equipment3"
     },
     {
-      "id": "4",
+      "id": "2444444",
       "name": "equipment4"
     },
     {
-      "id": "5",
+      "id": "3555555",
       "name": "equipment5"
     },
     {
-      "id": "6",
+      "id": "46666666",
       "name": "equipment6"
     },
     {
-      "id": "7",
+      "id": "977777777",
       "name": "equipment7"
     },
     {
-      "id": "8",
+      "id": "58888",
       "name": "equipment8"
     },
     {
-      "id": "9",
+      "id": "799999",
       "name": "equipment9"
     }
   ]

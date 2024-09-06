@@ -72,6 +72,8 @@ class Flow extends PureComponent {
                         placeholder="Select equipment"
                         options={equipmentOptions}
                         value={step.equipment}
+                        isMulti
+                        closeMenuOnSelect={false}
                         onChange={(selectedOption) => this.handleChange(index, 'equipment', selectedOption)}
                         styles={customStyles}
                       />
@@ -80,6 +82,8 @@ class Flow extends PureComponent {
                         placeholder="Select access"
                         options={materialOptions}
                         value={step.material}
+                        isMulti
+                        closeMenuOnSelect={false}
                         onChange={(selectedOption) => this.handleChange(index, 'material', selectedOption)}
                         styles={customStyles}
                       />
@@ -126,6 +130,8 @@ class Flow extends PureComponent {
                         placeholder="Select equipment"
                         options={equipmentOptions}
                         value={step.equipment}
+                        isMulti
+                        closeMenuOnSelect={false}
                         onChange={(selectedOption) => this.handleChange(index, 'equipment', selectedOption)}
                         styles={customStyles}
                       />
@@ -134,6 +140,8 @@ class Flow extends PureComponent {
                         placeholder="Select access"
                         options={materialOptions}
                         value={step.material}
+                        isMulti
+                        closeMenuOnSelect={false}
                         onChange={(selectedOption) => this.handleChange(index, 'material', selectedOption)}
                         styles={customStyles}
                       />
@@ -187,8 +195,8 @@ class Flow extends PureComponent {
   }
 
   componentDidMount() {
-    getmaterial();
-    getequipment();
+    this.props.getmaterial();
+    this.props.getequipment();
   }
 }
 
@@ -208,6 +216,12 @@ const mapDisptchToProps = (dispatch) => {
     },
     flowrevise(steps) {
       dispatch(actionCreators.flowrevise(steps));
+    },
+    getmaterial() {
+      dispatch(getmaterial());
+    },
+    getequipment() {
+      dispatch(getequipment());
     }
   }
 }

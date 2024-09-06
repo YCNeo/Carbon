@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store';
 import DatePicker from 'react-datepicker';
+import Select from 'react-select';
 import 'react-datepicker/dist/react-datepicker.css';
 import {
   ComponentWapper,
@@ -14,8 +15,10 @@ import {
   Projectmanagementinnerpageoption,
   DatePickerWrapper,
   FlowWapper,
-  Description
+  Description,
+  customStyles
 } from '../style';
+import { getequipment, getmaterial } from '../../admin/store/actionCreators';
 
 class Dailyrecord extends PureComponent {
   state = {
@@ -90,6 +93,15 @@ class Dailyrecord extends PureComponent {
               className="custom-time-input"
             />
           );
+          const materialOptions = this.props.materiallist.map(item => ({
+            value: item.id,
+            label: item.name
+          }));
+
+          const equipmentOptions = this.props.equipmentlist.map(item => ({
+            value: item.id,
+            label: item.name
+          }));
 
           return (
             <ComponentWapper>
@@ -113,10 +125,12 @@ class Dailyrecord extends PureComponent {
                   {index === 0 ? <Componentindex>Equipment</Componentindex> : <Componentindex className='blank' />}
                   <FlowWapper className='dailyrecord'>
                     {index + 1}:&nbsp;&nbsp;
-                    <Componentinput
-                      className='flow'
+                    <Select
+                      placeholder="Select equipment"
+                      options={equipmentOptions}
                       value={step.name}
-                      onChange={(e) => this.handleChangeE(index, 'name', e.target.value)}
+                      onChange={(selectedOption) => this.handleChangeE(index, 'name', selectedOption)}
+                      styles={customStyles}
                     />
                     amount:&nbsp;&nbsp;
                     <Componentinput
@@ -141,10 +155,12 @@ class Dailyrecord extends PureComponent {
                   {index === 0 ? <Componentindex>Materail</Componentindex> : <Componentindex className='blank' />}
                   <FlowWapper className='dailyrecord'>
                     {index + 1}:&nbsp;&nbsp;
-                    <Componentinput
-                      className='flow'
+                    <Select
+                      placeholder="Select access"
+                      options={materialOptions}
                       value={step.name}
-                      onChange={(e) => this.handleChangeM(index, 'name', e.target.value)}
+                      onChange={(selectedOption) => this.handleChangeM(index, 'name', selectedOption)}
+                      styles={customStyles}
                     />
                     amount:&nbsp;&nbsp;
                     <Componentinput
@@ -349,10 +365,17 @@ class Dailyrecord extends PureComponent {
       </ComponentWapper>
     )
   }
+
+  componentDidMount() {
+    this.props.getmaterial();
+    this.props.getequipment();
+  }
 }
 
 const mapStateToProps = (state) => ({
-  dailyrecordpage: state.projectmanagement.dailyrecordpage
+  dailyrecordpage: state.projectmanagement.dailyrecordpage,
+  materiallist: state.admin.materiallist,
+  equipmentlist: state.admin.equipmentlist
 })
 
 const mapDisptchToProps = (dispatch) => {
@@ -361,13 +384,21 @@ const mapDisptchToProps = (dispatch) => {
       dispatch(actionCreators.setdailyrecordpage(id));
     },
     dailyrecordpost(date, equipment, material, description) {
-      dispatch(actionCreators.dailyrecordpost(date, equipment, material, description))
+      const Equipment = equipment.map(item => ({ ...item, name: item.name.value }));
+      const Material = material.map(item => ({ ...item, name: item.name.value }));
+      dispatch(actionCreators.dailyrecordpost(date, Equipment, Material, description))
     },
     dailyrecordrevise(date, equipment, material, description) {
       dispatch(actionCreators.dailyrecordrevise(date, equipment, material, description));
     },
     dailyrecordretrieve(date) {
       dispatch(actionCreators.dailyrecordretrieve(date));
+    },
+    getmaterial() {
+      dispatch(getmaterial());
+    },
+    getequipment() {
+      dispatch(getequipment());
     }
   }
 }
