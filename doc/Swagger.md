@@ -79,12 +79,13 @@
 #### Daily Record
 | API purpoes | Input(type)                                                                                                                                                | Ouput(type)          | Tri | Remark |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | --- | ------ |
-| Post        | `date(date)`, `equipment(string)`, `material(string)`, `EQMamount(int)`, `EQMRuntime(number)`,`MATamount(int)`, `MATUnit(number)` , `runtime(int)_unit:hr` | success(detil), fail | B   | x      |
+| Post        | `date(date)`, `equipment(string)`, `material(string)`, `EQMamount(int)`, `EQMRuntime(number)`,`MATamount(int)`, `MATUnit(number)` , `runtime(int)_unit:hr` | success(detil), fail | B   | +PN      |
 | Revise      | `date(date)`, `equipment(string)`, `material(string)`, `EQMamount(int)`, `EQMRuntime(number)`, `MATamount(int)`, `MATUnit(number)`, `runtime(int)_unit:hr` | success(detil), fail | B   | x      |
 | retrieve    | `date(date)`                                                                                                                                               | Record(List)         | B   | x      |
 
 
 # PPE
+|get PN|`PN_id`,`PN_name`,`PN_amount`,`PN_unit`|success(detail),fail|B|x|
 #### Equipment
 | API purpoes   | Input(type)                                                                                                                                                 | Ouput(type)           | Tri | Remark           |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | --- | ---------------- |
@@ -99,7 +100,7 @@
 #### Material
 | API purpoes   | Input(type)                                                                                                                                            | Ouput(type)                  | Tri | Remark           |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | --- | ---------------- |
-| Post          | `name(string)`, `supplier(string)`, `amount(int)`, `unit(number)`, `factor(float)`, `purchaseDate(date)`, `age(int)`, `ageUnit(year)`, `EXPDate(date)` | success(return detail), fail | B   | x                |
+| Post          | `name(string)`, `supplier(string)`, `amount(int)`, `unit(number)`, `factor(float)`, `purchaseDate(date)`, `age(int)`, `ageUnit(year)`, `EXPDate(date)`,`PN_id` | success(return detail), fail | B   | x                |
 | Delete        | `name(string)`, `MID(string)`                                                                                                                          | success, fail                | B   | x                |
 | retrieve      | `MID(string)`, `name(string)`, `supplier(string)`                                                                                                      | Marerial(List)               | B   | x                |
 | Disposal list | x                                                                                                                                                      | Disposal(List)               | B   | 根據報廢日期排序 |
