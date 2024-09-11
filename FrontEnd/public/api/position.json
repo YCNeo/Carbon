@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": "1",
+      "name": "pm(project manager)"
+    },
+    {
+      "id": "2",
+      "name": "sa(system analyst)"
+    },
+    {
+      "id": "3",
+      "name": "sd(system designer)"
+    },
+    {
+      "id": "4",
+      "name": "fe(frontend engineer)"
+    },
+    {
+      "id": "5",
+      "name": "be(backend engineer)"
+    },
+    {
+      "id": "6",
+      "name": "de(data engineer)"
+    }
+  ]
+}

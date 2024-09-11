@@ -1,1 +1,1 @@
-export const GET_PROJECT= 'admin/GET_PROJECT'
+export const GET_PROJECT= 'statement/GET_PROJECT'

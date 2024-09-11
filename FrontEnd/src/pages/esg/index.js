@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { actionCreators } from './store';
+import { Navigate } from "react-router-dom";
 
 import BoundaryEdition from './components/boundarymanagement';
 import Source from './components/source';
@@ -49,27 +50,30 @@ class ESG extends Component {
   render() {
     const { setesgpage, esgpage } = this.props;
     const { hoveredBox, pages } = this.state;
-
-    return (
-      <ESGWrapper>
-        <ESGIndexlist>
-          {pages.map(({ id, text }) => (
-            <ESGpageoption
-              key={id}
-              onClick={() => setesgpage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={esgpage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </ESGpageoption>
-          ))}
-        </ESGIndexlist>
-        <ESGPage>
-          {this.whichpage(esgpage)}
-        </ESGPage>
-      </ESGWrapper>
-    )
+    if (localStorage.getItem('jwtToken') != null) {
+      return (
+        <ESGWrapper>
+          <ESGIndexlist>
+            {pages.map(({ id, text }) => (
+              <ESGpageoption
+                key={id}
+                onClick={() => setesgpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={esgpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </ESGpageoption>
+            ))}
+          </ESGIndexlist>
+          <ESGPage>
+            {this.whichpage(esgpage)}
+          </ESGPage>
+        </ESGWrapper>
+      )
+    } else {
+      return <Navigate to='/login' />
+    }
   }
 }
 

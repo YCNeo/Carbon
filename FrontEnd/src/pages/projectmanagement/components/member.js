@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store';
+import Select from 'react-select';
 import {
   ComponentWapper,
   Componentindex,
@@ -21,7 +22,9 @@ class Member extends PureComponent {
       { id: 3, text: 'Delete' },
       { id: 4, text: 'Retieve' },
     ],
-    display: false
+    display: false,
+    selectedposition: '',
+    retrieveposition: ''
   };
 
   handleMouseEnter = (id) => {
@@ -32,10 +35,23 @@ class Member extends PureComponent {
     this.setState({ hoveredBox: null });
   };
 
+  handleSelectChange = (selectedOptions) => {
+    this.setState({ selectedposition: selectedOptions });
+  };
+
+  handleSelectChangeR = (selectedOptions) => {
+    this.setState({ retrieveposition: selectedOptions });
+  };
+
   whichpage(page) {
     switch (page) {
       case 1:
         {
+          const positionOptions = this.props.positionlist.map(item => ({
+            value: item.id,
+            label: item.name
+          }));
+
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
@@ -44,19 +60,27 @@ class Member extends PureComponent {
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Position</Componentindex>
-                <Componentinput
-                  ref={(input) => { this.position = input }}
+                <Select
+                  placeholder="Select position"
+                  options={positionOptions}
+                  value={this.state.selectedposition}
+                  onChange={this.handleSelectChange}
                   readOnly={localStorage.getItem('PM_rank') === 'member'}
                 />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.memberpost(this.eid, this.position)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.memberpost(this.eid, this.state.selectedposition)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
       case 2:
         {
+          const positionOptions = this.props.positionlist.map(item => ({
+            value: item.id,
+            label: item.name
+          }));
+
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
@@ -65,13 +89,16 @@ class Member extends PureComponent {
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Position</Componentindex>
-                <Componentinput
-                  ref={(input) => { this.position = input }}
+                <Select
+                  placeholder="Select position"
+                  options={positionOptions}
+                  value={this.state.selectedposition}
+                  onChange={this.handleSelectChange}
                   readOnly={localStorage.getItem('PM_rank') === 'member'}
                 />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.memberrevise(this.eid, this.position)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.memberrevise(this.eid, this.state.selectedposition)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -92,6 +119,11 @@ class Member extends PureComponent {
         }
       case 4:
         {
+          const positionOptions = this.props.positionlist.map(item => ({
+            value: item.id,
+            label: item.name
+          }));
+
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
@@ -104,10 +136,15 @@ class Member extends PureComponent {
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Position</Componentindex>
-                <Componentinput ref={(input) => { this.position = input }} />
+                <Select
+                  placeholder="Select position"
+                  options={positionOptions}
+                  value={this.state.retrieveposition}
+                  onChange={this.handleSelectChangeR}
+                />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => { this.props.memberretrieve(this.eid, this.name, this.position); this.setState({ display: true }); }}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.memberretrieve(this.eid, this.name, this.state.retrieveposition); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
                 <div>
@@ -152,10 +189,15 @@ class Member extends PureComponent {
       </ComponentWapper>
     )
   }
+
+  componentDidMount() {
+    this.props.getposition();
+  }
 }
 
 const mapStateToProps = (state) => ({
-  memberpage: state.projectmanagement.memberpage
+  memberpage: state.projectmanagement.memberpage,
+  positionlist: state.projectmanagement.positionlist
 })
 
 const mapDisptchToProps = (dispatch) => {
@@ -164,7 +206,7 @@ const mapDisptchToProps = (dispatch) => {
       dispatch(actionCreators.setmemberpage(id));
     },
     memberpost(eid, position) {
-      dispatch(actionCreators.memberpost(eid.value, position.value));
+      dispatch(actionCreators.memberpost(eid.value, position.label));
     },
     memberrevise(eid, position) {
       dispatch(actionCreators.memberrevise(eid.value, position.value));
@@ -174,6 +216,9 @@ const mapDisptchToProps = (dispatch) => {
     },
     memberretrieve(eid, name, position) {
       dispatch(actionCreators.memberretrieve(eid.value, name.value, position.value));
+    },
+    getposition() {
+      dispatch(actionCreators.getposition());
     }
   }
 }

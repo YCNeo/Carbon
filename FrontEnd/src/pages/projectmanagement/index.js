@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { actionCreators } from './store';
+import { Navigate } from "react-router-dom";
 
 import Member from './components/member';
 import Flow from './components/flow';
@@ -54,26 +55,30 @@ class Projectmanagement extends Component {
     const { setprojectmanagementpage, projectmanagementpage } = this.props;
     const { hoveredBox, pages } = this.state;
 
-    return (
-      <ProjectmanagementWrapper>
-        <ProjectmanagementIndexlist>
-          {pages.map(({ id, text }) => (
-            <Projectmanagementpageoption
-              key={id}
-              onClick={() => setprojectmanagementpage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={projectmanagementpage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </Projectmanagementpageoption>
-          ))}
-        </ProjectmanagementIndexlist>
-        <ProjectmanagementPage>
-          {this.whichpage(projectmanagementpage)}
-        </ProjectmanagementPage>
-      </ProjectmanagementWrapper>
-    )
+    if (localStorage.getItem('jwtToken') != null) {
+      return (
+        <ProjectmanagementWrapper>
+          <ProjectmanagementIndexlist>
+            {pages.map(({ id, text }) => (
+              <Projectmanagementpageoption
+                key={id}
+                onClick={() => setprojectmanagementpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={projectmanagementpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Projectmanagementpageoption>
+            ))}
+          </ProjectmanagementIndexlist>
+          <ProjectmanagementPage>
+            {this.whichpage(projectmanagementpage)}
+          </ProjectmanagementPage>
+        </ProjectmanagementWrapper>
+      )
+    } else {
+      return <Navigate to='/login' />
+    }
   }
 }
 

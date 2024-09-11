@@ -2,6 +2,7 @@ import { Component } from 'react'
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Link } from 'react-router-dom'
+import { Navigate } from "react-router-dom";
 
 import store from './store';
 import Header from './common/header';
@@ -58,10 +59,10 @@ class App extends Component {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          {/*<Header />*/}
+          {<Header />}
           <MainWrapper>
             <MainIndexlist>
-              <h2>Carbon Project</h2>
+              <h2 onClick={() => (<Navigate to='/' />)}>Carbon Project</h2>
               {pages.map(({ id, text, link }) => (
                 <Link to={`/${link}`} key={id} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Mainpageoption
@@ -78,7 +79,7 @@ class App extends Component {
             <MainWrapper className='context'>
               <Maintop>id:&nbsp;{this.state.eid}&nbsp;&nbsp;name:&nbsp;{this.state.ename}</Maintop>
               <Routes>
-                <Route path='/' element={<h1>Home page</h1>}></Route>
+                <Route path='/' element={((localStorage.getItem('jwtToken')) != null) ? <h1>Home page</h1> : <Navigate to='/login' />}></Route>
                 <Route path='/home' element={<Home />}></Route>
                 <Route path='/login' element={<Login />}></Route>
                 <Route path='/admin' element={<Admin />}></Route>
