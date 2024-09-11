@@ -20,6 +20,10 @@ const firstlogin = () => ({
 })
 export const logout = () => {
   localStorage.removeItem('jwtToken');
+  localStorage.removeItem('EID');
+  localStorage.removeItem('Ename');
+  localStorage.removeItem('authority');
+  localStorage.removeItem('PM_rank');
   return {
     type: constants.LOGOUT,
     value: false
@@ -45,14 +49,18 @@ export const login = (user, ori_password) => {
       const token = res.data.JWT;
       localStorage.setItem('jwtToken', token);// put
       console.log("get:" + token);
-      //localStorage.setItem('EID', res.data.EID);
-      //localStorage.setItem('Ename', res.data.Ename);
-      //localStorage.setItem('authority', res.data.authority);
-      //localStorage.setItem('PM_rank', res.data.PM_rank);
-      localStorage.setItem('EID', '1111111111');
-      localStorage.setItem('Ename', 'apple');
-      localStorage.setItem('authority', 'admin');
-      localStorage.setItem('PM_rank', 'admin');
+      axios./*正是對接時用post*/get(`${API_URL}/???`)((res) => { //記得改route
+        const result2 = res.data;
+        localStorage.setItem('EID', result2.EID);
+        localStorage.setItem('Ename', result2.Ename);
+        localStorage.setItem('authority', result2.authority);
+        localStorage.setItem('PM_rank', result2.PM_rank);
+      })
+
+      //localStorage.setItem('EID', '1111111111');
+      //localStorage.setItem('Ename', 'apple');
+      //localStorage.setItem('authority', 'admin');
+      //localStorage.setItem('PM_rank', 'admin');
       //const token1 = localStorage.getItem('jwtToken');// take
       //console.log("take:"+token1);
     }).catch(() => {
@@ -63,7 +71,7 @@ export const login = (user, ori_password) => {
 //預設修改成功，先傳驗證舊密碼的api，成功再傳新密碼的api
 export const revisepassword = (UID, old_password, new_password, comfirm_new_password) => {
   return (dispatch) => {
-    if (new_password === comfirm_new_password) { 
+    if (new_password === comfirm_new_password) {
       const oldPw = CryptoJS.SHA256(old_password).toString(CryptoJS.enc.Hex);
       //axios.post(`${API_URL}/login`, { UID, oldPw }).then((res) => {                   //back end ok
       axios./*正是對接時用post*/get('/api/login.json', { UID, oldPw }).then((res) => {    //backend not ok
