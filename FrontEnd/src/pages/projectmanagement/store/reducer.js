@@ -5,8 +5,9 @@ const defaultState = {
   memberpage: 1,
   flowpage: 1,
   materialpage: 1,
-  equipmentpage:1,
+  equipmentpage: 1,
   dailyrecordpage: 1,
+  positionlist: []
 };
 
 const reducer = (state = defaultState, action) => {
@@ -41,6 +42,11 @@ const reducer = (state = defaultState, action) => {
         ...state,
         dailyrecordpage: action.page,
       };
+    case constants.GET_POSITION:
+      return {
+        ...state,
+        positionlist: action.position
+      }
     default:
       return state;
   }

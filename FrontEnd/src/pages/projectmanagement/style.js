@@ -5,7 +5,6 @@ position: relative;
 width: 100%;
 flex-grow: 1;
 margin: 0 auto;
-overflow: hidden;
 display: flex;
 `;
 
@@ -36,7 +35,6 @@ cursor: pointer;
 `
 
 export const ComponentWapper = styled.div`
-overflow: hidden;
 height: auto;
 width: auto;
 `;

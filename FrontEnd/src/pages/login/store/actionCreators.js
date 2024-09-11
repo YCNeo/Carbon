@@ -20,6 +20,10 @@ const firstlogin = () => ({
 })
 export const logout = () => {
   localStorage.removeItem('jwtToken');
+  localStorage.removeItem('EID');
+  localStorage.removeItem('Ename');
+  localStorage.removeItem('authority');
+  localStorage.removeItem('PM_rank');
   return {
     type: constants.LOGOUT,
     value: false
@@ -63,7 +67,7 @@ export const login = (user, ori_password) => {
 //預設修改成功，先傳驗證舊密碼的api，成功再傳新密碼的api
 export const revisepassword = (UID, old_password, new_password, comfirm_new_password) => {
   return (dispatch) => {
-    if (new_password === comfirm_new_password) { 
+    if (new_password === comfirm_new_password) {
       const oldPw = CryptoJS.SHA256(old_password).toString(CryptoJS.enc.Hex);
       //axios.post(`${API_URL}/login`, { UID, oldPw }).then((res) => {                   //back end ok
       axios./*正是對接時用post*/get('/api/login.json', { UID, oldPw }).then((res) => {    //backend not ok

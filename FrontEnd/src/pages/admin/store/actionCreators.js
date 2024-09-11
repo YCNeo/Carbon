@@ -130,6 +130,8 @@ export const getmaterial = () => {
   return (dispatch) => {
     axios.get('/api/material.json').then((res) => {
       const result = res.data.data;
+      console.log('material');
+      
       dispatch({
         type: constants.GET_MATERIAL,
         materiallist: result

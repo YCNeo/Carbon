@@ -202,3 +202,18 @@ export const dailyrecordrevise = (date, equipment, material, description) => {
     });
   }
 }
+///////////////////////////list//////////////////////
+
+export const getposition = ()=>{
+  return(dispatch)=>{
+    axios./*正是對接時用post*/get('/api/position.json').then((res) => {
+      const result = res.data.data;
+      dispatch({
+        type: constants.GET_POSITION,
+        position: result
+      })
+    }).catch((error) => {
+      console.error('Error fetching material data:', error);
+    });
+  }
+}
