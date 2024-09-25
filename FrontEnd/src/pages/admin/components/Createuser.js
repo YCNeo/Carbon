@@ -10,7 +10,7 @@ import {
   Componenttitle,
   ComponentoptionWapper,
   customStyles
-} from '../style';
+} from '../../../components/style';
 
 class Createuser extends PureComponent {
   state = {

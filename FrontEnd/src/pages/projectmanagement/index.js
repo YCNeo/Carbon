@@ -10,11 +10,11 @@ import Equipment from './components/equipment';
 import Dailyrecord from './components/dailyrecord';
 
 import {
-  ProjectmanagementWrapper,
-  ProjectmanagementIndexlist,
-  ProjectmanagementPage,
-  Projectmanagementpageoption
-} from "./style";
+  PageWrapper,
+  PageIndexlist,
+  PagePage,
+  Pagepageoption
+} from "../../components/style";
 
 class Projectmanagement extends Component {
   state = {
@@ -57,10 +57,10 @@ class Projectmanagement extends Component {
 
     if (localStorage.getItem('jwtToken') != null) {
       return (
-        <ProjectmanagementWrapper>
-          <ProjectmanagementIndexlist>
+        <PageWrapper>
+          <PageIndexlist>
             {pages.map(({ id, text }) => (
-              <Projectmanagementpageoption
+              <Pagepageoption
                 key={id}
                 onClick={() => setprojectmanagementpage(id)}
                 onMouseEnter={() => this.handleMouseEnter(id)}
@@ -68,13 +68,13 @@ class Projectmanagement extends Component {
                 className={projectmanagementpage === id || hoveredBox === id ? 'mousein' : ''}
               >
                 {text}
-              </Projectmanagementpageoption>
+              </Pagepageoption>
             ))}
-          </ProjectmanagementIndexlist>
-          <ProjectmanagementPage>
+          </PageIndexlist>
+          <PagePage>
             {this.whichpage(projectmanagementpage)}
-          </ProjectmanagementPage>
-        </ProjectmanagementWrapper>
+          </PagePage>
+        </PageWrapper>
       )
     } else {
       return <Navigate to='/login' />

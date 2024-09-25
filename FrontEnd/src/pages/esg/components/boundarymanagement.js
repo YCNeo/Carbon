@@ -9,8 +9,8 @@ import {
   Componenttitle,
   ComponentoptionWapper,
   Componentcheckbox,
-  ESGinnerpageoption
-} from '../style';
+  Innerpageoption
+} from '../../../components/style';
 
 class BoundaryEdition extends PureComponent {
   state = {
@@ -136,7 +136,7 @@ class BoundaryEdition extends PureComponent {
         <Componenttitle>Boundary Edition</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <ESGinnerpageoption
+            <Innerpageoption
               key={id}
               onClick={() => setboundary_editionpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
@@ -144,7 +144,7 @@ class BoundaryEdition extends PureComponent {
               className={boundary_editionpage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
-            </ESGinnerpageoption>
+            </Innerpageoption>
           ))}
         </ComponentoptionWapper>
         {this.whichpage(boundary_editionpage)}

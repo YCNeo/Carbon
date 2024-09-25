@@ -7,11 +7,11 @@ import Material from './components/material';
 import Equipment from './components/equipment';
 
 import {
-  PPEWrapper,
-  PPEIndexlist,
-  PPEPage,
-  PPEpageoption
-} from "./style";
+  PageWrapper,
+  PageIndexlist,
+  PagePage,
+  Pagepageoption
+} from "../../components/style";
 
 class PPE extends Component {
   state = {
@@ -44,10 +44,10 @@ class PPE extends Component {
     const { hoveredBox, pages } = this.state;
     if (localStorage.getItem('jwtToken') != null) {
       return (
-        <PPEWrapper>
-          <PPEIndexlist>
+        <PageWrapper>
+          <PageIndexlist>
             {pages.map(({ id, text }) => (
-              <PPEpageoption
+              <Pagepageoption
                 key={id}
                 onClick={() => setppepage(id)}
                 onMouseEnter={() => this.handleMouseEnter(id)}
@@ -55,13 +55,13 @@ class PPE extends Component {
                 className={ppepage === id || hoveredBox === id ? 'mousein' : ''}
               >
                 {text}
-              </PPEpageoption>
+              </Pagepageoption>
             ))}
-          </PPEIndexlist>
-          <PPEPage>
+          </PageIndexlist>
+          <PagePage>
             {this.whichpage(ppepage)}
-          </PPEPage>
-        </PPEWrapper>
+          </PagePage>
+        </PageWrapper>
       )
     } else {
       return <Navigate to='/login' />

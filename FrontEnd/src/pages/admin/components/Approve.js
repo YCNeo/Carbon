@@ -8,7 +8,7 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper
-} from '../style';
+} from '../../../components/style';
 
 class Approve extends PureComponent {
   render() {

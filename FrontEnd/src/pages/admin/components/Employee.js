@@ -9,8 +9,8 @@ import {
   Componenttitle,
   ComponentoptionWapper,
   Componentcheckbox,
-  Adminemployeepageoption
-} from '../style';
+  Innerpageoption
+} from '../../../components/style';
 
 class Employee extends PureComponent {
   state = {
@@ -167,7 +167,7 @@ class Employee extends PureComponent {
         <Componenttitle>Access Assignment</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Adminemployeepageoption
+            <Innerpageoption
               key={id}
               onClick={() => setpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
@@ -175,7 +175,7 @@ class Employee extends PureComponent {
               className={employeepage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
-            </Adminemployeepageoption>
+            </Innerpageoption>
           ))}
         </ComponentoptionWapper>
         {this.whichpage(employeepage)}
