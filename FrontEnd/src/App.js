@@ -1,8 +1,6 @@
 import { Component } from 'react'
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Link } from 'react-router-dom'
-import { Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
 
 import store from './store';
 import Header from './common/header';
@@ -49,9 +47,8 @@ class App extends Component {
     this.setState({ mainpage: page });
   }
 
-  getaccess = () => {
-    this.setState({ eid: localStorage.getItem('EID') });
-    this.setState({ ename: localStorage.getItem('Ename') });
+  getinfo = () => {
+    this.setState({ eid: localStorage.getItem('EID'), ename: localStorage.getItem('Ename') });
   }
 
   render() {
@@ -62,11 +59,11 @@ class App extends Component {
           {<Header />}
           <MainWrapper>
             <MainIndexlist>
-              <h2 onClick={() => (<Navigate to='/' />)}>Carbon Project</h2>
+              <h2>Carbon Project</h2>
               {pages.map(({ id, text, link }) => (
                 <Link to={`/${link}`} key={id} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Mainpageoption
-                    onClick={() => this.setmainpage(id)}
+                    onClick={() => { this.setmainpage(id); this.getinfo(); }}
                     onMouseEnter={() => this.handleMouseEnter(id)}
                     onMouseLeave={this.handleMouseLeave}
                     className={mainpage === id || hoveredBox === id ? 'mousein' : ''}
@@ -77,9 +74,9 @@ class App extends Component {
               ))}
             </MainIndexlist>
             <MainWrapper className='context'>
-              <Maintop>id:&nbsp;{this.state.eid}&nbsp;&nbsp;name:&nbsp;{this.state.ename}</Maintop>
+              <Maintop>{this.state.eid}&nbsp;&nbsp;{this.state.ename}</Maintop>
               <Routes>
-                <Route path='/' element={((localStorage.getItem('jwtToken')) != null) ? <h1>Home page</h1> : <Navigate to='/login' />}></Route>
+                <Route path='/' element={(localStorage.getItem('jwtToken')) ? <h1>Home page</h1> : <Navigate to='/login' />}></Route>
                 <Route path='/home' element={<Home />}></Route>
                 <Route path='/login' element={<Login />}></Route>
                 <Route path='/admin' element={<Admin />}></Route>
@@ -94,10 +91,6 @@ class App extends Component {
         </BrowserRouter>
       </Provider >
     )
-  }
-
-  componentDidMount() {
-    this.getaccess();
   }
 }
 
