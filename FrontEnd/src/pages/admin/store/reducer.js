@@ -6,6 +6,7 @@ const defaultState = {
   accesslist: [],
   materiallist: [],
   equipmentlist: [],
+  approvelist: [],
   approve_pid: "pid",
   approve_pmid: "pmid",
   approve_time: "time",
@@ -31,6 +32,8 @@ const reducer = (state = defaultState, action) => {
       return { ...state, materiallist: action.materiallist }
     case constants.GET_EQUIPMENT:
       return { ...state, equipmentlist: action.equipmentlist }
+    case constants.GET_APPROVE:
+      return { ...state, approvelist: action.approvelist }
     case constants.GET_OLD_CONTENT:
       return {
         ...state,

@@ -10,10 +10,10 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  PPEinnerpageoption,
+  Innerpageoption,
   DatePickerWrapper,
   Componentcheckbox
-} from '../style';
+} from '../../../components/style';
 
 class Material extends PureComponent {
   state = {
@@ -210,7 +210,7 @@ class Material extends PureComponent {
         <Componenttitle>Material</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <PPEinnerpageoption
+            <Innerpageoption
               key={id}
               onClick={() => setmaterialpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
@@ -218,7 +218,7 @@ class Material extends PureComponent {
               className={materialpage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
-            </PPEinnerpageoption>
+            </Innerpageoption>
           ))}
         </ComponentoptionWapper>
         {this.whichpage(materialpage)}
@@ -228,7 +228,7 @@ class Material extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  materialpage: state.projectmanagement.materialpage
+  materialpage: state.ppe.materialpage
 })
 
 const mapDisptchToProps = (dispatch) => {

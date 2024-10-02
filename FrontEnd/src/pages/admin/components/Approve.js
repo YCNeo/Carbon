@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import Select from 'react-select';
 import { actionCreators } from '../store';
 import {
   ComponentWapper,
@@ -7,35 +8,75 @@ import {
   Componentinfo,
   Componentbutton,
   Componenttitle,
-  ComponentoptionWapper
-} from '../style';
+  ComponentoptionWapper,
+  customStyles
+} from '../../../components/style';
 
 class Approve extends PureComponent {
+  state = {
+    selectedApprove: null,
+    PID: '',
+    PMID: '',
+    time: '',
+    oldContent: '',
+    newContent: ''
+  };
+
+  handleSelectChange = (selectedOptions) => {
+    const selectedApprove = this.props.approvelist.find(item => item.PID === selectedOptions.value);
+    if (selectedApprove) {
+      this.setState({
+        selectedApprove: selectedOptions,
+        PID: selectedApprove.PID,
+        PMID: selectedApprove.PMID,
+        time: selectedApprove.time,
+        oldContent: selectedApprove.oldContent,
+        newContent: selectedApprove.newContent
+      });
+    }
+  };
+
   render() {
-    const { approve_pid, approve_pmid, approve_time, oldcontent, newcontent } = this.props;
+    const { approvelist } = this.props;
+    const { selectedApprove, PID, PMID, time, oldContent, newContent } = this.state;
+
+    const approveOptions = approvelist.map(item => ({
+      value: item.PID,
+      label: item.PMID
+    }));
+
     return (
       <ComponentWapper>
         <Componenttitle>Approve</Componenttitle>
         <ComponentoptionWapper>
+          <Select
+            placeholder="Select record"
+            options={approveOptions}
+            value={selectedApprove}
+            onChange={this.handleSelectChange}
+            styles={customStyles}
+          />
+        </ComponentoptionWapper>
+        <ComponentoptionWapper>
           <Componentindex>Project ID</Componentindex>
-          <Componentinfo>{approve_pid}</Componentinfo>
+          <Componentinfo>{PID}</Componentinfo>
         </ComponentoptionWapper>
         <ComponentoptionWapper>
           <Componentindex>PM ID</Componentindex>
-          <Componentinfo>{approve_pmid}</Componentinfo>
+          <Componentinfo>{PMID}</Componentinfo>
         </ComponentoptionWapper>
         <ComponentoptionWapper>
           <Componentindex>Time</Componentindex>
-          <Componentinfo>{approve_time}</Componentinfo>
+          <Componentinfo>{time}</Componentinfo>
         </ComponentoptionWapper>
         <ComponentoptionWapper className='contentwarpper'>
           <ComponentoptionWapper className='content' >
             <Componentindex>Old Content</Componentindex>
-            <Componentinfo className='content ' dangerouslySetInnerHTML={{ __html: oldcontent }}></Componentinfo>
+            <Componentinfo className='content ' dangerouslySetInnerHTML={{ __html: oldContent }}></Componentinfo>
           </ComponentoptionWapper>
           <ComponentoptionWapper className='content'>
             <Componentindex>New Content</Componentindex>
-            <Componentinfo className='content' dangerouslySetInnerHTML={{ __html: newcontent }}></Componentinfo>
+            <Componentinfo className='content' dangerouslySetInnerHTML={{ __html: newContent }}></Componentinfo>
           </ComponentoptionWapper>
         </ComponentoptionWapper>
         <ComponentoptionWapper>
@@ -47,17 +88,12 @@ class Approve extends PureComponent {
   }
 
   componentDidMount() {
-    this.props.getnewcontent();
-    this.props.getoldcontent();
+    this.props.getapprove();
   }
 }
 
 const mapStateToProps = (state) => ({
-  approve_pid: state.admin.approve_pid,
-  approve_pmid: state.admin.approve_pmid,
-  approve_time: state.admin.approve_time,
-  oldcontent: state.admin.oldcontent,
-  newcontent: state.admin.newcontent,
+  approvelist: state.admin.approvelist,
 })
 
 const mapDisptchToProps = (dispatch) => {
@@ -65,11 +101,8 @@ const mapDisptchToProps = (dispatch) => {
     Asendinfo(type) {
       dispatch(actionCreators.Asendinfo(type));
     },
-    getoldcontent() {
-      dispatch(actionCreators.getoldcontent())
-    },
-    getnewcontent() {
-      dispatch(actionCreators.getnewcontent())
+    getapprove() {
+      dispatch(actionCreators.getapprove())
     }
   }
 }

@@ -9,8 +9,8 @@ import {
   Componenttitle,
   ComponentoptionWapper,
   Componentcheckbox,
-  ESGinnerpageoption
-} from '../style';
+  Innerpageoption
+} from '../../../components/style';
 
 class Statement extends PureComponent {
   state = {
@@ -75,7 +75,7 @@ class Statement extends PureComponent {
         <Componenttitle>Statement</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <ESGinnerpageoption
+            <Innerpageoption
               key={id}
               onClick={() => setstatementpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
@@ -83,7 +83,7 @@ class Statement extends PureComponent {
               className={statementpage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
-            </ESGinnerpageoption>
+            </Innerpageoption>
           ))}
         </ComponentoptionWapper>
         {this.whichpage(statementpage)}

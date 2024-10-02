@@ -1,8 +1,5 @@
 import axios from 'axios'
 import * as constants from './constants';
-import DiffMatchPatch from 'diff-match-patch';
-
-const dmp = new DiffMatchPatch();
 
 const API_URL = 'http://localhost:8000/';
 //axios.post(`${API_URL}/login`,{...     //測試替換部分
@@ -64,7 +61,7 @@ export const Asendinfo = (type, project_id, pm_id, material, equipment) => {
   }
 }
 
-///////////////////////////employee//////////////////////////////////////
+///////////////////////////employee///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const employeepost = (name, gender, phone, mail, nation) => {
   return (dispatch) => {
@@ -110,7 +107,7 @@ export const employeeretrieve = (EID, name, PID, region) => {
   }
 }
 
-///////////////////////get list/////////////////////
+///////////////////////get list//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const getaccess = () => {
   return (dispatch) => {
@@ -156,22 +153,24 @@ export const getequipment = () => {
   }
 }
 
-export const getoldcontent = () => {
+export const getapprove=()=>{
   return (dispatch) => {
-    axios.get('/api/oldcontent.json').then((res) => {
-      const result = res.data.data;
+    axios.get('/api/approve.json').then((res) => {
+      const result = res.data.approve_list;
       dispatch({
-        type: constants.GET_OLD_CONTENT,
-        oldcontent: result.content,
-        pid: result.pid,
-        pmid: result.pmid,
-        time: result.time
+        type: constants.GET_APPROVE,
+        approvelist: result
       });
     }).catch((error) => {
-      console.error('Error fetching oldcontent data:', error);
+      console.error('Error fetching approve list:', error);
     });
   };
-};
+}
+
+/////////////////////////////比較新舊參考用////////////////////////////////////////////////////////////////
+/*
+import DiffMatchPatch from 'diff-match-patch';
+const dmp = new DiffMatchPatch();
 
 export const getnewcontent = () => {
   return (dispatch, getState) => {
@@ -200,3 +199,4 @@ export const getnewcontent = () => {
     });
   };
 };
+*/

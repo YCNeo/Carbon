@@ -8,11 +8,11 @@ import Createproject from './components/Createproject';
 import Createuser from './components/Createuser';
 import Employee from './components/Employee';
 import {
-  AdminWrapper,
-  AdminIndexlist,
-  AdminPage,
-  Adminpageoption
-} from "./style";
+  PageWrapper,
+  PageIndexlist,
+  PagePage,
+  Pagepageoption
+} from "../../components/style";
 
 class Admin extends Component {
   state = {
@@ -55,10 +55,10 @@ class Admin extends Component {
 
     if (localStorage.getItem('jwtToken') != null) {
       return (
-        <AdminWrapper>
-          <AdminIndexlist>
+        <PageWrapper>
+          <PageIndexlist>
             {pages.map(({ id, text }) => (
-              <Adminpageoption
+              <Pagepageoption
                 key={id}
                 onClick={() => setadminpage(id)}
                 onMouseEnter={() => this.handleMouseEnter(id)}
@@ -66,13 +66,13 @@ class Admin extends Component {
                 className={adminpage === id || hoveredBox === id ? 'mousein' : ''}
               >
                 {text}
-              </Adminpageoption>
+              </Pagepageoption>
             ))}
-          </AdminIndexlist>
-          <AdminPage>
+          </PageIndexlist>
+          <PagePage>
             {this.whichpage(adminpage)}
-          </AdminPage>
-        </AdminWrapper>
+          </PagePage>
+        </PageWrapper>
       )
     } else {
       return <Navigate to='/login' />

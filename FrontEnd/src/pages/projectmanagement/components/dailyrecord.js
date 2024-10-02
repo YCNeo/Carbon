@@ -12,12 +12,12 @@ import {
   Componenttitle,
   ComponentoptionWapper,
   Componentcheckbox,
-  Projectmanagementinnerpageoption,
+  Innerpageoption,
   DatePickerWrapper,
   FlowWapper,
   Description,
-  customStyles
-} from '../style';
+  PMcustomStyles
+} from '../../../components/style';
 import { getequipment, getmaterial } from '../../admin/store/actionCreators';
 
 class Dailyrecord extends PureComponent {
@@ -130,7 +130,7 @@ class Dailyrecord extends PureComponent {
                       options={equipmentOptions}
                       value={step.name}
                       onChange={(selectedOption) => this.handleChangeE(index, 'name', selectedOption)}
-                      styles={customStyles}
+                      styles={PMcustomStyles}
                     />
                     amount:&nbsp;&nbsp;
                     <Componentinput
@@ -160,7 +160,7 @@ class Dailyrecord extends PureComponent {
                       options={materialOptions}
                       value={step.name}
                       onChange={(selectedOption) => this.handleChangeM(index, 'name', selectedOption)}
-                      styles={customStyles}
+                      styles={PMcustomStyles}
                     />
                     amount:&nbsp;&nbsp;
                     <Componentinput
@@ -350,7 +350,7 @@ class Dailyrecord extends PureComponent {
         <Componenttitle>Daily Record</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Projectmanagementinnerpageoption
+            <Innerpageoption
               key={id}
               onClick={() => setdailyrecordpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
@@ -358,7 +358,7 @@ class Dailyrecord extends PureComponent {
               className={dailyrecordpage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
-            </Projectmanagementinnerpageoption>
+            </Innerpageoption>
           ))}
         </ComponentoptionWapper>
         {this.whichpage(dailyrecordpage)}

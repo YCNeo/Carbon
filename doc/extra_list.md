@@ -17,3 +17,15 @@
 | project list   |             | project(list)                       | B   |x       |
 | material list  |             | material(list)                      | B   |x       |
 | equipment list |             | equipment(list)                     | B   |x       |
+| approve list   |             | approve(list)                       | B   |x       |
+
+
+approve_list[
+    {
+      "PID": "1",
+      "PMID": "project1",
+      "time": "1",
+      "oldContent": "1",
+      "newContent": "11"
+    }
+  ]

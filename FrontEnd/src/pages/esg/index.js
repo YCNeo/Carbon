@@ -9,11 +9,11 @@ import Statement from './components/statement';
 import Audit from './components/audit';
 
 import {
-  ESGWrapper,
-  ESGIndexlist,
-  ESGPage,
-  ESGpageoption
-} from "./style";
+  PageWrapper,
+  PageIndexlist,
+  PagePage,
+  Pagepageoption
+} from "../../components/style";
 
 class ESG extends Component {
   state = {
@@ -52,10 +52,10 @@ class ESG extends Component {
     const { hoveredBox, pages } = this.state;
     if (localStorage.getItem('jwtToken') != null) {
       return (
-        <ESGWrapper>
-          <ESGIndexlist>
+        <PageWrapper>
+          <PageIndexlist>
             {pages.map(({ id, text }) => (
-              <ESGpageoption
+              <Pagepageoption
                 key={id}
                 onClick={() => setesgpage(id)}
                 onMouseEnter={() => this.handleMouseEnter(id)}
@@ -63,13 +63,13 @@ class ESG extends Component {
                 className={esgpage === id || hoveredBox === id ? 'mousein' : ''}
               >
                 {text}
-              </ESGpageoption>
+              </Pagepageoption>
             ))}
-          </ESGIndexlist>
-          <ESGPage>
+          </PageIndexlist>
+          <PagePage>
             {this.whichpage(esgpage)}
-          </ESGPage>
-        </ESGWrapper>
+          </PagePage>
+        </PageWrapper>
       )
     } else {
       return <Navigate to='/login' />

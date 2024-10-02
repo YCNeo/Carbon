@@ -8,11 +8,11 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Projectmanagementinnerpageoption,
+  Innerpageoption,
   FlowWapper,
   Description,
-  customStyles
-} from '../style';
+  PMcustomStyles
+} from '../../../components/style';
 import { getequipment, getmaterial } from '../../admin/store/actionCreators';
 
 class Flow extends PureComponent {
@@ -75,7 +75,7 @@ class Flow extends PureComponent {
                         isMulti
                         closeMenuOnSelect={false}
                         onChange={(selectedOption) => this.handleChange(index, 'equipment', selectedOption)}
-                        styles={customStyles}
+                        styles={PMcustomStyles}
                       />
                       <Componentindex>Material</Componentindex>
                       <Select
@@ -85,7 +85,7 @@ class Flow extends PureComponent {
                         isMulti
                         closeMenuOnSelect={false}
                         onChange={(selectedOption) => this.handleChange(index, 'material', selectedOption)}
-                        styles={customStyles}
+                        styles={PMcustomStyles}
                       />
                     </FlowWapper>
                     <FlowWapper>
@@ -133,7 +133,7 @@ class Flow extends PureComponent {
                         isMulti
                         closeMenuOnSelect={false}
                         onChange={(selectedOption) => this.handleChange(index, 'equipment', selectedOption)}
-                        styles={customStyles}
+                        styles={PMcustomStyles}
                       />
                       <Componentindex>Material</Componentindex>
                       <Select
@@ -143,7 +143,7 @@ class Flow extends PureComponent {
                         isMulti
                         closeMenuOnSelect={false}
                         onChange={(selectedOption) => this.handleChange(index, 'material', selectedOption)}
-                        styles={customStyles}
+                        styles={PMcustomStyles}
                       />
                     </FlowWapper>
                     <FlowWapper>
@@ -178,7 +178,7 @@ class Flow extends PureComponent {
         <Componenttitle>Flow</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Projectmanagementinnerpageoption
+            <Innerpageoption
               key={id}
               onClick={() => setflowpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
@@ -186,7 +186,7 @@ class Flow extends PureComponent {
               className={flowpage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
-            </Projectmanagementinnerpageoption>
+            </Innerpageoption>
           ))}
         </ComponentoptionWapper>
         {this.whichpage(flowpage)}

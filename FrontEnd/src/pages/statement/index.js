@@ -6,20 +6,21 @@ import DatePicker from 'react-datepicker';
 import { Navigate } from "react-router-dom";
 import 'react-datepicker/dist/react-datepicker.css';
 import {
-  StatemetnWrapper,
-  Statementtitle,
-  StatementoptionWapper,
-  Statementindex,
-  Statementcheckbox,
-  Statementbutton,
+  PageWrapper,
+  PagePage,
+  Componenttitle,
+  ComponentoptionWapper,
+  Componentindex,
+  Componentcheckbox,
+  Componentbutton,
   customStyles,
-  customStyles2,
+  PMcustomStyles,
   CheckItem,
   Checkbutton,
   DatePickerWrapper,
   Chartselect,
   Option
-} from './style';
+} from '../../components/style';
 
 class Statement extends PureComponent {
   state = {
@@ -100,93 +101,95 @@ class Statement extends PureComponent {
     );
     if (localStorage.getItem('jwtToken') != null) {
       return (
-        <StatemetnWrapper>
-          <Statementtitle>Retrieve</Statementtitle>
-          <Statementtitle className='text'>查詢條件：</Statementtitle>
-          <StatementoptionWapper>
-            <Statementindex>Project name</Statementindex>
-            <Select
-              placeholder="Select project"
-              closeMenuOnSelect={false}
-              options={projectOptions}
-              isMulti
-              value={selectedProject}
-              onChange={this.handleSelectChange}
-              styles={customStyles}
-            />
-            <Statementbutton className='selectall' onClick={this.handleSelectAll}>Select All</Statementbutton>
-          </StatementoptionWapper>
-          <StatementoptionWapper>
-            <Statementindex>Start From</Statementindex>
-            <DatePickerWrapper>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => this.handleDateChange('startDate', date)}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={30}
-                dateFormat="yyyy/MM/dd HH:mm"
-                timeCaption="time"
-                customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+        <PageWrapper>
+          <PagePage>
+            <Componenttitle>Retrieve</Componenttitle>
+            <Componenttitle className='componentindex'>查詢條件：</Componenttitle>
+            <ComponentoptionWapper>
+              <Componentindex>Project name</Componentindex>
+              <Select
+                placeholder="Select project"
+                closeMenuOnSelect={false}
+                options={projectOptions}
+                isMulti
+                value={selectedProject}
+                onChange={this.handleSelectChange}
+                styles={customStyles}
               />
-            </DatePickerWrapper>
-            <Statementindex>End At</Statementindex>
-            <DatePickerWrapper>
-              <DatePicker
-                selected={endDate}
-                onChange={(date) => this.handleDateChange('endDate', date)}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={30}
-                dateFormat="yyyy/MM/dd HH:mm"
-                timeCaption="time"
-                customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
-              />
-            </DatePickerWrapper>
-          </StatementoptionWapper>
-          <StatementoptionWapper>
-            <Statementindex>生成圖表</Statementindex>
-            <Statementcheckbox>
-              {
-                chartlist.map((item) => (
-                  <CheckItem key={item.id} >
-                    <Checkbutton
-                      onClick={() => this.setchart(item.id)}
-                      className={chart === item.id ? 'checked' : ''}
-                    ></Checkbutton>
-                    <Option>{item.name}</Option>
-                    <Chartselect>
-                      {item.id === 3 ? "classification basis" : "x-axis:"}
-                      &nbsp;&nbsp;
-                      <Select
-                        placeholder="Select x"
-                        options={option}
-                        value={selectedOption1}
-                        onChange={this.handleSelectChange1}
-                        styles={customStyles2}
-                      />
-                    </Chartselect>
-                    {item.id === 3 ? '' :
+              <Componentbutton className='selectall' onClick={this.handleSelectAll}>Select All</Componentbutton>
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentindex>Start From</Componentindex>
+              <DatePickerWrapper>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => this.handleDateChange('startDate', date)}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={30}
+                  dateFormat="yyyy/MM/dd HH:mm"
+                  timeCaption="time"
+                  customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                />
+              </DatePickerWrapper>
+              <Componentindex>End At</Componentindex>
+              <DatePickerWrapper>
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date) => this.handleDateChange('endDate', date)}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={30}
+                  dateFormat="yyyy/MM/dd HH:mm"
+                  timeCaption="time"
+                  customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                />
+              </DatePickerWrapper>
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentindex>生成圖表</Componentindex>
+              <Componentcheckbox>
+                {
+                  chartlist.map((item) => (
+                    <CheckItem key={item.id} >
+                      <Checkbutton
+                        onClick={() => this.setchart(item.id)}
+                        className={chart === item.id ? 'checked' : ''}
+                      ></Checkbutton>
+                      <Option>{item.name}</Option>
                       <Chartselect>
-                        y-axis:&nbsp;&nbsp;
+                        {item.id === 3 ? "classification basis" : "x-axis:"}
+                        &nbsp;&nbsp;
                         <Select
-                          placeholder="Select y"
+                          placeholder="Select x"
                           options={option}
-                          value={selectedOption2}
-                          onChange={this.handleSelectChange2}
-                          styles={customStyles2}
+                          value={selectedOption1}
+                          onChange={this.handleSelectChange1}
+                          styles={PMcustomStyles}
                         />
                       </Chartselect>
-                    }
-                  </CheckItem>
-                ))
-              }
-            </Statementcheckbox>
-          </StatementoptionWapper>
-          <StatementoptionWapper>
-            <Statementbutton onClick={() => this.props.sendinfo(selectedProject, startDate, endDate, chart)}>Create</Statementbutton>
-          </StatementoptionWapper>
-        </StatemetnWrapper>
+                      {item.id === 3 ? '' :
+                        <Chartselect>
+                          y-axis:&nbsp;&nbsp;
+                          <Select
+                            placeholder="Select y"
+                            options={option}
+                            value={selectedOption2}
+                            onChange={this.handleSelectChange2}
+                            styles={PMcustomStyles}
+                          />
+                        </Chartselect>
+                      }
+                    </CheckItem>
+                  ))
+                }
+              </Componentcheckbox>
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentbutton onClick={() => this.props.sendinfo(selectedProject, startDate, endDate, chart)}>Create</Componentbutton>
+            </ComponentoptionWapper>
+          </PagePage>
+        </PageWrapper>
       )
     } else {
       return <Navigate to='/login' />

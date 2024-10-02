@@ -10,8 +10,8 @@ import {
   Componenttitle,
   ComponentoptionWapper,
   Componentcheckbox,
-  Projectmanagementinnerpageoption
-} from '../style';
+  Innerpageoption
+} from '../../../components/style';
 
 class Member extends PureComponent {
   state = {
@@ -174,7 +174,7 @@ class Member extends PureComponent {
         <Componenttitle>Member</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Projectmanagementinnerpageoption
+            <Innerpageoption
               key={id}
               onClick={() => setmemberpage(id)}
               onMouseEnter={() => this.handleMouseEnter(id)}
@@ -182,7 +182,7 @@ class Member extends PureComponent {
               className={memberpage === id || hoveredBox === id ? 'mousein' : ''}
             >
               {text}
-            </Projectmanagementinnerpageoption>
+            </Innerpageoption>
           ))}
         </ComponentoptionWapper>
         {this.whichpage(memberpage)}
