@@ -18,6 +18,11 @@ class Statement extends PureComponent {
     pages: [
       { id: 1, text: 'Retrieve' },
     ],
+    retrieveFormdata: {
+      ename: '',
+      form: '',
+      category: '',
+    },
     display: false
   };
 
@@ -29,8 +34,18 @@ class Statement extends PureComponent {
     this.setState({ hoveredBox: null });
   };
 
+  handleInputChange = (event, formType, field) => {
+    const { value } = event.target;
+    this.setState(prevState => ({
+      [formType]: {
+        ...prevState[formType],
+        [field]: value
+      }
+    }));
+  };
 
   whichpage(page) {
+    const { retrieveFormdata } = this.state;
     switch (page) {
       case 1:
         {
@@ -38,18 +53,18 @@ class Statement extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>EName</Componentindex>
-                <Componentinput ref={(input) => { this.ename = input }} />
+                <Componentinput value={retrieveFormdata.ename} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'ename')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Form</Componentindex>
-                <Componentinput ref={(input) => { this.form = input }} />
+                <Componentinput value={retrieveFormdata.form} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'form')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Category</Componentindex>
-                <Componentinput ref={(input) => { this.category = input }} />
+                <Componentinput value={retrieveFormdata.category} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'category')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => {this.props.statementretrieve(this.ename, this.form, this, this.category); this.setState({ display: true });}}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.statementretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
                 <div>
@@ -101,8 +116,9 @@ const mapDisptchToProps = (dispatch) => {
     setstatementpage(id) {
       dispatch(actionCreators.setstatementpage(id));
     },
-    statementretrieve(ename, form, category) {
-      dispatch(actionCreators.statementretrieve(ename.value, form.value, category.value));
+    statementretrieve(retrieveFormdata) {
+      const { ename, form, category } = retrieveFormdata
+      dispatch(actionCreators.statementretrieve(ename, form, category));
     }
   }
 }

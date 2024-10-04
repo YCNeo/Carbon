@@ -194,8 +194,6 @@ export const dailyrecordrevise = (date, equipment, material, description) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { date, equipment, material, description }).then((res) => {
       const result = res.data.data;
-      console.log(date,equipment,material,description);
-      
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);

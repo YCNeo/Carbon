@@ -23,20 +23,37 @@ import { getequipment, getmaterial } from '../../admin/store/actionCreators';
 class Dailyrecord extends PureComponent {
   state = {
     hoveredBox: null,
-    Date: new Date(),
-    customTimeInput: "",
     pages: [
       { id: 1, text: 'Post' },
       { id: 2, text: 'Revise' },
       { id: 3, text: 'Retieve' },
     ],
-    equipment: [
-      { name: '', amount: '', runtime: '' }
-    ],
-    material: [
-      { name: '', amount: '', unit: '' }
-    ],
-    description: '',
+    postFormdata: {
+      Date: new Date(),
+      customTimeInput: "",
+      equipment: [
+        { name: '', amount: '', runtime: '' }
+      ],
+      material: [
+        { name: '', amount: '', unit: '' }
+      ],
+      description: ''
+    },
+    reviseFormdata: {
+      Date: new Date(),
+      customTimeInput: "",
+      equipment: [
+        { name: '', amount: '', runtime: '' }
+      ],
+      material: [
+        { name: '', amount: '', unit: '' }
+      ],
+      description: ''
+    },
+    retrieveFormdata: {
+      Date: new Date(),
+      customTimeInput: "",
+    },
     display: false
   };
 
@@ -48,79 +65,91 @@ class Dailyrecord extends PureComponent {
     this.setState({ hoveredBox: null });
   };
 
-  handleDateChange = (field, date) => {
-    this.setState({ [field]: date });
-  };
-
-  handleTimeInputChange = (field, event) => {
-    this.setState({ [field]: event.target.value });
-  };
-
-  addStepM = () => {
+  handleDateChange = (form, date) => {
     this.setState((prevState) => ({
-      material: [...prevState.material, { name: '', amount: '', unit: '' }]
+      [form]: {
+        ...prevState[form],
+        Date: date
+      }
     }));
   };
 
-  handleChangeM = (index, field, value) => {
-    const newSteps = [...this.state.material];
-    newSteps[index][field] = value;
-    this.setState({ material: newSteps });
-  };
-
-  addStepE = () => {
+  handleTimeInputChange = (form, event) => {
+    const value = event.target.value;
     this.setState((prevState) => ({
-      equipment: [...prevState.equipment, { name: '', amount: '', runtime: '' }]
+      [form]: {
+        ...prevState[form],
+        customTimeInput: value
+      }
     }));
   };
 
-  handleChangeE = (index, field, value) => {
-    const newSteps = [...this.state.equipment];
-    newSteps[index][field] = value;
-    this.setState({ equipment: newSteps });
+  handleChange = (form, type, index, field, value) => {
+    const newFormdata = { ...this.state[form] };
+    if (type === 'equipment') {
+      const newEquipment = [...newFormdata.equipment];
+      newEquipment[index][field] = value;
+      newFormdata.equipment = newEquipment;
+    } else if (type === 'material') {
+      const newMaterial = [...newFormdata.material];
+      newMaterial[index][field] = value;
+      newFormdata.material = newMaterial;
+    }
+    this.setState({ [form]: newFormdata });
+  };
+
+  addStep = (form, type) => {
+    const newFormdata = { ...this.state[form] };
+    if (type === 'material') {
+      newFormdata.material.push({ name: '', amount: '', unit: '' });
+    } else if (type === 'equipment') {
+      newFormdata.equipment.push({ name: '', amount: '', runtime: '' });
+    }
+    this.setState({ [form]: newFormdata });
   };
 
   whichpage(page) {
+    const materialOptions = this.props.materiallist.map(item => ({
+      value: item.id,
+      label: item.name
+    }));
+
+    const equipmentOptions = this.props.equipmentlist.map(item => ({
+      value: item.id,
+      label: item.name
+    }));
+
+    const { postFormdata, reviseFormdata, retrieveFormdata } = this.state;
+    const CustomTimeInput = ({ value, onChange }) => (
+      <input
+        value={value}
+        onChange={onChange}
+        placeholder="HH:mm"
+        className="custom-time-input"
+      />
+    );
+
     switch (page) {
       case 1:
         {
-          const { Date, customTimeInput } = this.state;
-          const CustomTimeInput = ({ value, onChange }) => (
-            <input
-              value={value}
-              onChange={onChange}
-              placeholder="HH:mm"
-              className="custom-time-input"
-            />
-          );
-          const materialOptions = this.props.materiallist.map(item => ({
-            value: item.id,
-            label: item.name
-          }));
-
-          const equipmentOptions = this.props.equipmentlist.map(item => ({
-            value: item.id,
-            label: item.name
-          }));
-
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
-                    selected={Date}
-                    onChange={(date) => this.handleDateChange('Date', date)}
+                    selected={postFormdata.Date}
+                    onChange={(date) => this.handleDateChange('postFormdata', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
                     dateFormat="yyyy/MM/dd HH:mm"
                     timeCaption="time"
-                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                    customTimeInput={<CustomTimeInput value={postFormdata.customTimeInput} onChange={(e) => this.handleTimeInputChange('postFormdata', e)} />}
                   />
                 </DatePickerWrapper>
               </ComponentoptionWapper >
-              {this.state.equipment.map((step, index) => (
+              {this.state.postFormdata.equipment.map((step, index) => (
                 <ComponentoptionWapper className='flow' key={index}>
                   {index === 0 ? <Componentindex>Equipment</Componentindex> : <Componentindex className='blank' />}
                   <FlowWapper className='dailyrecord'>
@@ -129,199 +158,185 @@ class Dailyrecord extends PureComponent {
                       placeholder="Select equipment"
                       options={equipmentOptions}
                       value={step.name}
-                      onChange={(selectedOption) => this.handleChangeE(index, 'name', selectedOption)}
+                      onChange={(selectedOption) => this.handleChange('postFormdata', 'equipment', index, 'name', selectedOption)}
                       styles={PMcustomStyles}
                     />
                     amount:&nbsp;&nbsp;
                     <Componentinput
                       className='small'
                       value={step.amount}
-                      onChange={(e) => this.handleChangeE(index, 'amount', e.target.value)}
+                      onChange={(e) => this.handleChange('postFormdata', 'equipment', index, 'amount', e.target.value)}
                     />
                     runtime:&nbsp;&nbsp;
                     <Componentinput
                       className='small'
                       value={step.runtime}
-                      onChange={(e) => this.handleChangeE(index, 'runtime', e.target.value)}
+                      onChange={(e) => this.handleChange('postFormdata', 'equipment', index, 'runtime', e.target.value)}
                     />
                   </FlowWapper>
                 </ComponentoptionWapper>
               ))}
               <ComponentoptionWapper>
-                <Componentbutton className='addstepDailyrecord' onClick={this.addStepE}>Add Step</Componentbutton>
+                <Componentbutton className='addstepDailyrecord' onClick={() => this.addStep('postFormdata', 'equipment')}>Add Step</Componentbutton>
               </ComponentoptionWapper>
-              {this.state.material.map((step, index) => (
+              {this.state.postFormdata.material.map((step, index) => (
                 <ComponentoptionWapper className='flow' key={index}>
                   {index === 0 ? <Componentindex>Materail</Componentindex> : <Componentindex className='blank' />}
                   <FlowWapper className='dailyrecord'>
                     {index + 1}:&nbsp;&nbsp;
                     <Select
-                      placeholder="Select access"
+                      placeholder="Select material"
                       options={materialOptions}
                       value={step.name}
-                      onChange={(selectedOption) => this.handleChangeM(index, 'name', selectedOption)}
+                      onChange={(selectedOption) => this.handleChange('postFormdata', 'material', index, 'name', selectedOption)}
                       styles={PMcustomStyles}
                     />
                     amount:&nbsp;&nbsp;
                     <Componentinput
                       className='small'
                       value={step.amount}
-                      onChange={(e) => this.handleChangeM(index, 'amount', e.target.value)}
+                      onChange={(e) => this.handleChange('postFormdata', 'material', index, 'amount', e.target.value)}
                     />
                     unit:&nbsp;&nbsp;
                     <Componentinput
                       className='small'
                       value={step.unit}
-                      onChange={(e) => this.handleChangeM(index, 'unit', e.target.value)}
+                      onChange={(e) => this.handleChange('postFormdata', 'material', index, 'unit', e.target.value)}
                     />
                   </FlowWapper>
                 </ComponentoptionWapper>
               ))}
               <ComponentoptionWapper>
-                <Componentbutton className='addstepDailyrecord' onClick={this.addStepM}>Add Step</Componentbutton>
+                <Componentbutton className='addstepDailyrecord' onClick={() => this.addStep('postFormdata', 'material')}>Add Step</Componentbutton>
               </ComponentoptionWapper>
               <ComponentoptionWapper className='flow'>
                 <Componentindex>Description</Componentindex>
                 <Description
                   className='short'
-                  value={this.state.description}
-                  onChange={(e) => this.setState({ description: e.target.value })}></Description>
+                  value={this.state.postFormdata.description}
+                  onChange={(e) => this.setState((prevState) => ({ postFormdata: { ...prevState.postFormdata, description: e.target.value } }))}>
+                </Description>
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.dailyrecordpost(this.state.Date, this.state.equipment, this.state.material, this.state.description)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.dailyrecordpost(postFormdata)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
       case 2:
         {
-          const { Date, customTimeInput } = this.state;
-          const CustomTimeInput = ({ value, onChange }) => (
-            <input
-              value={value}
-              onChange={onChange}
-              placeholder="HH:mm"
-              className="custom-time-input"
-            />
-          );
-
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
-                    selected={Date}
-                    onChange={(date) => this.handleDateChange('Date', date)}
+                    selected={reviseFormdata.Date}
+                    onChange={(date) => this.handleDateChange('reviseFormdata', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
                     dateFormat="yyyy/MM/dd HH:mm"
                     timeCaption="time"
-                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                    customTimeInput={<CustomTimeInput value={reviseFormdata.customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
                   />
                 </DatePickerWrapper>
               </ComponentoptionWapper >
-              {this.state.equipment.map((step, index) => (
+              {this.state.reviseFormdata.equipment.map((step, index) => (
                 <ComponentoptionWapper className='flow' key={index}>
                   {index === 0 ? <Componentindex>Equipment</Componentindex> : <Componentindex className='blank' />}
                   <FlowWapper className='dailyrecord'>
                     {index + 1}:&nbsp;&nbsp;
-                    <Componentinput
-                      className='flow'
+                    <Select
+                      placeholder="Select equipment"
+                      options={equipmentOptions}
                       value={step.name}
-                      onChange={(e) => this.handleChangeE(index, 'name', e.target.value)}
+                      onChange={(selectedOption) => this.handleChange('reviseFormdata', 'equipment', index, 'name', selectedOption)}
+                      styles={PMcustomStyles}
                     />
                     amount:&nbsp;&nbsp;
                     <Componentinput
                       className='small'
                       value={step.amount}
-                      onChange={(e) => this.handleChangeE(index, 'amount', e.target.value)}
+                      onChange={(e) => this.handleChange('reviseFormdata', 'equipment', index, 'amount', e.target.value)}
                     />
                     runtime:&nbsp;&nbsp;
                     <Componentinput
                       className='small'
                       value={step.runtime}
-                      onChange={(e) => this.handleChangeE(index, 'runtime', e.target.value)}
+                      onChange={(e) => this.handleChange('reviseFormdata', 'equipment', index, 'runtime', e.target.value)}
                     />
                   </FlowWapper>
                 </ComponentoptionWapper>
               ))}
               <ComponentoptionWapper>
-                <Componentbutton className='addstepDailyrecord' onClick={this.addStepE}>Add Step</Componentbutton>
+                <Componentbutton className='addstepDailyrecord' onClick={() => this.addStep('reviseFormdata', 'equipment')}>Add Step</Componentbutton>
               </ComponentoptionWapper>
-              {this.state.material.map((step, index) => (
+              {this.state.reviseFormdata.material.map((step, index) => (
                 <ComponentoptionWapper className='flow' key={index}>
                   {index === 0 ? <Componentindex>Materail</Componentindex> : <Componentindex className='blank' />}
                   <FlowWapper className='dailyrecord'>
                     {index + 1}:&nbsp;&nbsp;
-                    <Componentinput
-                      className='flow'
+                    <Select
+                      placeholder="Select material"
+                      options={materialOptions}
                       value={step.name}
-                      onChange={(e) => this.handleChangeM(index, 'name', e.target.value)}
+                      onChange={(selectedOption) => this.handleChange('reviseFormdata', 'material', index, 'name', selectedOption)}
+                      styles={PMcustomStyles}
                     />
                     amount:&nbsp;&nbsp;
                     <Componentinput
                       className='small'
                       value={step.amount}
-                      onChange={(e) => this.handleChangeM(index, 'amount', e.target.value)}
+                      onChange={(e) => this.handleChange('reviseFormdata', 'material', index, 'amount', e.target.value)}
                     />
                     unit:&nbsp;&nbsp;
                     <Componentinput
                       className='small'
                       value={step.unit}
-                      onChange={(e) => this.handleChangeM(index, 'unit', e.target.value)}
+                      onChange={(e) => this.handleChange('reviseFormdata', 'material', index, 'unit', e.target.value)}
                     />
                   </FlowWapper>
                 </ComponentoptionWapper>
               ))}
               <ComponentoptionWapper>
-                <Componentbutton className='addstepDailyrecord' onClick={this.addStepM}>Add Step</Componentbutton>
+                <Componentbutton className='addstepDailyrecord' onClick={() => this.addStep('reviseFormdata', 'material')}>Add Step</Componentbutton>
               </ComponentoptionWapper>
               <ComponentoptionWapper className='flow'>
                 <Componentindex>Description</Componentindex>
                 <Description
                   className='short'
-                  value={this.state.description}
-                  onChange={(e) => this.setState({ description: e.target.value })}></Description>
+                  value={this.state.reviseFormdata.description}
+                  onChange={(e) => this.setState((prevState) => ({ reviseFormdata: { ...prevState.reviseFormdata, description: e.target.value } }))}>
+                </Description>
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.dailyrecordrevise(this.state.Date, this.state.equipment, this.state.material, this.state.description)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.dailyrecordrevise(reviseFormdata)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
       case 3:
         {
-          const { Date, customTimeInput } = this.state;
-          const CustomTimeInput = ({ value, onChange }) => (
-            <input
-              value={value}
-              onChange={onChange}
-              placeholder="HH:mm"
-              className="custom-time-input"
-            />
-          );
-
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
-                    selected={Date}
-                    onChange={(date) => this.handleDateChange('Date', date)}
+                    selected={retrieveFormdata.Date}
+                    onChange={(date) => this.handleDateChange('retrieveFormdata', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
                     dateFormat="yyyy/MM/dd HH:mm"
                     timeCaption="time"
-                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                    customTimeInput={<CustomTimeInput value={retrieveFormdata.customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
                   />
                 </DatePickerWrapper>
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => { this.props.dailyrecordretrieve(this.state.Date); this.setState({ display: true }); }}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.dailyrecordretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
                 <div>
@@ -383,16 +398,17 @@ const mapDisptchToProps = (dispatch) => {
     setdailyrecordpage(id) {
       dispatch(actionCreators.setdailyrecordpage(id));
     },
-    dailyrecordpost(date, equipment, material, description) {
-      const Equipment = equipment.map(item => ({ ...item, name: item.name.value }));
-      const Material = material.map(item => ({ ...item, name: item.name.value }));
-      dispatch(actionCreators.dailyrecordpost(date, Equipment, Material, description))
+    dailyrecordpost(postFormdata) {
+      const { Date, equipment, material, description } = postFormdata
+      dispatch(actionCreators.dailyrecordpost(Date, equipment, material, description))
     },
-    dailyrecordrevise(date, equipment, material, description) {
-      dispatch(actionCreators.dailyrecordrevise(date, equipment, material, description));
+    dailyrecordrevise(reviseFormdata) {
+      const { Date, equipment, material, description } = reviseFormdata
+      dispatch(actionCreators.dailyrecordrevise(Date, equipment, material, description));
     },
-    dailyrecordretrieve(date) {
-      dispatch(actionCreators.dailyrecordretrieve(date));
+    dailyrecordretrieve(retrieveFormdata) {
+      const { Date } = retrieveFormdata
+      dispatch(actionCreators.dailyrecordretrieve(Date));
     },
     getmaterial() {
       dispatch(getmaterial());
@@ -402,6 +418,5 @@ const mapDisptchToProps = (dispatch) => {
     }
   }
 }
-
 
 export default connect(mapStateToProps, mapDisptchToProps)(Dailyrecord);

@@ -21,6 +21,23 @@ class BoundaryEdition extends PureComponent {
       { id: 3, text: 'Revise' },
       { id: 4, text: 'Delete' }
     ],
+    postFormdata: {
+      name: '',
+      address: '',
+      type: ''
+    },
+    retrieveFormdata: {
+      bid: '',
+      name: '',
+      type: '',
+    },
+    reviseFormdata: {
+      bid: '',
+      address: ''
+    },
+    deleteFormdata: {
+      bid: ''
+    },
     display: false
   };
 
@@ -32,8 +49,18 @@ class BoundaryEdition extends PureComponent {
     this.setState({ hoveredBox: null });
   };
 
+  handleInputChange = (event, formType, field) => {
+    const { value } = event.target;
+    this.setState(prevState => ({
+      [formType]: {
+        ...prevState[formType],
+        [field]: value
+      }
+    }));
+  };
 
   whichpage(page) {
+    const { postFormdata, reviseFormdata, deleteFormdata, retrieveFormdata } = this.state;
     switch (page) {
       case 1:
         {
@@ -41,18 +68,18 @@ class BoundaryEdition extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={postFormdata.name} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'name')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Address</Componentindex>
-                <Componentinput ref={(input) => { this.address = input }} />
+                <Componentinput value={postFormdata.address} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'address')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Type</Componentindex>
-                <Componentinput ref={(input) => { this.type = input }} />
+                <Componentinput value={postFormdata.type} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'type')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.boundary_editionpost(this.name, this.address, this.type)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.boundary_editionpost(postFormdata)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -63,18 +90,18 @@ class BoundaryEdition extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>BID</Componentindex>
-                <Componentinput ref={(input) => { this.bid = input }} />
+                <Componentinput value={retrieveFormdata.bid} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'bid')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={retrieveFormdata.name} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'name')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Type</Componentindex>
-                <Componentinput ref={(input) => { this.type = input }} />
+                <Componentinput value={retrieveFormdata.type} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'type')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => { this.props.boundary_editionretrieve(this.bid, this.name, this.type); this.setState({ display: true }); }}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.boundary_editionretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
                 <div>
@@ -97,14 +124,14 @@ class BoundaryEdition extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>BID</Componentindex>
-                <Componentinput ref={(input) => { this.bid = input }} />
+                <Componentinput value={reviseFormdata.bid} onChange={(e) => this.handleInputChange(e, 'reviseFormdata', 'bid')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Address</Componentindex>
-                <Componentinput ref={(input) => { this.address = input }} />
+                <Componentinput value={reviseFormdata.address} onChange={(e) => this.handleInputChange(e, 'reviseFormdata', 'address')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.boundary_editionrevise(this.bid, this.address)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.boundary_editionrevise(reviseFormdata)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -115,16 +142,16 @@ class BoundaryEdition extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>BID</Componentindex>
-                <Componentinput ref={(input) => { this.bid = input }} />
+                <Componentinput value={deleteFormdata.bid} onChange={(e) => this.handleInputChange(e, 'deleteFormdata', 'bid')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.boundary_editiondelete(this.bid)}>Delete</Componentbutton>
+                <Componentbutton onClick={() => this.props.boundary_editiondelete(deleteFormdata)}>Delete</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           )
         }
       default:
-        return;
+        return null;
     }
   }
 
@@ -162,17 +189,21 @@ const mapDisptchToProps = (dispatch) => {
     setboundary_editionpage(id) {
       dispatch(actionCreators.setboundary_editionpage(id));
     },
-    boundary_editionpost(name, address, type) {
-      dispatch(actionCreators.boundary_editionpost(name.value, address.value, type.value));
+    boundary_editionpost(postFormdata) {
+      const { name, address, type } = postFormdata
+      dispatch(actionCreators.boundary_editionpost(name, address, type));
     },
-    boundary_editionretrieve(bid, name, type) {
-      dispatch(actionCreators.boundary_editionretrieve(bid.value, name.value, type.value));
+    boundary_editionretrieve(retrieveFormdata) {
+      const { bid, name, type } = retrieveFormdata
+      dispatch(actionCreators.boundary_editionretrieve(bid, name, type));
     },
-    boundary_editionrevise(bid, address) {
-      dispatch(actionCreators.boundary_editionrevise(bid.value, address.value));
+    boundary_editionrevise(reviseFormdata) {
+      const { bid, address } = reviseFormdata
+      dispatch(actionCreators.boundary_editionrevise(bid, address));
     },
-    boundary_editiondelete(bid) {
-      dispatch(actionCreators.boundary_editiondelete(bid.value));
+    boundary_editiondelete(deleteFormdata) {
+      const { bid } = deleteFormdata
+      dispatch(actionCreators.boundary_editiondelete(bid));
     }
   }
 }

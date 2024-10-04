@@ -112,7 +112,7 @@ margin: 20px 0 0 25px;
 display: flex;
 align-items: center;
 &.contentwarpper {
-  justify-content: center;
+  justify-content: start;
   margin: 0;
 }
 &.content {
@@ -147,7 +147,8 @@ border-radius: 7px;
 font-size: 18px;
 background: #e0e0e0;
 &.content {
-margin-top: 20px;
+  margin-top: 20px;
+  max-width: 400px;
 }
 `;
 

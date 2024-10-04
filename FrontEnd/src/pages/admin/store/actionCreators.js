@@ -77,6 +77,8 @@ export const employeepost = (name, gender, phone, mail, nation) => {
 export const employeerevise = (EID, name, gender, phone, mail, nation) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/AAinfo.json', { EID, name, gender, phone, mail, nation }).then((res) => {
+      console.log(EID, name, gender, phone, mail, nation);
+      
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch(() => {
@@ -127,8 +129,6 @@ export const getmaterial = () => {
   return (dispatch) => {
     axios.get('/api/material.json').then((res) => {
       const result = res.data.data;
-      console.log('material');
-      
       dispatch({
         type: constants.GET_MATERIAL,
         materiallist: result

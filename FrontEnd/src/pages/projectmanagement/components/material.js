@@ -20,6 +20,22 @@ class Material extends PureComponent {
       { id: 2, text: 'Revise' },
       { id: 3, text: 'Retieve' },
     ],
+    postFormData: {
+      name: '',
+      mid: '',
+      amount: '',
+      unit: ''
+    },
+    reviseFormData: {
+      name: '',
+      mid: '',
+      amount: '',
+      unit: ''
+    },
+    retrieveFormData: {
+      name: '',
+      mid: '',
+    },
     display: false
   };
 
@@ -31,7 +47,18 @@ class Material extends PureComponent {
     this.setState({ hoveredBox: null });
   };
 
+  handleInputChange = (event, formType, field) => {
+    const { value } = event.target;
+    this.setState(prevState => ({
+      [formType]: {
+        ...prevState[formType],
+        [field]: value
+      }
+    }));
+  };
+
   whichpage(page) {
+    const { postFormData, reviseFormData, retrieveFormData } = this.state;
     switch (page) {
       case 1:
         {
@@ -39,22 +66,22 @@ class Material extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={postFormData.name} onChange={(e) => this.handleInputChange(e, 'postFormData', 'name')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper >
                 <Componentindex>MID</Componentindex>
-                <Componentinput ref={(input) => { this.mid = input }} />
+                <Componentinput value={postFormData.mid} onChange={(e) => this.handleInputChange(e, 'postFormData', 'mid')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Amount</Componentindex>
-                <Componentinput ref={(input) => { this.amount = input }} />
+                <Componentinput value={postFormData.amount} onChange={(e) => this.handleInputChange(e, 'postFormData', 'amount')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Unit</Componentindex>
-                <Componentinput ref={(input) => { this.unit = input }} />
+                <Componentinput value={postFormData.unit} onChange={(e) => this.handleInputChange(e, 'postFormData', 'unit')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialpost(this.name, this.mid, this.amount, this.unit)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialpost(postFormData)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -65,22 +92,22 @@ class Material extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={reviseFormData.name} onChange={(e) => this.handleInputChange(e, 'reviseFormData', 'name')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper >
                 <Componentindex>MID</Componentindex>
-                <Componentinput ref={(input) => { this.mid = input }} />
+                <Componentinput value={reviseFormData.mid} onChange={(e) => this.handleInputChange(e, 'reviseFormData', 'mid')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Amount</Componentindex>
-                <Componentinput ref={(input) => { this.amount = input }} />
+                <Componentinput value={reviseFormData.amount} onChange={(e) => this.handleInputChange(e, 'reviseFormData', 'amount')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Unit</Componentindex>
-                <Componentinput ref={(input) => { this.unit = input }} />
+                <Componentinput value={reviseFormData.unit} onChange={(e) => this.handleInputChange(e, 'reviseFormData', 'unit')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialrevise(this.name, this.mid, this.amount, this.unit)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialrevise(reviseFormData)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -91,14 +118,14 @@ class Material extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={retrieveFormData.name} onChange={(e) => this.handleInputChange(e, 'retrieveFormData', 'name')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper >
                 <Componentindex>MID</Componentindex>
-                <Componentinput ref={(input) => { this.mid = input }} />
+                <Componentinput value={retrieveFormData.mid} onChange={(e) => this.handleInputChange(e, 'retrieveFormData', 'mid')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => { this.props.materialretrieve(this.name, this.mid); this.setState({ display: true }); }}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.materialretrieve(retrieveFormData); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
                 <div>
@@ -115,7 +142,7 @@ class Material extends PureComponent {
           );
         }
       default:
-        return;
+        return null;
     }
   }
 
@@ -153,14 +180,17 @@ const mapDisptchToProps = (dispatch) => {
     setmaterialpage(id) {
       dispatch(actionCreators.setmaterialpage(id));
     },
-    materialpost(name, mid, amount, unit) {
-      dispatch(actionCreators.materialpost(name.value, mid.value, amount.value, unit.value));
+    materialpost(postFormData) {
+      const { name, mid, amount, unit } = postFormData
+      dispatch(actionCreators.materialpost(name, mid, amount, unit));
     },
-    materialrevise(name, mid, amount, unit) {
-      dispatch(actionCreators.materialrevise(name.value, mid.value, amount.value, unit.value));
+    materialrevise(reviseFormData) {
+      const { name, mid, amount, unit } = reviseFormData
+      dispatch(actionCreators.materialrevise(name, mid, amount, unit));
     },
-    materialretrieve(name, mid) {
-      dispatch(actionCreators.materialretrieve(name.value, mid.value));
+    materialretrieve(retrieveFormData) {
+      const { name, mid } = retrieveFormData
+      dispatch(actionCreators.materialretrieve(name, mid));
     }
   }
 }
