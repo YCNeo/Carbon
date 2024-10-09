@@ -163,15 +163,17 @@ class BoundaryEdition extends PureComponent {
         <Componenttitle>Boundary Edition</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Innerpageoption
-              key={id}
-              onClick={() => setboundary_editionpage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={boundary_editionpage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </Innerpageoption>
+            (localStorage.getItem('authority') === 'admin' || text === 'Retrieve') && (
+              <Innerpageoption
+                key={id}
+                onClick={() => setboundary_editionpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={boundary_editionpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Innerpageoption>
+            )
           ))}
         </ComponentoptionWapper>
         {this.whichpage(boundary_editionpage)}

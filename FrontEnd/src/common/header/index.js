@@ -73,25 +73,28 @@ class Header extends Component {
     return (
       <div>
         {cheatpage ?
-            <HeaderWrapper>
-              <Navitem>page list</Navitem>
-              <Link to='/home' onClick={() => (this.changecheatpage(cheatpage))}><Logo /></Link>
-              <Link to='/'><Jumpbottom>home</Jumpbottom></Link>
-              {
-                login ?
-                  <Jumpbottom onClick={logout}>press to logout</Jumpbottom> :
-                  <div>
-                    <Link to='/login'><Jumpbottom onClick={() => (iforgotpassword(false))}>login</Jumpbottom></Link>
-                    <Jumpbottom onClick={() => (iforgotpassword(true))}>revisepassword</Jumpbottom>
-                  </div>
-              }
-              <Link to='/admin'><Jumpbottom onClick={() => (iforgotpassword(false))}>admin (need login)</Jumpbottom></Link>
-              <Link to='/statement'><Jumpbottom>statement</Jumpbottom></Link>
-              <Link to='/projectmanagement'><Jumpbottom>project management</Jumpbottom></Link>
-              <Link to='/ppe'><Jumpbottom>PPE</Jumpbottom></Link>
-              <Link to='/esg'><Jumpbottom>ESG</Jumpbottom></Link>
-              <button onClick={() => (this.getjwp())}>get JWT</button>
-            </HeaderWrapper>
+          <HeaderWrapper>
+            <Navitem>page list</Navitem>
+            <Link to='/home' onClick={() => (this.changecheatpage(cheatpage))}><Logo /></Link>
+            <Link to='/'><Jumpbottom>home</Jumpbottom></Link>
+            {
+              login ?
+                <Jumpbottom onClick={logout}>press to logout</Jumpbottom> :
+                <div>
+                  <Link to='/login'><Jumpbottom onClick={() => (iforgotpassword(false))}>login</Jumpbottom></Link>
+                  <Jumpbottom onClick={() => (iforgotpassword(true))}>revisepassword</Jumpbottom>
+                </div>
+            }
+            <Link to='/admin'><Jumpbottom onClick={() => (iforgotpassword(false))}>admin (need login)</Jumpbottom></Link>
+            <Link to='/statement'><Jumpbottom>statement</Jumpbottom></Link>
+            <Link to='/projectmanagement'><Jumpbottom>project management</Jumpbottom></Link>
+            <Link to='/ppe'><Jumpbottom>PPE</Jumpbottom></Link>
+            <Link to='/esg'><Jumpbottom>ESG</Jumpbottom></Link>
+            <button onClick={() => (this.getjwp())}>get JWT</button>
+            <button onClick={() => (localStorage.setItem('authority', 'admin'))}>admin</button>
+            <button onClick={() => (localStorage.setItem('authority', 'member'))}>member</button>
+            <button onClick={() => (localStorage.setItem('authority', 'read_only'))}>read only</button>
+          </HeaderWrapper>
           :
           <HeaderWrapper>
             <div>
@@ -123,7 +126,8 @@ class Header extends Component {
               <Link to='/admin'><Button className="color1">admin</Button></Link>
               <Button className="color2">test1</Button>
             </Addition>
-          </HeaderWrapper >}
+          </HeaderWrapper >
+        }
       </div>
     )
   }

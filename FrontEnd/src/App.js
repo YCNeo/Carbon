@@ -61,16 +61,18 @@ class App extends Component {
             <MainIndexlist>
               <h2>Carbon Project</h2>
               {pages.map(({ id, text, link }) => (
-                <Link to={`/${link}`} key={id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <Mainpageoption
-                    onClick={() => { this.setmainpage(id); this.getinfo(); }}
-                    onMouseEnter={() => this.handleMouseEnter(id)}
-                    onMouseLeave={this.handleMouseLeave}
-                    className={mainpage === id || hoveredBox === id ? 'mousein' : ''}
-                  >
-                    {text}
-                  </Mainpageoption>
-                </Link>
+                (localStorage.getItem('authority') === 'admin' || text !== 'Admin') && (
+                  <Link to={`/${link}`} key={id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Mainpageoption
+                      onClick={() => { this.setmainpage(id); this.getinfo(); }}
+                      onMouseEnter={() => this.handleMouseEnter(id)}
+                      onMouseLeave={this.handleMouseLeave}
+                      className={mainpage === id || hoveredBox === id ? 'mousein' : ''}
+                    >
+                      {text}
+                    </Mainpageoption>
+                  </Link>
+                )
               ))}
             </MainIndexlist>
             <MainWrapper className='context'>

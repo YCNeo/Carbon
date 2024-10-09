@@ -24,6 +24,7 @@ export const logout = () => {
   localStorage.removeItem('Ename');
   localStorage.removeItem('authority');
   localStorage.removeItem('PM_rank');
+  localStorage.removeItem('project');
   return {
     type: constants.LOGOUT,
     value: false

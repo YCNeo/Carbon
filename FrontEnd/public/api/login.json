@@ -5,5 +5,9 @@
   "EID": "111111111",
   "Ename": "hahapiyen",
   "authority": "admin",
-  "PM_rank": "member"
+  "PM_rank": [
+    "project1",
+    "project2",
+    "project3"
+  ]
 }

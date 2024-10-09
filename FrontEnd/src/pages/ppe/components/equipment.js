@@ -24,7 +24,7 @@ class Equipment extends PureComponent {
       { id: 3, text: 'Retrieve' },
       { id: 4, text: 'Post Repair' },
       { id: 5, text: 'Repair Log' },
-      { id: 6, text: 'Dispoal List' },
+      { id: 6, text: 'Disposal List' },
     ],
     postFormdata: {
       name: '',
@@ -277,15 +277,17 @@ class Equipment extends PureComponent {
         <Componenttitle>Equipment</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Innerpageoption
-              key={id}
-              onClick={() => setequipmentpage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={equipmentpage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </Innerpageoption>
+            (localStorage.getItem('authority') === 'admin' || text === 'Retrieve' || text === 'Repair Log' || text === 'Disposal List') && (
+              <Innerpageoption
+                key={id}
+                onClick={() => setequipmentpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={equipmentpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Innerpageoption>
+            )
           ))}
         </ComponentoptionWapper>
         {this.whichpage(equipmentpage)}

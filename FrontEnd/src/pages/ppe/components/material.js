@@ -21,7 +21,7 @@ class Material extends PureComponent {
     pages: [
       { id: 1, text: 'Post' },
       { id: 2, text: 'Delete' },
-      { id: 3, text: 'Retieve' },
+      { id: 3, text: 'Retrieve' },
       { id: 4, text: 'Disposal list' }
     ],
     postFormdata: {
@@ -247,15 +247,17 @@ class Material extends PureComponent {
         <Componenttitle>Material</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Innerpageoption
-              key={id}
-              onClick={() => setmaterialpage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={materialpage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </Innerpageoption>
+            (localStorage.getItem('authority') === 'admin' || text === 'Retrieve') && (
+              <Innerpageoption
+                key={id}
+                onClick={() => setmaterialpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={materialpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Innerpageoption>
+            )
           ))}
         </ComponentoptionWapper>
         {this.whichpage(materialpage)}

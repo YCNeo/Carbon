@@ -26,7 +26,7 @@ class Dailyrecord extends PureComponent {
     pages: [
       { id: 1, text: 'Post' },
       { id: 2, text: 'Revise' },
-      { id: 3, text: 'Retieve' },
+      { id: 3, text: 'Retrieve' },
     ],
     postFormdata: {
       Date: new Date(),
@@ -365,15 +365,17 @@ class Dailyrecord extends PureComponent {
         <Componenttitle>Daily Record</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Innerpageoption
-              key={id}
-              onClick={() => setdailyrecordpage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={dailyrecordpage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </Innerpageoption>
+            (localStorage.getItem('authority') === 'admin' || text === 'Retrieve') && (
+              <Innerpageoption
+                key={id}
+                onClick={() => setdailyrecordpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={dailyrecordpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Innerpageoption>
+            )
           ))}
         </ComponentoptionWapper>
         {this.whichpage(dailyrecordpage)}
