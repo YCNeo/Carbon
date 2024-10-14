@@ -154,7 +154,7 @@ class Equipment extends PureComponent {
         <Componenttitle>Equipment</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            (localStorage.getItem('authority') === 'admin' || text === 'Retrieve') && (
+            (localStorage.getItem('pm_rank') === 'pm' || text === 'Retrieve') && (
               <Innerpageoption
                 key={id}
                 onClick={() => setequipmentpage(id)}

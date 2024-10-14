@@ -197,7 +197,7 @@ class Member extends PureComponent {
         <Componenttitle>Member</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            (localStorage.getItem('authority') === 'admin' || text === 'Retrieve') && (
+            (localStorage.getItem('pm_rank') === 'pm' || text === 'Retrieve') && (
               <Innerpageoption
                 key={id}
                 onClick={() => setmemberpage(id)}

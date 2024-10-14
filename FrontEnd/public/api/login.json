@@ -6,8 +6,17 @@
   "Ename": "hahapiyen",
   "authority": "admin",
   "PM_rank": [
-    "project1",
-    "project2",
-    "project3"
+    {
+      "pid": "1",
+      "position": "pm"
+    },
+    {
+      "pid": "2",
+      "position": "sa"
+    },
+    {
+      "pid": "3",
+      "position": "ro"
+    }
   ]
 }

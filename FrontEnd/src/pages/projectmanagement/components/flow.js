@@ -170,15 +170,17 @@ class Flow extends PureComponent {
         <Componenttitle>Flow</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Innerpageoption
-              key={id}
-              onClick={() => setflowpage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={flowpage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </Innerpageoption>
+            (localStorage.getItem('pm_rank') === 'pm' || text === 'Design') && (
+              <Innerpageoption
+                key={id}
+                onClick={() => setflowpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={flowpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Innerpageoption>
+            )
           ))}
         </ComponentoptionWapper>
         {this.whichpage(flowpage)}

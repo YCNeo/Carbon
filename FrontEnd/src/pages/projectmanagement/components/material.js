@@ -154,7 +154,7 @@ class Material extends PureComponent {
         <Componenttitle>Material</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            (localStorage.getItem('authority') === 'admin' || text === 'Retrieve') && (
+            (localStorage.getItem('pm_rank') === 'pm' || text === 'Retrieve') && (
               <Innerpageoption
                 key={id}
                 onClick={() => setmaterialpage(id)}

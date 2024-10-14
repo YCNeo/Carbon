@@ -365,7 +365,7 @@ class Dailyrecord extends PureComponent {
         <Componenttitle>Daily Record</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            (localStorage.getItem('authority') === 'admin' || text === 'Retrieve') && (
+            (localStorage.getItem('pm_rank') === 'pm' || text === 'Retrieve') && (
               <Innerpageoption
                 key={id}
                 onClick={() => setdailyrecordpage(id)}

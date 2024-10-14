@@ -3,7 +3,8 @@ import * as constants from './constants';
 const defaultState = {
   login: false,
   loginfail: false,
-  forgetpassword: false
+  forgetpassword: false,
+  pm_ranklist:[]
 }
 
 const reducer = (state = defaultState, action) => {
@@ -18,6 +19,8 @@ const reducer = (state = defaultState, action) => {
       return { ...state, forgetpassword: action.value }
     case constants.FIRST_LOGIN:
       return { ...state, forgetpassword: action.value }
+    case constants.PMRANK:
+      return { ...state, pm_ranklist: action.list }
     default:
       return state;
   }

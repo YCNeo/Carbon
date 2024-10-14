@@ -34,7 +34,8 @@ class Projectmanagement extends Component {
     ],
     choosepage: true,
     projectid: '',
-    userposition: []
+    projectname: '',
+    matchedProjects: []
   };
 
   handleMouseEnter = (index) => {
@@ -48,9 +49,14 @@ class Projectmanagement extends Component {
   back = () => {
     this.setState({ choosepage: true })
   }
+
   handleSelectChange = (selectedOptions) => {
-    this.setState({ projectid: selectedOptions, choosepage: false });
-    localStorage.setItem('project', selectedOptions.label);//看要回傳id(value)還是name(label)
+    this.setState({ projectid: selectedOptions, choosepage: false, projectname: selectedOptions.label });
+    localStorage.setItem('project', selectedOptions.value);//看要回傳id(value)還是name(label)
+
+    const { pm_ranklist } = this.props;
+    const rank = pm_ranklist.find(rank => rank.pid === localStorage.getItem('project'));
+    localStorage.setItem('pm_rank', (rank ? rank.position : null));
   };
 
   whichpage(Projectmanagementpage) {
@@ -70,10 +76,10 @@ class Projectmanagement extends Component {
 
   render() {
     const { setprojectmanagementpage, projectmanagementpage, projectlist } = this.props;
-    const { hoveredBox, pages, userposition, projectid } = this.state;
+    const { hoveredBox, pages, projectid, projectname } = this.state;
 
-    const isinposition = (name) => {
-      return userposition.includes(name);
+    const isinposition = (projectId) => {
+      return this.state.matchedProjects.includes(projectId);
     };
 
     const options = projectlist.map(item => ({
@@ -88,7 +94,7 @@ class Projectmanagement extends Component {
       }),
       option: (provided, state) => ({
         ...provided,
-        backgroundColor: state.isSelected ? '#0080FF' : (isinposition(state.data.label) ? '#d3d3d3' : 'white'),
+        backgroundColor: state.isSelected ? '#0080FF' : (isinposition(state.data.value) ? '#d3d3d3' : 'white'),
         color: state.isSelected ? 'white' : 'black',
         '&:hover': { backgroundColor: '#D2E9FF', }
       })
@@ -116,6 +122,7 @@ class Projectmanagement extends Component {
             (
               <PageWrapper>
                 <PageIndexlist>
+                  <Pagepageoption className='projectname'>{projectname}</Pagepageoption>
                   {pages.map(({ id, text }) => (
                     <Pagepageoption
                       key={id}
@@ -143,20 +150,24 @@ class Projectmanagement extends Component {
 
   componentDidMount() {
     this.props.getproject();
-    const userpositionStr = localStorage.getItem('PM_rank');
 
-    if (userpositionStr) {
-      this.setState({
-        userposition: userpositionStr.split(',')
-      });
-    }
+    const { pm_ranklist, projectlist } = this.props;
+
+    const matchedProjects = projectlist.filter(project =>
+      pm_ranklist.some(rank => rank.pid === project.id)
+    ).map(project => project.id);
+
+    this.setState({
+      matchedProjects
+    });
   }
 }
 
 const mapStateToProps = (state) => ({
   loginstate: state.login.login,
   projectmanagementpage: state.projectmanagement.projectmanagementpage,
-  projectlist: state.statement.projectlist
+  projectlist: state.statement.projectlist,
+  pm_ranklist: state.login.pm_ranklist
 });
 
 const mapDispatchToProps = (dispatch) => ({

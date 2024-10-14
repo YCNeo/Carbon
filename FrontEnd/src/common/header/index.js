@@ -75,7 +75,6 @@ class Header extends Component {
         {cheatpage ?
           <HeaderWrapper>
             <Navitem>page list</Navitem>
-            <Link to='/home' onClick={() => (this.changecheatpage(cheatpage))}><Logo /></Link>
             <Link to='/'><Jumpbottom>home</Jumpbottom></Link>
             {
               login ?
@@ -100,7 +99,6 @@ class Header extends Component {
             <div>
               <Navitem>page list</Navitem>
               <Link to='/' onClick={() => (this.changecheatpage(cheatpage))}><Logo /></Link>
-              <Link to='/home'><Jumpbottom>home</Jumpbottom></Link>
             </div>
             <Nav>
               <Navitem className="left active">button1</Navitem>

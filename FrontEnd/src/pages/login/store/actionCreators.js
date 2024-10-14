@@ -18,6 +18,12 @@ const firstlogin = () => ({
   type: constants.FIRST_LOGIN,
   value: true
 })
+
+const pmrank = (rank) => ({
+  type: constants.PMRANK,
+  list: rank
+})
+
 export const logout = () => {
   localStorage.removeItem('jwtToken');
   localStorage.removeItem('EID');
@@ -25,6 +31,7 @@ export const logout = () => {
   localStorage.removeItem('authority');
   localStorage.removeItem('PM_rank');
   localStorage.removeItem('project');
+  localStorage.removeItem('pm_rank');
   return {
     type: constants.LOGOUT,
     value: false
@@ -55,7 +62,7 @@ export const login = (user, ori_password) => {
         localStorage.setItem('EID', result2.EID);
         localStorage.setItem('Ename', result2.Ename);
         localStorage.setItem('authority', result2.authority);
-        localStorage.setItem('PM_rank', result2.PM_rank);
+        dispatch(pmrank(result2.PM_rank));
       })
 
       //localStorage.setItem('EID', '1111111111');
