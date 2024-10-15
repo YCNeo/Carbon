@@ -15,7 +15,6 @@ export const MainIndexlist = styled.div`
 width: 200px;
 float: left;
 border-right: 1px solid gray;
-flex-grow: 1;
 `;
 
 export const MainPage = styled.div`
@@ -37,14 +36,14 @@ cursor: pointer;
 }
 `
 
-export const Maintop =styled.div`
+export const Maintop = styled.div`
 //flex-grow: 1;
 min-height: 80px;
 border-bottom: 1px solid gray;
 display: flex;
 align-items: center;
-justify-content: flex-end;
-padding-right: 30px;
+justify-content: space-between;
+padding: 0 50px 0 30px;
 `
 
 //////////////////////////////////////login//////////////////////////////////////

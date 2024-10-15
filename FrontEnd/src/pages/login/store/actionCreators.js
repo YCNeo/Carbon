@@ -56,7 +56,6 @@ export const login = (user, ori_password) => {
       }
       const token = res.data.JWT;
       localStorage.setItem('jwtToken', token);// put
-      console.log("get:" + token);
       axios./*正是對接時用post*/get('/api/login.json').then((res) => { //記得改route
         const result2 = res.data;
         localStorage.setItem('EID', result2.EID);

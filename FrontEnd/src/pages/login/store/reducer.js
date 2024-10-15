@@ -4,13 +4,13 @@ const defaultState = {
   login: false,
   loginfail: false,
   forgetpassword: false,
-  pm_ranklist:[]
+  pm_ranklist: []
 }
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case constants.CHANGE_LOGIN:
-      return { ...state, login: action.value, loginfail: !action.value }
+      return { ...state, login: action.value, loginfail: !action.value, forgetpassword: !action.value }
     case constants.LOGOUT:
       return { ...state, login: action.value, forgetpassword: action.value }
     case constants.LOG_FAIL:
