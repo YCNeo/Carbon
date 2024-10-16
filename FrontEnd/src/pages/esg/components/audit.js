@@ -37,7 +37,6 @@ class Audit extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>i audit</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentbutton>Post</Componentbutton>

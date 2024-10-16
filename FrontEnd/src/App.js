@@ -1,14 +1,12 @@
 import { Component } from 'react'
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 
 import store from './store';
 import Header from './common/header';
-import Home from './pages/home';
 import Login from './pages/login'
 import Admin from './pages/admin'
 import Statement from './pages/statement'
-import Detail from './pages/detail';
 import Projectmanagement from './pages/projectmanagement';
 import PPE from './pages/ppe';
 import ESG from './pages/esg';
@@ -18,14 +16,16 @@ import {
   MainIndexlist,
   Maintop,
   Mainpageoption
-} from './style';
+} from './components/style';
 import './index.css';
+import Logout from './components/function/logout';
 
 class App extends Component {
   state = {
     mainpage: 0,
     hoveredBox: null,
     pages: [
+      { id: 0, text: 'home', link: '' },
       { id: 1, text: 'Admin', link: 'admin' },
       { id: 2, text: 'Project management', link: 'projectmanagement' },
       { id: 3, text: 'PPE', link: 'ppe' },
@@ -57,40 +57,47 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           {<Header />}
-          <MainWrapper>
-            <MainIndexlist>
+          <MainWrapper className='context'>
+            <Maintop>
               <h2>Carbon Project</h2>
-              {pages.map(({ id, text, link }) => (
-                <Link to={`/${link}`} key={id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <Mainpageoption
-                    onClick={() => { this.setmainpage(id); this.getinfo(); }}
-                    onMouseEnter={() => this.handleMouseEnter(id)}
-                    onMouseLeave={this.handleMouseLeave}
-                    className={mainpage === id || hoveredBox === id ? 'mousein' : ''}
-                  >
-                    {text}
-                  </Mainpageoption>
-                </Link>
-              ))}
-            </MainIndexlist>
-            <MainWrapper className='context'>
-              <Maintop>{this.state.eid}&nbsp;&nbsp;{this.state.ename}</Maintop>
+              {this.state.eid}&nbsp;&nbsp;{this.state.ename}
+              <Logout />
+            </Maintop>
+            <MainWrapper>
+              <MainIndexlist>
+                {pages.map(({ id, text, link }) => (
+                  (localStorage.getItem('authority') === 'admin' || text !== 'Admin') && (
+                    <Link to={`/${link}`} key={id} style={{ textDecoration: 'none', color: 'inherit' }}>
+                      <Mainpageoption
+                        onClick={() => { this.setmainpage(id) }}
+                        onMouseEnter={() => this.handleMouseEnter(id)}
+                        onMouseLeave={this.handleMouseLeave}
+                        className={mainpage === id || hoveredBox === id ? 'mousein' : ''}
+                      >
+                        {text}
+                      </Mainpageoption>
+                    </Link>
+                  )
+                ))}
+              </MainIndexlist>
               <Routes>
-                <Route path='/' element={(localStorage.getItem('jwtToken')) ? <h1>Home page</h1> : <Navigate to='/login' />}></Route>
-                <Route path='/home' element={<Home />}></Route>
+                <Route path='/' element={<h1>Home page</h1>}></Route>
                 <Route path='/login' element={<Login />}></Route>
                 <Route path='/admin' element={<Admin />}></Route>
                 <Route path='/statement' element={<Statement />}></Route>
                 <Route path='/projectmanagement' element={<Projectmanagement />}></Route>
                 <Route path='/ppe' element={<PPE />}></Route>
                 <Route path='/esg' element={<ESG />}></Route>
-                <Route path='/detail/:id' element={<Detail />}></Route>
               </Routes>
             </MainWrapper>
           </MainWrapper >
         </BrowserRouter>
       </Provider >
     )
+  }
+
+  componentDidMount() {
+    this.getinfo();
   }
 }
 

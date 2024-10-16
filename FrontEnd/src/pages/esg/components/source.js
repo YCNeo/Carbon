@@ -21,6 +21,27 @@ class Source extends PureComponent {
       { id: 3, text: 'Delete' },
       { id: 4, text: 'Retrieve' },
     ],
+    postFormdata: {
+      ename: '',
+      form: '',
+      ingredient: '',
+      category: ''
+    },
+    retrieveFormdata: {
+      ename: '',
+      form: '',
+      ingredient: '',
+      category: ''
+    },
+    reviseFormdata: {
+      ename: '',
+      form: '',
+      ingredient: '',
+      category: ''
+    },
+    deleteFormdata: {
+      sid: ''
+    },
     display: false
   };
 
@@ -32,8 +53,18 @@ class Source extends PureComponent {
     this.setState({ hoveredBox: null });
   };
 
+  handleInputChange = (event, formType, field) => {
+    const { value } = event.target;
+    this.setState(prevState => ({
+      [formType]: {
+        ...prevState[formType],
+        [field]: value
+      }
+    }));
+  };
 
   whichpage(page) {
+    const { postFormdata, reviseFormdata, deleteFormdata, retrieveFormdata } = this.state;
     switch (page) {
       case 1:
         {
@@ -41,22 +72,22 @@ class Source extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>EName</Componentindex>
-                <Componentinput ref={(input) => { this.ename = input }} />
+                <Componentinput value={postFormdata.ename} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'ename')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Form</Componentindex>
-                <Componentinput ref={(input) => { this.form = input }} />
+                <Componentinput value={postFormdata.form} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'form')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Ingredient</Componentindex>
-                <Componentinput ref={(input) => { this.ingredient = input }} />
+                <Componentinput value={postFormdata.ingredient} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'ingredient')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Category</Componentindex>
-                <Componentinput ref={(input) => { this.category = input }} />
+                <Componentinput value={postFormdata.category} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'category')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.sourcepost(this.ename, this.form, this.ingredient, this, this.category)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.sourcepost(postFormdata)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -67,22 +98,22 @@ class Source extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>EName</Componentindex>
-                <Componentinput ref={(input) => { this.ename = input }} />
+                <Componentinput value={reviseFormdata.ename} onChange={(e) => this.handleInputChange(e, 'reviseFormdata', 'ename')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Form</Componentindex>
-                <Componentinput ref={(input) => { this.form = input }} />
+                <Componentinput value={reviseFormdata.form} onChange={(e) => this.handleInputChange(e, 'reviseFormdata', 'form')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Ingredient</Componentindex>
-                <Componentinput ref={(input) => { this.ingredient = input }} />
+                <Componentinput value={reviseFormdata.ingredient} onChange={(e) => this.handleInputChange(e, 'reviseFormdata', 'ingredient')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Category</Componentindex>
-                <Componentinput ref={(input) => { this.category = input }} />
+                <Componentinput value={reviseFormdata.category} onChange={(e) => this.handleInputChange(e, 'reviseFormdata', 'category')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.sourcerevise(this.ename, this.form, this.ingredient, this, this.category)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.sourcerevise(reviseFormdata)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -93,10 +124,10 @@ class Source extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>SID</Componentindex>
-                <Componentinput ref={(input) => { this.sid = input }} />
+                <Componentinput value={deleteFormdata.sid} onChange={(e) => this.handleInputChange(e, 'deleteFormdata', 'sid')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton className='reject' onClick={() => this.props.sourcedelete(this.sid)}>Delete</Componentbutton>
+                <Componentbutton className='reject' onClick={() => this.props.sourcedelete(deleteFormdata)}>Delete</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -107,22 +138,22 @@ class Source extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>EName</Componentindex>
-                <Componentinput ref={(input) => { this.ename = input }} />
+                <Componentinput value={retrieveFormdata.ename} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'ename')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Form</Componentindex>
-                <Componentinput ref={(input) => { this.form = input }} />
+                <Componentinput value={retrieveFormdata.form} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'form')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Ingredient</Componentindex>
-                <Componentinput ref={(input) => { this.ingredient = input }} />
+                <Componentinput value={retrieveFormdata.ingredient} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'ingredient')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Category</Componentindex>
-                <Componentinput ref={(input) => { this.category = input }} />
+                <Componentinput value={retrieveFormdata.category} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'category')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => { this.props.sourceretrieve(this.ename, this.form, this.ingredient, this, this.category); this.setState({ display: true }); }}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.sourceretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
                 <div>
@@ -152,15 +183,17 @@ class Source extends PureComponent {
         <Componenttitle>Source</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Innerpageoption
-              key={id}
-              onClick={() => setsourcepage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={sourcepage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </Innerpageoption>
+            (localStorage.getItem('authority') === 'admin' || text === 'Retrieve') && (
+              <Innerpageoption
+                key={id}
+                onClick={() => setsourcepage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={sourcepage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Innerpageoption>
+            )
           ))}
         </ComponentoptionWapper>
         {this.whichpage(sourcepage)}
@@ -178,17 +211,21 @@ const mapDisptchToProps = (dispatch) => {
     setsourcepage(id) {
       dispatch(actionCreators.setsourcepage(id));
     },
-    sourcepost(ename, form, ingredient, category) {
-      dispatch(actionCreators.sourcepost(ename.value, form.value, ingredient.value, category.value));
+    sourcepost(postFormdata) {
+      const { ename, form, ingredient, category } = postFormdata
+      dispatch(actionCreators.sourcepost(ename, form, ingredient, category));
     },
-    sourceretrieve(ename, form, ingredient, category) {
-      dispatch(actionCreators.sourceretrieve(ename.value, form.value, ingredient.value, category.value));
+    sourceretrieve(retrieveFormdata) {
+      const { ename, form, ingredient, category } = retrieveFormdata
+      dispatch(actionCreators.sourceretrieve(ename, form, ingredient, category));
     },
-    sourcedelete(sid) {
-      dispatch(actionCreators.sourcedelete(sid.value))
+    sourcedelete(deleteFormdata) {
+      const { sid } = deleteFormdata
+      dispatch(actionCreators.sourcedelete(sid))
     },
-    sourcerevise(ename, form, ingredient, category) {
-      dispatch(actionCreators.sourcerevise(ename.value, form.value, ingredient.value, category.value));
+    sourcerevise(reviseFormdata) {
+      const { ename, form, ingredient, category } = reviseFormdata
+      dispatch(actionCreators.sourcerevise(ename, form, ingredient, category));
     }
   }
 }

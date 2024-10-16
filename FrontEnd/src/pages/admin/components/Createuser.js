@@ -44,7 +44,6 @@ class Createuser extends PureComponent {
             value={selectedAccess}
             onChange={this.handleSelectChange}
             styles={customStyles}
-            isDisabled={localStorage.getItem('authority') === 'read_only'}
           />
         </ComponentoptionWapper>
         <ComponentoptionWapper>

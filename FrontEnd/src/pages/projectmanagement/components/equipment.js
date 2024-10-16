@@ -18,8 +18,24 @@ class Equipment extends PureComponent {
     pages: [
       { id: 1, text: 'Post' },
       { id: 2, text: 'Revise' },
-      { id: 3, text: 'Retieve' },
+      { id: 3, text: 'Retrieve' },
     ],
+    postFormData: {
+      name: '',
+      eqid: '',
+      amount: '',
+      unit: ''
+    },
+    reviseFormData: {
+      name: '',
+      eqid: '',
+      amount: '',
+      unit: ''
+    },
+    retrieveFormData: {
+      name: '',
+      eqid: '',
+    },
     display: false
   };
 
@@ -31,7 +47,18 @@ class Equipment extends PureComponent {
     this.setState({ hoveredBox: null });
   };
 
+  handleInputChange = (event, formType, field) => {
+    const { value } = event.target;
+    this.setState(prevState => ({
+      [formType]: {
+        ...prevState[formType],
+        [field]: value
+      }
+    }));
+  };
+
   whichpage(page) {
+    const { postFormData, reviseFormData, retrieveFormData } = this.state;
     switch (page) {
       case 1:
         {
@@ -39,22 +66,22 @@ class Equipment extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={postFormData.name} onChange={(e) => this.handleInputChange(e, 'postFormData', 'name')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper >
                 <Componentindex>EQID</Componentindex>
-                <Componentinput ref={(input) => { this.eqid = input }} />
+                <Componentinput value={postFormData.eqid} onChange={(e) => this.handleInputChange(e, 'postFormData', 'eqid')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Amount</Componentindex>
-                <Componentinput ref={(input) => { this.amount = input }} />
+                <Componentinput value={postFormData.amount} onChange={(e) => this.handleInputChange(e, 'postFormData', 'amount')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Unit</Componentindex>
-                <Componentinput ref={(input) => { this.unit = input }} />
+                <Componentinput value={postFormData.unit} onChange={(e) => this.handleInputChange(e, 'postFormData', 'unit')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentpost(this.name, this.eqid, this.amount, this.unit)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.equipmentpost(postFormData)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -65,22 +92,22 @@ class Equipment extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={reviseFormData.name} onChange={(e) => this.handleInputChange(e, 'reviseFormData', 'name')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper >
                 <Componentindex>EQID</Componentindex>
-                <Componentinput ref={(input) => { this.eqid = input }} />
+                <Componentinput value={reviseFormData.eqid} onChange={(e) => this.handleInputChange(e, 'reviseFormData', 'eqid')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Amount</Componentindex>
-                <Componentinput ref={(input) => { this.amount = input }} />
+                <Componentinput value={reviseFormData.amount} onChange={(e) => this.handleInputChange(e, 'reviseFormData', 'amount')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Unit</Componentindex>
-                <Componentinput ref={(input) => { this.unit = input }} />
+                <Componentinput value={reviseFormData.unit} onChange={(e) => this.handleInputChange(e, 'reviseFormData', 'unit')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.equipmentrevise(this.name, this.eqid, this.amount, this.unit)}>Revise</Componentbutton>
+                <Componentbutton onClick={() => this.props.equipmentrevise(reviseFormData)}>Revise</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -91,14 +118,14 @@ class Equipment extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={retrieveFormData.name} onChange={(e) => this.handleInputChange(e, 'retrieveFormData', 'name')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper >
                 <Componentindex>EQID</Componentindex>
-                <Componentinput ref={(input) => { this.eqid = input }} />
+                <Componentinput value={retrieveFormData.eqid} onChange={(e) => this.handleInputChange(e, 'retrieveFormData', 'eqid')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => { this.props.equipmentretrieve(this.name, this.eqid); this.setState({ display: true }); }}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.equipmentretrieve(retrieveFormData); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
                 <div>
@@ -127,15 +154,17 @@ class Equipment extends PureComponent {
         <Componenttitle>Equipment</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Innerpageoption
-              key={id}
-              onClick={() => setequipmentpage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={equipmentpage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </Innerpageoption>
+            (localStorage.getItem('pm_rank') === 'pm' || text === 'Retrieve') && (
+              <Innerpageoption
+                key={id}
+                onClick={() => setequipmentpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={equipmentpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Innerpageoption>
+            )
           ))}
         </ComponentoptionWapper>
         {this.whichpage(equipmentpage)}
@@ -153,14 +182,17 @@ const mapDisptchToProps = (dispatch) => {
     setequipmentpage(id) {
       dispatch(actionCreators.setequipmentpage(id));
     },
-    equipmentpost(name, eqid, amount, unit) {
-      dispatch(actionCreators.equipmentpost(name.value, eqid.value, amount.value, unit.value));
+    equipmentpost(postFormData) {
+      const { name, eqid, amount, unit } = postFormData
+      dispatch(actionCreators.equipmentpost(name, eqid, amount, unit));
     },
-    equipmentrevise(name, eqid, amount, unit) {
-      dispatch(actionCreators.equipmentrevise(name.value, eqid.value, amount.value, unit.value));
+    equipmentrevise(reviseFormData) {
+      const { name, eqid, amount, unit } = reviseFormData
+      dispatch(actionCreators.equipmentrevise(name, eqid, amount, unit));
     },
-    equipmentretrieve(name, eqid) {
-      dispatch(actionCreators.equipmentretrieve(name.value, eqid.value));
+    equipmentretrieve(retrieveFormData) {
+      const { name, eqid } = retrieveFormData
+      dispatch(actionCreators.equipmentretrieve(name, eqid));
     }
   }
 }

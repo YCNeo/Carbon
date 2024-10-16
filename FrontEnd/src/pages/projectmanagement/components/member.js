@@ -20,11 +20,26 @@ class Member extends PureComponent {
       { id: 1, text: 'Post' },
       { id: 2, text: 'Revise' },
       { id: 3, text: 'Delete' },
-      { id: 4, text: 'Retieve' },
+      { id: 4, text: 'Retrieve' },
     ],
+    postFormData: {
+      eid: '',
+      position: null
+    },
+    reviseFormData: {
+      eid: '',
+      position: null
+    },
+    deleteFormData: {
+      eid: ''
+    },
+    retrieveFormData: {
+      eid: '',
+      name: '',
+      position: null
+    },
     display: false,
-    selectedposition: '',
-    retrieveposition: ''
+
   };
 
   handleMouseEnter = (id) => {
@@ -35,15 +50,26 @@ class Member extends PureComponent {
     this.setState({ hoveredBox: null });
   };
 
-  handleSelectChange = (selectedOptions) => {
-    this.setState({ selectedposition: selectedOptions });
+  handleInputChange = (page, field, value) => {
+    this.setState((prevState) => ({
+      [`${page}FormData`]: {
+        ...prevState[`${page}FormData`],
+        [field]: value
+      }
+    }));
   };
 
-  handleSelectChangeR = (selectedOptions) => {
-    this.setState({ retrieveposition: selectedOptions });
+  handleSelectChange = (page, selectedOptions) => {
+    this.setState((prevState) => ({
+      [`${page}FormData`]: {
+        ...prevState[`${page}FormData`],
+        position: selectedOptions
+      }
+    }));
   };
 
   whichpage(page) {
+    const { postFormData, reviseFormData, deleteFormData, retrieveFormData } = this.state;
     switch (page) {
       case 1:
         {
@@ -54,113 +80,110 @@ class Member extends PureComponent {
 
           return (
             <ComponentWapper>
-              <ComponentoptionWapper >
+              <ComponentoptionWapper>
                 <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.eid = input }} />
-              </ComponentoptionWapper >
+                <Componentinput value={postFormData.eid} onChange={(e) => this.handleInputChange('post', 'eid', e.target.value)} />
+              </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Position</Componentindex>
                 <Select
                   placeholder="Select position"
                   options={positionOptions}
-                  value={this.state.selectedposition}
-                  onChange={this.handleSelectChange}
+                  value={postFormData.position}
+                  onChange={(option) => this.handleSelectChange('post', option)}
                   readOnly={localStorage.getItem('PM_rank') === 'member'}
                 />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.memberpost(this.eid, this.state.selectedposition)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.memberpost(postFormData)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
         }
-      case 2:
-        {
-          const positionOptions = this.props.positionlist.map(item => ({
-            value: item.id,
-            label: item.name
-          }));
+      case 2: {
+        const positionOptions = this.props.positionlist.map(item => ({
+          value: item.id,
+          label: item.name
+        }));
 
-          return (
-            <ComponentWapper>
-              <ComponentoptionWapper >
-                <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.eid = input }} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper>
-                <Componentindex>Position</Componentindex>
-                <Select
-                  placeholder="Select position"
-                  options={positionOptions}
-                  value={this.state.selectedposition}
-                  onChange={this.handleSelectChange}
-                  readOnly={localStorage.getItem('PM_rank') === 'member'}
-                />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.memberrevise(this.eid, this.state.selectedposition)}>Revise</Componentbutton>
-              </ComponentoptionWapper>
-            </ComponentWapper>
-          );
-        }
-      case 3:
-        {
-          return (
-            <ComponentWapper>
-              <ComponentoptionWapper >
-                <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.eid = input }} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper>
-                <Componentbutton className='reject' onClick={() => this.props.memberremove(this.eid)}>Remove</Componentbutton>
-              </ComponentoptionWapper>
-            </ComponentWapper>
-          );
-        }
-      case 4:
-        {
-          const positionOptions = this.props.positionlist.map(item => ({
-            value: item.id,
-            label: item.name
-          }));
+        return (
+          <ComponentWapper>
+            <ComponentoptionWapper>
+              <Componentindex>EID</Componentindex>
+              <Componentinput value={reviseFormData.eid} onChange={(e) => this.handleInputChange('revise', 'eid', e.target.value)} />
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentindex>Position</Componentindex>
+              <Select
+                placeholder="Select position"
+                options={positionOptions}
+                value={reviseFormData.position}
+                onChange={(option) => this.handleSelectChange('revise', option)}
+                readOnly={localStorage.getItem('PM_rank') === 'member'}
+              />
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentbutton onClick={() => this.props.memberrevise(reviseFormData)}>Revise</Componentbutton>
+            </ComponentoptionWapper>
+          </ComponentWapper>
+        );
+      }
+      case 3: {
+        return (
+          <ComponentWapper>
+            <ComponentoptionWapper>
+              <Componentindex>EID</Componentindex>
+              <Componentinput value={deleteFormData.eid} onChange={(e) => this.handleInputChange('delete', 'eid', e.target.value)} />
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentbutton className='reject' onClick={() => this.props.memberremove(deleteFormData)}>Remove</Componentbutton>
+            </ComponentoptionWapper>
+          </ComponentWapper>
+        );
+      }
+      case 4: {
+        const positionOptions = this.props.positionlist.map(item => ({
+          value: item.id,
+          label: item.name
+        }));
 
-          return (
-            <ComponentWapper>
-              <ComponentoptionWapper >
-                <Componentindex>EID</Componentindex>
-                <Componentinput ref={(input) => { this.eid = input }} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper>
-                <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentindex>Position</Componentindex>
-                <Select
-                  placeholder="Select position"
-                  options={positionOptions}
-                  value={this.state.retrieveposition}
-                  onChange={this.handleSelectChangeR}
-                />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentbutton onClick={() => { this.props.memberretrieve(this.eid, this.name, this.state.retrieveposition); this.setState({ display: true }); }}>Retrieve</Componentbutton>
-              </ComponentoptionWapper>
-              {this.state.display ?
-                <div>
-                  <ComponentoptionWapper>
-                    <Componentcheckbox>list</Componentcheckbox>
-                  </ComponentoptionWapper>
-                  <ComponentoptionWapper>
-                    <Componentbutton onClick={() => { this.props.setmemberpage(2) }}>revise</Componentbutton>
-                    <Componentbutton onClick={() => { this.props.setmemberpage(3) }} className='reject'>Delete</Componentbutton>
-                  </ComponentoptionWapper>
-                </div>
-                :
-                ''}
-            </ComponentWapper>
-          );
-        }
+        return (
+          <ComponentWapper>
+            <ComponentoptionWapper>
+              <Componentindex>EID</Componentindex>
+              <Componentinput value={retrieveFormData.eid} onChange={(e) => this.handleInputChange('retrieve', 'eid', e.target.value)} />
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentindex>Name</Componentindex>
+              <Componentinput value={retrieveFormData.name} onChange={(e) => this.handleInputChange('retrieve', 'name', e.target.value)} />
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentindex>Position</Componentindex>
+              <Select
+                placeholder="Select position"
+                options={positionOptions}
+                value={retrieveFormData.position}
+                onChange={(option) => this.handleSelectChange('retrieve', option)}
+              />
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentbutton onClick={() => { this.props.memberretrieve(retrieveFormData); this.setState({ display: true }); }}>Retrieve</Componentbutton>
+            </ComponentoptionWapper>
+            {this.state.display ?
+              <div>
+                <ComponentoptionWapper>
+                  <Componentcheckbox>list</Componentcheckbox>
+                </ComponentoptionWapper>
+                <ComponentoptionWapper>
+                  <Componentbutton onClick={() => { this.props.setmemberpage(2) }}>Revise</Componentbutton>
+                  <Componentbutton onClick={() => { this.props.setmemberpage(3) }} className='reject'>Delete</Componentbutton>
+                </ComponentoptionWapper>
+              </div>
+              :
+              ''}
+          </ComponentWapper>
+        );
+      }
       default:
         return;
     }
@@ -174,15 +197,17 @@ class Member extends PureComponent {
         <Componenttitle>Member</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Innerpageoption
-              key={id}
-              onClick={() => setmemberpage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={memberpage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </Innerpageoption>
+            (localStorage.getItem('pm_rank') === 'pm' || text === 'Retrieve') && (
+              <Innerpageoption
+                key={id}
+                onClick={() => setmemberpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={memberpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Innerpageoption>
+            )
           ))}
         </ComponentoptionWapper>
         {this.whichpage(memberpage)}
@@ -205,17 +230,21 @@ const mapDisptchToProps = (dispatch) => {
     setmemberpage(id) {
       dispatch(actionCreators.setmemberpage(id));
     },
-    memberpost(eid, position) {
-      dispatch(actionCreators.memberpost(eid.value, position.label));
+    memberpost(postFormData) {
+      const { eid, position } = postFormData;
+      dispatch(actionCreators.memberpost(eid, position));
     },
-    memberrevise(eid, position) {
-      dispatch(actionCreators.memberrevise(eid.value, position.value));
+    memberrevise(reviseFormData) {
+      const { eid, position } = reviseFormData;
+      dispatch(actionCreators.memberrevise(eid, position));
     },
-    memberremove(eid) {
-      dispatch(actionCreators.memberremove(eid.value));
+    memberremove(deleteFormData) {
+      const { eid } = deleteFormData;
+      dispatch(actionCreators.memberremove(eid));
     },
-    memberretrieve(eid, name, position) {
-      dispatch(actionCreators.memberretrieve(eid.value, name.value, position.value));
+    memberretrieve(retrieveFormData) {
+      const { eid, name, position } = retrieveFormData;
+      dispatch(actionCreators.memberretrieve(eid, name, position));
     },
     getposition() {
       dispatch(actionCreators.getposition());

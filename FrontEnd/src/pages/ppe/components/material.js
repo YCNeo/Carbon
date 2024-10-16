@@ -21,13 +21,30 @@ class Material extends PureComponent {
     pages: [
       { id: 1, text: 'Post' },
       { id: 2, text: 'Delete' },
-      { id: 3, text: 'Retieve' },
+      { id: 3, text: 'Retrieve' },
       { id: 4, text: 'Disposal list' }
     ],
-    startDate: new Date(),
-    disposalDate: new Date(),
-    endDate: new Date(),
-    customTimeInput: "",
+    postFormdata: {
+      name: '',
+      supplier_name: '',
+      amount: '',
+      unit: '',
+      factor: '',
+      age: '',
+      startDate: new Date(),
+      disposalDate: new Date(),
+      endDate: new Date(),
+      customTimeInput: ""
+    },
+    deleteFormdata: {
+      name: '',
+      mid: ''
+    },
+    retrieveFormdata: {
+      name: '',
+      supplier_name: '',
+      mid: ''
+    },
     display: false
   };
 
@@ -40,18 +57,38 @@ class Material extends PureComponent {
   };
 
   handleDateChange = (field, date) => {
-    this.setState({ [field]: date });
+    this.setState(prevState => ({
+      postFormdata: {
+        ...prevState.postFormdata,
+        [field]: date
+      }
+    }));
   };
 
   handleTimeInputChange = (field, event) => {
-    this.setState({ [field]: event.target.value });
+    this.setState(prevState => ({
+      postFormdata: {
+        ...prevState.postFormdata,
+        [field]: event.target
+      }
+    }));
+  };
+
+  handleInputChange = (event, formType, field) => {
+    const { value } = event.target;
+    this.setState(prevState => ({
+      [formType]: {
+        ...prevState[formType],
+        [field]: value
+      }
+    }));
   };
 
   whichpage(page) {
+    const { postFormdata, deleteFormdata, retrieveFormdata } = this.state;
     switch (page) {
       case 1:
         {
-          const { startDate, disposalDate, endDate, customTimeInput } = this.state;
           const CustomTimeInput = ({ value, onChange }) => (
             <input
               value={value}
@@ -65,73 +102,73 @@ class Material extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={postFormdata.name} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'name')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Supplier Name</Componentindex>
-                <Componentinput ref={(input) => { this.supplier_name = input }} />
+                <Componentinput value={postFormdata.supplier_name} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'supplier_name')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper >
                 <Componentindex>Amount</Componentindex>
-                <Componentinput ref={(input) => { this.amount = input }} />
+                <Componentinput value={postFormdata.amount} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'amount')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Unit</Componentindex>
-                <Componentinput ref={(input) => { this.unit = input }} />
+                <Componentinput value={postFormdata.unit} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'unit')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper >
                 <Componentindex>Factor</Componentindex>
-                <Componentinput ref={(input) => { this.factor = input }} />
+                <Componentinput value={postFormdata.factor} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'factor')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Purchase Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
-                    selected={startDate}
+                    selected={postFormdata.startDate}
                     onChange={(date) => this.handleDateChange('startDate', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
                     dateFormat="yyyy/MM/dd HH:mm"
                     timeCaption="time"
-                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                    customTimeInput={<CustomTimeInput value={postFormdata.customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
                   />
                 </DatePickerWrapper>
                 <Componentindex>Disposal Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
-                    selected={disposalDate}
+                    selected={postFormdata.disposalDate}
                     onChange={(date) => this.handleDateChange('disposalDate', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
                     dateFormat="yyyy/MM/dd HH:mm"
                     timeCaption="time"
-                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                    customTimeInput={<CustomTimeInput value={postFormdata.customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
                   />
                 </DatePickerWrapper>
               </ComponentoptionWapper>
               <ComponentoptionWapper >
                 <Componentindex>Age</Componentindex>
-                <Componentinput ref={(input) => { this.age = input }} />
+                <Componentinput value={postFormdata.age} onChange={(e) => this.handleInputChange(e, 'postFormdata', 'age')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Expire Date</Componentindex>
                 <DatePickerWrapper>
                   <DatePicker
-                    selected={endDate}
+                    selected={postFormdata.endDate}
                     onChange={(date) => this.handleDateChange('endDate', date)}
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={30}
                     dateFormat="yyyy/MM/dd HH:mm"
                     timeCaption="time"
-                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                    customTimeInput={<CustomTimeInput value={postFormdata.customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
                   />
                 </DatePickerWrapper>
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialpost(this.name, this.supplier_name, this.amount, this.unit, this.factor, startDate, disposalDate, this.age, endDate)}>Post</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialpost(postFormdata)}>Post</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           );
@@ -142,14 +179,14 @@ class Material extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={deleteFormdata.name} onChange={(e) => this.handleInputChange(e, 'deleteFormdata', 'name')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>MID</Componentindex>
-                <Componentinput ref={(input) => { this.m_id = input }} />
+                <Componentinput value={deleteFormdata.mid} onChange={(e) => this.handleInputChange(e, 'deleteFormdata', 'mid')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.materialdelete(this.name, this.m_id)}>Delete</Componentbutton>
+                <Componentbutton onClick={() => this.props.materialdelete(deleteFormdata)}>Delete</Componentbutton>
               </ComponentoptionWapper>
             </ComponentWapper>
           )
@@ -160,18 +197,18 @@ class Material extends PureComponent {
             <ComponentWapper>
               <ComponentoptionWapper >
                 <Componentindex>Name</Componentindex>
-                <Componentinput ref={(input) => { this.name = input }} />
+                <Componentinput value={retrieveFormdata.name} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'name')} />
               </ComponentoptionWapper >
               <ComponentoptionWapper>
                 <Componentindex>Supplier Name</Componentindex>
-                <Componentinput ref={(input) => { this.supplier_name = input }} />
+                <Componentinput value={retrieveFormdata.supplier_name} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'supplier_name')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>MID</Componentindex>
-                <Componentinput ref={(input) => { this.m_id = input }} />
+                <Componentinput value={retrieveFormdata.mid} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'mid')} />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => {this.props.materialretrieve(this.name, this.supplier_name, this.m_id); this.setState({ display: true });}}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.materialretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
                 <div>
@@ -179,7 +216,7 @@ class Material extends PureComponent {
                     <Componentcheckbox>list</Componentcheckbox>
                   </ComponentoptionWapper>
                   <ComponentoptionWapper>
-                    <Componentbutton onClick={()=>{this.props.setmaterialpage(2)}} className='reject'>Delete</Componentbutton>
+                    <Componentbutton onClick={() => { this.props.setmaterialpage(2) }} className='reject'>Delete</Componentbutton>
                   </ComponentoptionWapper>
                 </div>
                 :
@@ -210,15 +247,17 @@ class Material extends PureComponent {
         <Componenttitle>Material</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
-            <Innerpageoption
-              key={id}
-              onClick={() => setmaterialpage(id)}
-              onMouseEnter={() => this.handleMouseEnter(id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={materialpage === id || hoveredBox === id ? 'mousein' : ''}
-            >
-              {text}
-            </Innerpageoption>
+            (localStorage.getItem('authority') === 'admin' || text === 'Retrieve') && (
+              <Innerpageoption
+                key={id}
+                onClick={() => setmaterialpage(id)}
+                onMouseEnter={() => this.handleMouseEnter(id)}
+                onMouseLeave={this.handleMouseLeave}
+                className={materialpage === id || hoveredBox === id ? 'mousein' : ''}
+              >
+                {text}
+              </Innerpageoption>
+            )
           ))}
         </ComponentoptionWapper>
         {this.whichpage(materialpage)}
@@ -236,14 +275,17 @@ const mapDisptchToProps = (dispatch) => {
     setmaterialpage(id) {
       dispatch(actionCreators.setmaterialpage(id));
     },
-    materialpost(name, supplier_name, amount, unit, factor, startDate, disposalDate, age, endDate) {
-      dispatch(actionCreators.materialpost(name.value, supplier_name.value, amount.value, unit.value, factor.value, startDate, disposalDate, age.value, endDate));
+    materialpost(postFormdata) {
+      const { name, supplier_name, amount, unit, factor, startDate, disposalDate, age, endDate } = postFormdata
+      dispatch(actionCreators.materialpost(name, supplier_name, amount, unit, factor, startDate, disposalDate, age, endDate));
     },
-    materialretrieve(name, supplier_name, m_id) {
-      dispatch(actionCreators.materialretrieve(name.value, supplier_name.value, m_id.value));
+    materialretrieve(retrieveFormdata) {
+      const { name, supplier_name, mid } = retrieveFormdata
+      dispatch(actionCreators.materialretrieve(name, supplier_name, mid));
     },
-    materialdelete(name, m_id) {
-      dispatch(actionCreators.materialdelete(name.value, m_id.value));
+    materialdelete(deleteFormdata) {
+      const { name, mid } = deleteFormdata
+      dispatch(actionCreators.materialdelete(name, mid));
     },
   }
 }

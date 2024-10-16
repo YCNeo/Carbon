@@ -5,5 +5,18 @@
   "EID": "111111111",
   "Ename": "hahapiyen",
   "authority": "admin",
-  "PM_rank": "member"
+  "PM_rank": [
+    {
+      "pid": "1",
+      "position": "pm"
+    },
+    {
+      "pid": "2",
+      "position": "sa"
+    },
+    {
+      "pid": "3",
+      "position": "ro"
+    }
+  ]
 }
