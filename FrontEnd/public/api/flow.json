@@ -1,0 +1,80 @@
+{
+  "success": true,
+  "data": [
+    {
+      "step": 1,
+      "equipments": [
+        {
+          "PN": "01",
+          "amount": 1,
+          "unit": "unit"
+        },
+        {
+          "PN": "04",
+          "amount": 14,
+          "unit": "unit"
+        }
+      ],
+      "materials": [
+        {
+          "PN": "01",
+          "amount": 1,
+          "unit": "kg"
+        }
+      ],
+      "description": "1Initial setup and preparation"
+    },
+    {
+      "step": 2,
+      "equipments": [
+        {
+          "PN": "02",
+          "amount": 2,
+          "unit": "unit"
+        }
+      ],
+      "materials": [
+        {
+          "PN": "02",
+          "amount": 2,
+          "unit": "kg"
+        },
+        {
+          "PN": "05",
+          "amount": 25,
+          "unit": "unit"
+        }
+      ],
+      "description": "2Initial setup and preparation"
+    },
+    {
+      "step": 3,
+      "equipments": [
+        {
+          "PN": "03",
+          "amount": 3,
+          "unit": "unit"
+        },
+        {
+          "PN": "06",
+          "amount": 36,
+          "unit": "unit"
+        }
+      ],
+      "materials": [
+        {
+          "PN": "03",
+          "amount": 3,
+          "unit": "kg"
+        },
+        {
+          "PN": "07",
+          "amount": 37,
+          "unit": "unit"
+        }
+      ],
+      "description": "3Initial setup and preparation"
+    }
+  ],
+  "data1": []
+}

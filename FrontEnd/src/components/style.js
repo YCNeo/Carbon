@@ -138,6 +138,8 @@ cursor: pointer;
   background: #e0e0e0;
 }
 &.projectname {
+  display: flex;
+  align-items: center;
   background: #97CBFF;
   cursor: default;
   text-align: center;
@@ -241,6 +243,9 @@ background: #d0d0d0;
 }
 &.addstep {
   margin-left: 780px;
+}
+&.addstepEM {
+  margin: 0 0 20px 780px;
 }
 &.addstepDailyrecord {
   margin-left: 605px;
@@ -358,6 +363,9 @@ margin-bottom: 20px;
   padding-top: 0px;
   flex-direction: column;
   margin: 0;
+}
+&.stepoption {
+  padding-top: 0px;
 }
 &.dailyrecord {
   align-items: center;

@@ -6,3 +6,6 @@ export const SET_EQUIPMENT_PAGE = 'projectmanagement/SET_EQUIPMENT_PAGE';
 export const SET_DAILY_RECORD_PAGE = 'projectmanagement/SET_DAILY_RECORD_PAGE';
 
 export const GET_POSITION = 'projectmanagement/GET_POSITION';
+export const GET_FLOW = 'projectmanagement/GET_FLOW';
+
+export const FLOW_UPDATED = 'projectmanagement/FLOW_UPDATED';
