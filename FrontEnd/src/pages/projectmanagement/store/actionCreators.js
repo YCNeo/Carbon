@@ -79,16 +79,6 @@ export const memberretrieve = (EID, name, position) => {
   }
 }
 ///////////////////////////flow//////////////////////////////////////////
-export const flowdesign = (steps) => {
-  return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { project, steps }).then((res) => {
-      const result = res.data.data;
-      result ? alert('success') : alert('fail')
-    }).catch((error) => {
-      console.error('Error fetching material data:', error);
-    });
-  }
-}
 
 export const flowrevise = (steps) => {
   return (dispatch) => {
@@ -211,7 +201,29 @@ export const getposition = () => {
         position: result
       })
     }).catch((error) => {
-      console.error('Error fetching material data:', error);
+      console.error('Error fetching position data:', error);
     });
+  }
+}
+
+export const getflow = () => {
+  return (dispatch) => {
+    axios./*正是對接時用post*/get('/api/flow.json').then((res) => {
+      const result = res.data.data;
+      dispatch({
+        type: constants.GET_FLOW,
+        flow: result
+      })
+    }).catch((error) => {
+      console.error('Error fetching flow data:', error);
+    });
+  }
+}
+///////////////////////////////////////////////////////other
+export const updateflow = () => {
+  return (dispatch) => {
+    dispatch({
+      type: constants.FLOW_UPDATED
+    })
   }
 }

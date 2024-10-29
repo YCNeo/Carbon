@@ -138,6 +138,8 @@ cursor: pointer;
   background: #e0e0e0;
 }
 &.projectname {
+  display: flex;
+  align-items: center;
   background: #97CBFF;
   cursor: default;
   text-align: center;
@@ -186,6 +188,14 @@ background: #e0e0e0;
 float: left;
 &.blank {
   background: white;
+}
+&.bottom {
+  margin-bottom: 28px;
+  cursor: pointer;
+}
+&.remove {
+  background: rgb(204, 0, 0, 0.65);
+  cursor: pointer;
 }
 `;
 
@@ -241,6 +251,11 @@ background: #d0d0d0;
 }
 &.addstep {
   margin-left: 780px;
+  background: #8CEA00;
+}
+&.addstepEM {
+  margin: 0 0 20px 900px;
+  background: #8CEA00;
 }
 &.addstepDailyrecord {
   margin-left: 605px;
@@ -358,6 +373,9 @@ margin-bottom: 20px;
   padding-top: 0px;
   flex-direction: column;
   margin: 0;
+}
+&.stepoption {
+  padding-top: 0px;
 }
 &.dailyrecord {
   align-items: center;

@@ -20,6 +20,8 @@ import {
   Pagepageoption
 } from "../../components/style";
 import { getproject } from '../statement/store/actionCreators';
+import { getflow } from './store/actionCreators';
+import { SlActionUndo } from "react-icons/sl";
 
 class Projectmanagement extends Component {
   state = {
@@ -47,7 +49,8 @@ class Projectmanagement extends Component {
   };
 
   back = () => {
-    this.setState({ choosepage: true })
+    this.setState({ choosepage: true });
+    this.props.getflow();
   }
 
   handleSelectChange = (selectedOptions) => {
@@ -94,7 +97,7 @@ class Projectmanagement extends Component {
       }),
       option: (provided, state) => ({
         ...provided,
-        backgroundColor: state.isSelected ? '#0080FF' : (isinposition(state.data.value) ? '#d3d3d3' : 'white'),
+        backgroundColor: state.isSelected ? '#0080FF' : (isinposition(state.data.value) ? 'white' : '#d3d3d3'),
         color: state.isSelected ? 'white' : 'black',
         '&:hover': { backgroundColor: '#D2E9FF', }
       })
@@ -122,7 +125,13 @@ class Projectmanagement extends Component {
             (
               <PageWrapper>
                 <PageIndexlist>
-                  <Pagepageoption className='projectname'>{projectname}</Pagepageoption>
+                  <Pagepageoption className='projectname'>
+                    {projectname}
+                    &nbsp;&nbsp;
+                    {localStorage.getItem('pm_rank') ? localStorage.getItem('pm_rank') : 'none'}
+                    &nbsp;&nbsp;
+                    <SlActionUndo onClick={() => { this.back() }} />
+                  </Pagepageoption>
                   {pages.map(({ id, text }) => (
                     <Pagepageoption
                       key={id}
@@ -176,6 +185,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   getproject() {
     dispatch(getproject())
+  },
+  getflow() {
+    dispatch(getflow())  
   }
 });
 

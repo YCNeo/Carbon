@@ -3,38 +3,47 @@
   "data": [
     {
       "id": "111111",
+      "PN": "01",
       "name": "equipment1"
     },
     {
       "id": "8222222",
+      "PN": "02",
       "name": "equipment2"
     },
     {
       "id": "6333333333",
+      "PN": "03",
       "name": "equipment3"
     },
     {
       "id": "2444444",
+      "PN": "04",
       "name": "equipment4"
     },
     {
       "id": "3555555",
+      "PN": "05",
       "name": "equipment5"
     },
     {
       "id": "46666666",
+      "PN": "06",
       "name": "equipment6"
     },
     {
       "id": "977777777",
+      "PN": "07",
       "name": "equipment7"
     },
     {
       "id": "58888",
+      "PN": "08",
       "name": "equipment8"
     },
     {
       "id": "799999",
+      "PN": "09",
       "name": "equipment9"
     }
   ]

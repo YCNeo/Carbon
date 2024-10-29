@@ -7,7 +7,9 @@ const defaultState = {
   materialpage: 1,
   equipmentpage: 1,
   dailyrecordpage: 1,
-  positionlist: []
+  positionlist: [],
+  flowlist: [],
+  updateflowlist: true
 };
 
 const reducer = (state = defaultState, action) => {
@@ -46,7 +48,18 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         positionlist: action.position
-      }
+      };
+    case constants.GET_FLOW:
+      return {
+        ...state,
+        flowlist: action.flow,
+        updateflowlist: true
+      };
+    case constants.FLOW_UPDATED:
+      return {
+        ...state,
+        updateflowlist: false
+      };
     default:
       return state;
   }
