@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import logoPic from '../../statics/asshole.png';
 
 export const HeaderWrapper = styled.div`
 position: relative;
@@ -8,16 +7,6 @@ background: #9eedff;
 border-bottom: 7px solid #4dbbff;
 `;
 
-export const Logo = styled.div`
-position: absolute;
-top: 0;
-left: 0;
-display: block;
-width: 56px;
-height: 56px;
-background: url(${logoPic});
-background-size: contain;
-`;
 //////////////////
 export const Jumpbottom = styled.div` 
 padding: 0 20px;

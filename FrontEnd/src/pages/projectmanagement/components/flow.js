@@ -109,6 +109,18 @@ class Flow extends PureComponent {
     this.setState({ flowlist: formatFlowlist, reviseSteps: formatFlowlist });
   }
 
+  deletestep = (index) => {
+    const newSteps = [...this.state.reviseSteps];
+    newSteps.splice(index, 1);
+    this.setState({ reviseSteps: newSteps });
+  };
+
+  deleteoption = (index, type, subIndex) => {
+    const newSteps = [...this.state.reviseSteps];
+    newSteps[index][type].splice(subIndex, 1);
+    this.setState({ reviseSteps: newSteps });
+  };
+
   whichpage(page) {
     const { reviseSteps } = this.state;
     const materialOptions = this.props.materiallist.map(item => ({
@@ -196,7 +208,10 @@ class Flow extends PureComponent {
           <ComponentWapper>
             {reviseSteps.map((step, index) => (
               <ComponentoptionWapper className='flow' key={index}>
-                <Componentindex>Step {index + 1}</Componentindex>
+                <FlowWapper className='step'>
+                  <Componentindex className='bottom'>Step {index + 1}</Componentindex>
+                  <Componentindex className='remove' onClick={() => (this.deletestep(index))}>delete step</Componentindex>
+                </FlowWapper>
                 <FlowWapper className='step'>
                   {step.equipments.map((equipment, subIndex) => (
                     <FlowWapper className='stepoption' key={subIndex}>
@@ -220,9 +235,10 @@ class Flow extends PureComponent {
                         value={equipment.unit}
                         onChange={(e) => this.handleChange('revise', index, 'equipments', 'unit', subIndex, e.target.value)}
                       />
+                      <Componentindex className='remove' onClick={() => (this.deleteoption(index, 'equipments', subIndex))}>delete this</Componentindex>
                     </FlowWapper>
                   ))}
-                  <Componentbutton className='addstepEM' onClick={() => this.addStep('revise', index, 'equipment')}>Add equipment</Componentbutton>
+                  <Componentbutton className='addstepEM' onClick={() => this.addStep('revise', index, 'equipments')}>Add equipment</Componentbutton>
                   {step.materials.map((material, subIndex) => (
                     <FlowWapper className='stepoption' key={subIndex}>
                       <Componentindex>Material</Componentindex>
@@ -245,9 +261,10 @@ class Flow extends PureComponent {
                         value={material.unit}
                         onChange={(e) => this.handleChange('revise', index, 'materials', 'unit', subIndex, e.target.value)}
                       />
+                      <Componentindex className='remove' onClick={() => (this.deleteoption(index, 'materials', subIndex))}>delete this</Componentindex>
                     </FlowWapper>
                   ))}
-                  <Componentbutton className='addstepEM' onClick={() => this.addStep('revise', index, 'material')}>Add material</Componentbutton>
+                  <Componentbutton className='addstepEM' onClick={() => this.addStep('revise', index, 'materials')}>Add material</Componentbutton>
                   <FlowWapper>
                     <Componentindex>Description</Componentindex>
                     <Description
@@ -306,7 +323,7 @@ class Flow extends PureComponent {
   componentDidUpdate() {
     if (this.props.updateflowlist) {
       this.props.setflowpage(1);
-      (this.props.flowlist.length === 0 && localStorage.getItem('pm_rank')==='pm') ? this.props.setflowpage(2) : this.editflowlist();
+      (this.props.flowlist.length === 0 && localStorage.getItem('pm_rank') === 'pm') ? this.props.setflowpage(2) : this.editflowlist();
       this.props.updateflow();
     }
   }

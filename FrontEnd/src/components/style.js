@@ -189,6 +189,14 @@ float: left;
 &.blank {
   background: white;
 }
+&.bottom {
+  margin-bottom: 28px;
+  cursor: pointer;
+}
+&.remove {
+  background: rgb(204, 0, 0, 0.65);
+  cursor: pointer;
+}
 `;
 
 export const Componentinfo = styled.div`
@@ -243,9 +251,11 @@ background: #d0d0d0;
 }
 &.addstep {
   margin-left: 780px;
+  background: #8CEA00;
 }
 &.addstepEM {
-  margin: 0 0 20px 780px;
+  margin: 0 0 20px 900px;
+  background: #8CEA00;
 }
 &.addstepDailyrecord {
   margin-left: 605px;
