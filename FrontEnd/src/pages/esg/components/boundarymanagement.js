@@ -17,9 +17,9 @@ class BoundaryEdition extends PureComponent {
     hoveredBox: null,
     pages: [
       { id: 1, text: 'Post' },
-      { id: 2, text: 'Retrieve' },
-      { id: 3, text: 'Revise' },
-      { id: 4, text: 'Delete' }
+      { id: 2, text: 'Revise' },
+      { id: 3, text: 'Delete' },
+      { id: 4, text: 'Retrieve' }
     ],
     postFormdata: {
       name: '',
@@ -59,7 +59,22 @@ class BoundaryEdition extends PureComponent {
     }));
   };
 
-  whichpage(page) {
+  revsiedata = (employee) => {
+    this.setState({
+      reviseFormdata: {
+        bid: employee.bid,
+        address: employee.address
+      }
+    });
+  }
+
+  deletedata = (employee) => {
+    this.setState({
+      deleteFormdata: { bid: employee.bid }
+    });
+  }
+
+  whichpage(page, retrieve_boundary) {
     const { postFormdata, reviseFormdata, deleteFormdata, retrieveFormdata } = this.state;
     switch (page) {
       case 1:
@@ -84,7 +99,40 @@ class BoundaryEdition extends PureComponent {
             </ComponentWapper>
           );
         }
+
       case 2:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentindex>BID</Componentindex>
+                <Componentinput value={reviseFormdata.bid} onChange={(e) => this.handleInputChange(e, 'reviseFormdata', 'bid')} />
+              </ComponentoptionWapper >
+              <ComponentoptionWapper>
+                <Componentindex>Address</Componentindex>
+                <Componentinput value={reviseFormdata.address} onChange={(e) => this.handleInputChange(e, 'reviseFormdata', 'address')} />
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.boundary_editionrevise(reviseFormdata)}>Revise</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          );
+        }
+      case 3:
+        {
+          return (
+            <ComponentWapper>
+              <ComponentoptionWapper >
+                <Componentindex>BID</Componentindex>
+                <Componentinput value={deleteFormdata.bid} onChange={(e) => this.handleInputChange(e, 'deleteFormdata', 'bid')} />
+              </ComponentoptionWapper >
+              <ComponentoptionWapper>
+                <Componentbutton onClick={() => this.props.boundary_editiondelete(deleteFormdata)}>Delete</Componentbutton>
+              </ComponentoptionWapper>
+            </ComponentWapper>
+          )
+        }
+      case 4:
         {
           return (
             <ComponentWapper>
@@ -104,51 +152,22 @@ class BoundaryEdition extends PureComponent {
                 <Componentbutton onClick={() => { this.props.boundary_editionretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <div>
-                  <ComponentoptionWapper>
-                    <Componentcheckbox>list</Componentcheckbox>
-                  </ComponentoptionWapper>
-                  <ComponentoptionWapper>
-                    <Componentbutton onClick={() => { this.props.setboundary_editionpage(3) }}>revise</Componentbutton>
-                    <Componentbutton onClick={() => { this.props.setboundary_editionpage(4) }} className='reject'>Delete</Componentbutton>
-                  </ComponentoptionWapper>
-                </div>
+                <Componentcheckbox>
+                  {retrieve_boundary.map((boundary) => (
+                    <ComponentoptionWapper key={boundary.bid}>
+                      <Componentindex>{boundary.bid}</Componentindex>
+                      <Componentindex>{boundary.address}</Componentindex>
+                      <Componentindex>{boundary.name}</Componentindex>
+                      <Componentindex>{boundary.type}</Componentindex>
+                      <Componentbutton onClick={() => { this.props.setboundary_editionpage(2); this.revsiedata(boundary) }}>revise</Componentbutton>
+                      <Componentbutton onClick={() => { this.props.setboundary_editionpage(3); this.deletedata(boundary) }} className='reject'>Delete</Componentbutton>
+                    </ComponentoptionWapper>
+                  ))}
+                </Componentcheckbox>
                 :
                 ''}
             </ComponentWapper>
           );
-        }
-      case 3:
-        {
-          return (
-            <ComponentWapper>
-              <ComponentoptionWapper >
-                <Componentindex>BID</Componentindex>
-                <Componentinput value={reviseFormdata.bid} onChange={(e) => this.handleInputChange(e, 'reviseFormdata', 'bid')} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper>
-                <Componentindex>Address</Componentindex>
-                <Componentinput value={reviseFormdata.address} onChange={(e) => this.handleInputChange(e, 'reviseFormdata', 'address')} />
-              </ComponentoptionWapper>
-              <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.boundary_editionrevise(reviseFormdata)}>Revise</Componentbutton>
-              </ComponentoptionWapper>
-            </ComponentWapper>
-          );
-        }
-      case 4:
-        {
-          return (
-            <ComponentWapper>
-              <ComponentoptionWapper >
-                <Componentindex>BID</Componentindex>
-                <Componentinput value={deleteFormdata.bid} onChange={(e) => this.handleInputChange(e, 'deleteFormdata', 'bid')} />
-              </ComponentoptionWapper >
-              <ComponentoptionWapper>
-                <Componentbutton onClick={() => this.props.boundary_editiondelete(deleteFormdata)}>Delete</Componentbutton>
-              </ComponentoptionWapper>
-            </ComponentWapper>
-          )
         }
       default:
         return null;
@@ -156,7 +175,7 @@ class BoundaryEdition extends PureComponent {
   }
 
   render() {
-    const { setboundary_editionpage, boundary_editionpage } = this.props;
+    const { setboundary_editionpage, boundary_editionpage, retrieve_boundary } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
@@ -176,14 +195,15 @@ class BoundaryEdition extends PureComponent {
             )
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(boundary_editionpage)}
+        {this.whichpage(boundary_editionpage, retrieve_boundary)}
       </ComponentWapper>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  boundary_editionpage: state.esg.boundary_editionpage
+  boundary_editionpage: state.esg.boundary_editionpage,
+  retrieve_boundary: state.esg.retrieve_boundary
 });
 
 const mapDisptchToProps = (dispatch) => {

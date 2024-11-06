@@ -39,7 +39,6 @@ class Member extends PureComponent {
       position: null
     },
     display: false,
-
   };
 
   handleMouseEnter = (id) => {
@@ -68,7 +67,19 @@ class Member extends PureComponent {
     }));
   };
 
-  whichpage(page) {
+  revsiedata = (member) => {
+    this.setState({
+      reviseFormData: { eid: member.eid }
+    });
+  }
+
+  deletedata = (member) => {
+    this.setState({
+      deleteFormData: { eid: member.eid }
+    });
+  }
+
+  whichpage(page, retrieve_member) {
     const { postFormData, reviseFormData, deleteFormData, retrieveFormData } = this.state;
     switch (page) {
       case 1:
@@ -170,15 +181,16 @@ class Member extends PureComponent {
               <Componentbutton onClick={() => { this.props.memberretrieve(retrieveFormData); this.setState({ display: true }); }}>Retrieve</Componentbutton>
             </ComponentoptionWapper>
             {this.state.display ?
-              <div>
-                <ComponentoptionWapper>
-                  <Componentcheckbox>list</Componentcheckbox>
-                </ComponentoptionWapper>
-                <ComponentoptionWapper>
-                  <Componentbutton onClick={() => { this.props.setmemberpage(2) }}>Revise</Componentbutton>
-                  <Componentbutton onClick={() => { this.props.setmemberpage(3) }} className='reject'>Delete</Componentbutton>
-                </ComponentoptionWapper>
-              </div>
+              <Componentcheckbox>
+                {retrieve_member.map((member) => (
+                  <ComponentoptionWapper key={member.eid}>
+                    <Componentindex>{member.eid}</Componentindex>
+                    <Componentindex>{member.name}</Componentindex>
+                    <Componentbutton onClick={() => { this.props.setmemberpage(2); this.revsiedata(member) }}>revise</Componentbutton>
+                    <Componentbutton onClick={() => { this.props.setmemberpage(3); this.deletedata(member) }} className='reject'>Delete</Componentbutton>
+                  </ComponentoptionWapper>
+                ))}
+              </Componentcheckbox>
               :
               ''}
           </ComponentWapper>
@@ -190,7 +202,7 @@ class Member extends PureComponent {
   }
 
   render() {
-    const { setmemberpage, memberpage } = this.props;
+    const { setmemberpage, memberpage, retrieve_member } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
@@ -210,7 +222,7 @@ class Member extends PureComponent {
             )
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(memberpage)}
+        {this.whichpage(memberpage, retrieve_member)}
       </ComponentWapper>
     )
   }
@@ -222,7 +234,8 @@ class Member extends PureComponent {
 
 const mapStateToProps = (state) => ({
   memberpage: state.projectmanagement.memberpage,
-  positionlist: state.projectmanagement.positionlist
+  positionlist: state.projectmanagement.positionlist,
+  retrieve_member: state.projectmanagement.retrieve_member
 })
 
 const mapDisptchToProps = (dispatch) => {

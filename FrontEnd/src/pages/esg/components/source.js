@@ -63,7 +63,24 @@ class Source extends PureComponent {
     }));
   };
 
-  whichpage(page) {
+  revsiedata = (employee) => {
+    this.setState({
+      reviseFormdata: {
+        form: employee.form,
+        ename: employee.ename,
+        ingredient: employee.ingredient,
+        category: employee.category
+      }
+    });
+  }
+
+  deletedata = (employee) => {
+    this.setState({
+      deleteFormdata: { sid: employee.sid }
+    });
+  }
+
+  whichpage(page, retrieve_source) {
     const { postFormdata, reviseFormdata, deleteFormdata, retrieveFormdata } = this.state;
     switch (page) {
       case 1:
@@ -156,15 +173,19 @@ class Source extends PureComponent {
                 <Componentbutton onClick={() => { this.props.sourceretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <div>
-                  <ComponentoptionWapper>
-                    <Componentcheckbox>list</Componentcheckbox>
-                  </ComponentoptionWapper>
-                  <ComponentoptionWapper>
-                    <Componentbutton onClick={() => { this.props.setsourcepage(2) }}>revise</Componentbutton>
-                    <Componentbutton onClick={() => { this.props.setsourcepage(3) }} className='reject'>Delete</Componentbutton>
-                  </ComponentoptionWapper>
-                </div>
+                <Componentcheckbox>
+                  {retrieve_source.map((source) => (
+                    <ComponentoptionWapper key={source.sid}>
+                      <Componentindex>{source.sid}</Componentindex>
+                      <Componentindex>{source.ename}</Componentindex>
+                      <Componentindex>{source.form}</Componentindex>
+                      <Componentindex>{source.ingredient}</Componentindex>
+                      <Componentindex>{source.category}</Componentindex>
+                      <Componentbutton onClick={() => { this.props.setsourcepage(2); this.revsiedata(source) }}>revise</Componentbutton>
+                      <Componentbutton onClick={() => { this.props.setsourcepage(3); this.deletedata(source) }} className='reject'>Delete</Componentbutton>
+                    </ComponentoptionWapper>
+                  ))}
+                </Componentcheckbox>
                 :
                 ''}
             </ComponentWapper>
@@ -176,7 +197,7 @@ class Source extends PureComponent {
   }
 
   render() {
-    const { setsourcepage, sourcepage } = this.props;
+    const { setsourcepage, sourcepage, retrieve_source } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
@@ -196,14 +217,15 @@ class Source extends PureComponent {
             )
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(sourcepage)}
+        {this.whichpage(sourcepage, retrieve_source)}
       </ComponentWapper>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  sourcepage: state.esg.sourcepage
+  sourcepage: state.esg.sourcepage,
+  retrieve_source: state.esg.retrieve_source
 });
 
 const mapDisptchToProps = (dispatch) => {

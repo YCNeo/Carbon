@@ -67,7 +67,29 @@ class Employee extends PureComponent {
     }));
   };
 
-  whichpage(page) {
+  revsiedata = (employee) => {
+    this.setState({
+      reviseFormData: {
+        eid: employee.eid,
+        name: employee.name,
+        gender: employee.gender,
+        phone: employee.phone,
+        mail: employee.email,
+        region: employee.nation
+      }
+    });
+  }
+
+  deletedata = (employee) => {
+    this.setState({
+      deleteFormData: {
+        eid: employee.eid,
+        name: employee.name
+      }
+    });
+  }
+
+  whichpage(page, retrieve_employee) {
     const { postFormData, reviseFormData, deleteFormData, retrieveFormData } = this.state;
     switch (page) {
       case 1:
@@ -176,15 +198,19 @@ class Employee extends PureComponent {
                 <Componentbutton onClick={() => { this.props.employeeretrieve(retrieveFormData); this.setState({ display: true }) }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <div>
-                  <ComponentoptionWapper>
-                    <Componentcheckbox>list</Componentcheckbox>
-                  </ComponentoptionWapper>
-                  <ComponentoptionWapper>
-                    <Componentbutton onClick={() => { this.props.setpage(2) }}>revise</Componentbutton>
-                    <Componentbutton onClick={() => { this.props.setpage(3) }} className='reject'>Delete</Componentbutton>
-                  </ComponentoptionWapper>
-                </div>
+                  <Componentcheckbox>
+                    {retrieve_employee.map((employee) => (
+                      <ComponentoptionWapper key={employee.eid}>
+                        <Componentindex>{employee.name}</Componentindex>
+                        <Componentindex>{employee.gender}</Componentindex>
+                        <Componentindex>{employee.phone}</Componentindex>
+                        <Componentindex>{employee.email}</Componentindex>
+                        <Componentindex>{employee.nation}</Componentindex>
+                        <Componentbutton onClick={() => { this.props.setpage(2); this.revsiedata(employee) }}>revise</Componentbutton>
+                        <Componentbutton onClick={() => { this.props.setpage(3); this.deletedata(employee) }} className='reject'>Delete</Componentbutton>
+                      </ComponentoptionWapper>
+                    ))}
+                  </Componentcheckbox>
                 :
                 ''}
             </ComponentWapper>
@@ -196,7 +222,7 @@ class Employee extends PureComponent {
   }
 
   render() {
-    const { setpage, employeepage } = this.props;
+    const { setpage, employeepage, retrieve_employee } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
@@ -214,7 +240,7 @@ class Employee extends PureComponent {
             </Innerpageoption>
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(employeepage)}
+        {this.whichpage(employeepage, retrieve_employee)}
       </ComponentWapper>
     );
   }
@@ -222,6 +248,7 @@ class Employee extends PureComponent {
 
 const mapStateToProps = (state) => ({
   employeepage: state.admin.employeepage,
+  retrieve_employee: state.admin.retrieve_employee
 })
 
 const mapDisptchToProps = (dispatch) => {

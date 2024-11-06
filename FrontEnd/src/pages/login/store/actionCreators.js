@@ -1,8 +1,7 @@
 import axios from 'axios'
 import * as constants from './constants'
 import CryptoJS from 'crypto-js';
-
-const API_URL = 'http://localhost:8000/';
+import { API_URL } from '../../../components/apiurl';
 
 const changelogin = () => ({
   type: constants.CHANGE_LOGIN,
@@ -56,7 +55,7 @@ export const login = (user, ori_password) => {
       }
       const token = res.data.JWT;
       localStorage.setItem('jwtToken', token);// put
-      axios./*正是對接時用post*/get('/api/login.json').then((res) => { //記得改route
+      axios./*正是對接時用post*/get('/api/login.json', { user }).then((res) => { //記得改route
         const result2 = res.data;
         localStorage.setItem('EID', result2.EID);
         localStorage.setItem('Ename', result2.Ename);

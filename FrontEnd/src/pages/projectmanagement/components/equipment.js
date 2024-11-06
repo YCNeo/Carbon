@@ -57,7 +57,18 @@ class Equipment extends PureComponent {
     }));
   };
 
-  whichpage(page) {
+  revsiedata = (equipment) => {
+    this.setState({
+      reviseFormData: {
+        name: equipment.name,
+        eqid: equipment.eqid,
+        amount: equipment.amount,
+        unit: equipment.unit
+      }
+    });
+  }
+
+  whichpage(page, retrieve_equipment) {
     const { postFormData, reviseFormData, retrieveFormData } = this.state;
     switch (page) {
       case 1:
@@ -128,14 +139,17 @@ class Equipment extends PureComponent {
                 <Componentbutton onClick={() => { this.props.equipmentretrieve(retrieveFormData); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <div>
-                  <ComponentoptionWapper>
-                    <Componentcheckbox>list</Componentcheckbox>
-                  </ComponentoptionWapper>
-                  <ComponentoptionWapper>
-                    <Componentbutton onClick={() => { this.props.setequipmentpage(2) }}>revise</Componentbutton>
-                  </ComponentoptionWapper>
-                </div>
+                <Componentcheckbox>
+                  {retrieve_equipment.map((equipment) => (
+                    <ComponentoptionWapper key={equipment.eqid}>
+                      <Componentindex>{equipment.eqid}</Componentindex>
+                      <Componentindex>{equipment.name}</Componentindex>
+                      <Componentindex>{equipment.amount}</Componentindex>
+                      <Componentindex>{equipment.unit}</Componentindex>
+                      <Componentbutton onClick={() => { this.props.setequipmentpage(2); this.revsiedata(equipment) }}>revise</Componentbutton>
+                    </ComponentoptionWapper>
+                  ))}
+                </Componentcheckbox>
                 :
                 ''}
             </ComponentWapper>
@@ -147,7 +161,7 @@ class Equipment extends PureComponent {
   }
 
   render() {
-    const { setequipmentpage, equipmentpage } = this.props;
+    const { setequipmentpage, equipmentpage, retrieve_equipment } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
@@ -167,14 +181,15 @@ class Equipment extends PureComponent {
             )
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(equipmentpage)}
+        {this.whichpage(equipmentpage, retrieve_equipment)}
       </ComponentWapper>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  equipmentpage: state.projectmanagement.equipmentpage
+  equipmentpage: state.projectmanagement.equipmentpage,
+  retrieve_equipment: state.projectmanagement.retrieve_equipment
 })
 
 const mapDisptchToProps = (dispatch) => {

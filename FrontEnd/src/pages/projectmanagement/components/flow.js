@@ -49,9 +49,9 @@ class Flow extends PureComponent {
 
   addStep = (page, index, target) => {
     const newSteps = [...this.state[`${page}Steps`]];
-    if (target === 'equipment') {
+    if (target === 'equipments') {
       newSteps[index].equipments.push({ PN: '', amount: '', unit: '' });
-    } else if (target === 'material') {
+    } else if (target === 'materials') {
       newSteps[index].materials.push({ PN: '', amount: '', unit: '' });
     } else {
       newSteps.push({

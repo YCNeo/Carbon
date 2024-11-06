@@ -5,7 +5,9 @@ const defaultState = {
   boundary_editionpage: 1,
   sourcepage: 1,
   statementpage: 1,
-  auditpage: 1
+  auditpage: 1,
+  retrieve_boundary: [],
+  retrieve_source: []
 };
 
 const reducer = (state = defaultState, action) => {
@@ -34,6 +36,16 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         auditpage: action.page,
+      };
+    case constants.RETRIEVE_BOUNDARY:
+      return {
+        ...state,
+        retrieve_boundary: action.retrieve_boundary,
+      };
+    case constants.RETRIEVE_SOURCE:
+      return {
+        ...state,
+        retrieve_source: action.retrieve_source,
       };
     default:
       return state;

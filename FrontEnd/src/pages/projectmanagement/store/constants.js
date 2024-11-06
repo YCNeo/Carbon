@@ -9,3 +9,7 @@ export const GET_POSITION = 'projectmanagement/GET_POSITION';
 export const GET_FLOW = 'projectmanagement/GET_FLOW';
 
 export const FLOW_UPDATED = 'projectmanagement/FLOW_UPDATED';
+
+export const RETRIEVE_MEMBER = 'projectmanagement/RETRIEVE_MEMBER';
+export const RETRIEVE_MATERIAL = 'projectmanagement/RETRIEVE_MATERIAL';
+export const RETRIEVE_EQUIPMENT = 'projectmanagement/RETRIEVE_EQUIPMENT';

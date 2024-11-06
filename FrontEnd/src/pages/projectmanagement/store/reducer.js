@@ -9,7 +9,10 @@ const defaultState = {
   dailyrecordpage: 1,
   positionlist: [],
   flowlist: [],
-  updateflowlist: true
+  updateflowlist: true,
+  retrieve_member: [],
+  retrieve_material: [],
+  retrieve_equipment: []
 };
 
 const reducer = (state = defaultState, action) => {
@@ -59,6 +62,21 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         updateflowlist: false
+      };
+    case constants.RETRIEVE_MEMBER:
+      return {
+        ...state,
+        retrieve_member: action.retrieve_member
+      };
+    case constants.RETRIEVE_MATERIAL:
+      return {
+        ...state,
+        retrieve_material: action.retrieve_material
+      };
+    case constants.RETRIEVE_EQUIPMENT:
+      return {
+        ...state,
+        retrieve_equipment: action.retrieve_equipment
       };
     default:
       return state;
