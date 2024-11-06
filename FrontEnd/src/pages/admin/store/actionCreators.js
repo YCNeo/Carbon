@@ -1,7 +1,6 @@
 import axios from 'axios'
 import * as constants from './constants';
-
-const API_URL = 'http://localhost:8000/';
+import { API_URL } from '../../../components/apiurl';
 //axios.post(`${API_URL}/login`,{...     //測試替換部分
 
 export const setadminpage = (page) => ({
@@ -19,7 +18,7 @@ export const setpage = (page) => ({
 export const CUsendinfo = (name, access) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/CUinfo.json', { name, access }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('CUsendinfo fail')
@@ -30,7 +29,7 @@ export const CUsendinfo = (name, access) => {
 export const AAsendinfo = (name, access) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/AAinfo.json', { name, access }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('AAsendinfo fail')
@@ -41,7 +40,7 @@ export const AAsendinfo = (name, access) => {
 export const CPsendinfo = (projectName, PMID, materialChecked, equipmentChecked) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/CPinfo.json', { projectName, PMID, materialChecked, equipmentChecked }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('CPsendinfo fail')
@@ -53,7 +52,7 @@ export const CPsendinfo = (projectName, PMID, materialChecked, equipmentChecked)
 export const Asendinfo = (type, project_id, pm_id, material, equipment) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/Ainfo.json', { type, project_id, pm_id, material, equipment }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('Asendinfo fail')
@@ -66,7 +65,7 @@ export const Asendinfo = (type, project_id, pm_id, material, equipment) => {
 export const employeepost = (name, gender, phone, mail, nation) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/Ainfo.json', { name, gender, phone, mail, nation }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('EPsendinfo fail')
@@ -77,7 +76,7 @@ export const employeepost = (name, gender, phone, mail, nation) => {
 export const employeerevise = (EID, name, gender, phone, mail, nation) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/AAinfo.json', { EID, name, gender, phone, mail, nation }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('ERsendinfo fail')
@@ -88,7 +87,7 @@ export const employeerevise = (EID, name, gender, phone, mail, nation) => {
 export const employeedelete = (EID, name) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/AAinfo.json', { EID, name }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('EDsendinfo fail')
@@ -99,7 +98,7 @@ export const employeedelete = (EID, name) => {
 export const employeeretrieve = (EID, name, PID, region) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/employeeretrieve.json', { EID, name, PID, region }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       dispatch({
         type: constants.RETRIEVE_EMPLOYEE,
         retrieve_employee: result
@@ -116,7 +115,7 @@ export const employeeretrieve = (EID, name, PID, region) => {
 export const getaccess = () => {
   return (dispatch) => {
     axios.get('/api/access.json').then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       dispatch({
         type: constants.GET_ACCESS,
         accesslist: result
@@ -130,7 +129,7 @@ export const getaccess = () => {
 export const getmaterial = () => {
   return (dispatch) => {
     axios.get('/api/material.json').then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       dispatch({
         type: constants.GET_MATERIAL,
         materiallist: result
@@ -144,7 +143,7 @@ export const getmaterial = () => {
 export const getequipment = () => {
   return (dispatch) => {
     axios.get('/api/equipment.json').then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       dispatch({
         type: constants.GET_EQUIPMENT,
         equipmentlist: result
@@ -177,7 +176,7 @@ const dmp = new DiffMatchPatch();
 export const getnewcontent = () => {
   return (dispatch, getState) => {
     axios.get('/api/newcontent.json').then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       const { oldcontent } = getState().admin;
       const diff = dmp.diff_main(oldcontent, result.content);
       dmp.diff_cleanupSemantic(diff);

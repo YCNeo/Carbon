@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as constants from './constants';
+import { API_URL } from '../../../components/apiurl';
 
-const API_URL = 'http://localhost:8000/';
 //axios.post(`${API_URL}/login`,{...     //測試替換部分
 
 export const setppepage = (page) => ({
@@ -23,7 +23,7 @@ export const setequipmentpage = (page) => ({
 export const materialpost = (name, supplier, amount, unit, factor, purchaseDate, disposalDate, age, EXPDate) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { name, supplier, amount, unit, factor, purchaseDate, age, disposalDate, EXPDate }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -34,7 +34,7 @@ export const materialpost = (name, supplier, amount, unit, factor, purchaseDate,
 export const materialretrieve = (name, supplier, MID) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/ppematerialretrieve.json', { MID, name, supplier }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       dispatch({
         type: constants.RETRIEVE_MATERIAL,
         retrieve_material: result
@@ -49,7 +49,7 @@ export const materialretrieve = (name, supplier, MID) => {
 export const materialdelete = (name, MID) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { name, MID }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -60,7 +60,7 @@ export const materialdelete = (name, MID) => {
 export const equipmentpost = (name, supplier, amount, unit, factor, purchaseDate, disposalDate, age, ageUnit) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { name, supplier, amount, unit, factor, purchaseDate, disposalDate, age, ageUnit }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching equipment data:', error);
@@ -71,7 +71,7 @@ export const equipmentpost = (name, supplier, amount, unit, factor, purchaseDate
 export const equipmentpostrepair = (date, EQID) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { date, EQID }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching equipment data:', error);
@@ -82,7 +82,7 @@ export const equipmentpostrepair = (date, EQID) => {
 export const equipmentretrieve = (name, supplier, EQIP) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/ppeequipmentretrieve.json', { EQIP, name, supplier }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       dispatch({
         type: constants.RETRIEVE_EQUIPMENT,
         retrieve_equipment: result
@@ -97,7 +97,7 @@ export const equipmentretrieve = (name, supplier, EQIP) => {
 export const equipmentdelete = (EQIP) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { EQIP }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching equipment data:', error);

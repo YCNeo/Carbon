@@ -1,7 +1,6 @@
 import axios from 'axios'
 import * as constants from './constants';
-
-const API_URL = 'http://localhost:8000/';
+import { API_URL } from '../../../components/apiurl';
 //axios.post(`${API_URL}/login`,{...     //測試替換部分
 
 export const setesgpage = (page) => ({
@@ -34,7 +33,7 @@ export const setauditpage = (page) => ({
 export const boundary_editionpost = (name, address, type) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { name, address, type }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -45,7 +44,7 @@ export const boundary_editionpost = (name, address, type) => {
 export const boundary_editionretrieve = (BID, name, type) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/esgboundaryretrieve.json', { BID, name, type }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       dispatch({
         type: constants.RETRIEVE_BOUNDARY,
         retrieve_boundary: result
@@ -60,7 +59,7 @@ export const boundary_editionretrieve = (BID, name, type) => {
 export const boundary_editionrevise = (BID, address) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { BID, address }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -71,7 +70,7 @@ export const boundary_editionrevise = (BID, address) => {
 export const boundary_editiondelete = (BID) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { BID }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -83,7 +82,7 @@ export const boundary_editiondelete = (BID) => {
 export const sourcepost = (EName, form, MName, category) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { EName, form, MName, category }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -94,7 +93,7 @@ export const sourcepost = (EName, form, MName, category) => {
 export const sourceretrieve = (EName, form, MName, category) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/esgsourceretrieve.json', { EName, form, MName, category }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       dispatch({
         type: constants.RETRIEVE_SOURCE,
         retrieve_source: result
@@ -109,7 +108,7 @@ export const sourceretrieve = (EName, form, MName, category) => {
 export const sourcedelete = (SID) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { SID }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -120,7 +119,7 @@ export const sourcedelete = (SID) => {
 export const sourcerevise = (EName, form, MName, category) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { EName, form, MName, category }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -133,7 +132,7 @@ export const sourcerevise = (EName, form, MName, category) => {
 export const statementretrieve = (EName, form, category) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/member.json', { category, form, EName }).then((res) => {
-      const result = res.data.data;
+      const result = res.data;
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
