@@ -44,8 +44,12 @@ export const boundary_editionpost = (name, address, type) => {
 
 export const boundary_editionretrieve = (BID, name, type) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { BID, name, type }).then((res) => {
+    axios./*正是對接時用post*/get('/api/esgboundaryretrieve.json', { BID, name, type }).then((res) => {
       const result = res.data.data;
+      dispatch({
+        type: constants.RETRIEVE_BOUNDARY,
+        retrieve_boundary: result
+      })
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -89,8 +93,12 @@ export const sourcepost = (EName, form, MName, category) => {
 
 export const sourceretrieve = (EName, form, MName, category) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { EName, form, MName, category }).then((res) => {
+    axios./*正是對接時用post*/get('/api/esgsourceretrieve.json', { EName, form, MName, category }).then((res) => {
       const result = res.data.data;
+      dispatch({
+        type: constants.RETRIEVE_SOURCE,
+        retrieve_source: result
+      })
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);

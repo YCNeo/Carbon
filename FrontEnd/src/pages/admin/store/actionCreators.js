@@ -77,8 +77,6 @@ export const employeepost = (name, gender, phone, mail, nation) => {
 export const employeerevise = (EID, name, gender, phone, mail, nation) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/AAinfo.json', { EID, name, gender, phone, mail, nation }).then((res) => {
-      console.log(EID, name, gender, phone, mail, nation);
-      
       const result = res.data.data;
       result ? alert('success') : alert('fail')
     }).catch(() => {
@@ -100,8 +98,12 @@ export const employeedelete = (EID, name) => {
 
 export const employeeretrieve = (EID, name, PID, region) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/Ainfo.json', { EID, name, PID, region }).then((res) => {
+    axios./*正是對接時用post*/get('/api/employeeretrieve.json', { EID, name, PID, region }).then((res) => {
       const result = res.data.data;
+      dispatch({
+        type: constants.RETRIEVE_EMPLOYEE,
+        retrieve_employee: result
+      })
       result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('ESsendinfo fail')
@@ -153,7 +155,7 @@ export const getequipment = () => {
   }
 }
 
-export const getapprove=()=>{
+export const getapprove = () => {
   return (dispatch) => {
     axios.get('/api/approve.json').then((res) => {
       const result = res.data.approve_list;

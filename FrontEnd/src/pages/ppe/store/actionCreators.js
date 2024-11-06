@@ -33,8 +33,12 @@ export const materialpost = (name, supplier, amount, unit, factor, purchaseDate,
 
 export const materialretrieve = (name, supplier, MID) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { MID, name, supplier }).then((res) => {
+    axios./*正是對接時用post*/get('/api/ppematerialretrieve.json', { MID, name, supplier }).then((res) => {
       const result = res.data.data;
+      dispatch({
+        type: constants.RETRIEVE_MATERIAL,
+        retrieve_material: result
+      })
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -77,8 +81,12 @@ export const equipmentpostrepair = (date, EQID) => {
 
 export const equipmentretrieve = (name, supplier, EQIP) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { EQIP, name, supplier }).then((res) => {
+    axios./*正是對接時用post*/get('/api/ppeequipmentretrieve.json', { EQIP, name, supplier }).then((res) => {
       const result = res.data.data;
+      dispatch({
+        type: constants.RETRIEVE_EQUIPMENT,
+        retrieve_equipment: result
+      })
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching equipment data:', error);

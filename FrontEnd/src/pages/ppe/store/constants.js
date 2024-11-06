@@ -1,3 +1,6 @@
 export const SET_PPE_PAGE = 'ppe/SET_PPE_PAGE';
 export const SET_MATERIAL_PAGE = 'ppe/SET_MATERIAL_PAGE';
 export const SET_EQUIPMENT_PAGE = 'ppe/SET_EQUIPMENT_PAGE';
+
+export const RETRIEVE_MATERIAL = 'ppe/RETRIEVE_MATERIAL';
+export const RETRIEVE_EQUIPMENT = 'ppe/RETRIEVE_EQUIPMENT';

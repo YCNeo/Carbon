@@ -1,0 +1,23 @@
+{
+  "success": true,
+  "data": [
+    {
+      "eqid": "1",
+      "name": "11",
+      "amount": "1111",
+      "unit": "11111"
+    },
+    {
+      "eqid": "2",
+      "name": "22",
+      "amount": "222",
+      "unit": "2222"
+    },
+    {
+      "eqid": "3",
+      "name": "33",
+      "amount": "333",
+      "unit": "3333"
+    }
+  ]
+}

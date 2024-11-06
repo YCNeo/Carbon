@@ -84,7 +84,16 @@ class Material extends PureComponent {
     }));
   };
 
-  whichpage(page) {
+  deletedata = (material) => {
+    this.setState({
+      deleteFormdata: {
+        mid: material.mid,
+        name: material.name
+      }
+    });
+  }
+
+  whichpage(page, retrieve_material) {
     const { postFormdata, deleteFormdata, retrieveFormdata } = this.state;
     switch (page) {
       case 1:
@@ -211,14 +220,15 @@ class Material extends PureComponent {
                 <Componentbutton onClick={() => { this.props.materialretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <div>
-                  <ComponentoptionWapper>
-                    <Componentcheckbox>list</Componentcheckbox>
-                  </ComponentoptionWapper>
-                  <ComponentoptionWapper>
-                    <Componentbutton onClick={() => { this.props.setmaterialpage(2) }} className='reject'>Delete</Componentbutton>
-                  </ComponentoptionWapper>
-                </div>
+                <Componentcheckbox>
+                  {retrieve_material.map((material) => (
+                    <ComponentoptionWapper key={material.mid}>
+                      <Componentindex>{material.name}</Componentindex>
+                      <Componentindex>{material.mid}</Componentindex>
+                      <Componentbutton onClick={() => { this.props.setmaterialpage(2); this.deletedata(material) }} className='reject'>Delete</Componentbutton>
+                    </ComponentoptionWapper>
+                  ))}
+                </Componentcheckbox>
                 :
                 ''}
             </ComponentWapper>
@@ -240,7 +250,7 @@ class Material extends PureComponent {
   }
 
   render() {
-    const { setmaterialpage, materialpage } = this.props;
+    const { setmaterialpage, materialpage, retrieve_material } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
@@ -260,14 +270,15 @@ class Material extends PureComponent {
             )
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(materialpage)}
+        {this.whichpage(materialpage, retrieve_material)}
       </ComponentWapper>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  materialpage: state.ppe.materialpage
+  materialpage: state.ppe.materialpage,
+  retrieve_material: state.ppe.retrieve_material
 })
 
 const mapDisptchToProps = (dispatch) => {

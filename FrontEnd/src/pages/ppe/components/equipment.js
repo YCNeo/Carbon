@@ -89,7 +89,15 @@ class Equipment extends PureComponent {
     }));
   };
 
-  whichpage(page) {
+  deletedata = (equipment) => {
+    this.setState({
+      deleteFormdata: {
+        eqid: equipment.eqid
+      }
+    });
+  }
+
+  whichpage(page,retrieve_equipment) {
     const { postFormdata, deleteFormdata, retrieveFormdata, postrepairFormdata } = this.state;
     switch (page) {
       case 1:
@@ -213,14 +221,14 @@ class Equipment extends PureComponent {
                 <Componentbutton onClick={() => { this.props.equipmentretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <div>
-                  <ComponentoptionWapper>
-                    <Componentcheckbox>list</Componentcheckbox>
-                  </ComponentoptionWapper>
-                  <ComponentoptionWapper>
-                    <Componentbutton onClick={() => { this.props.setpage(3) }} className='reject'>Delete</Componentbutton>
-                  </ComponentoptionWapper>
-                </div>
+                  <Componentcheckbox>
+                  {retrieve_equipment.map((equipment) => (
+                    <ComponentoptionWapper key={equipment.eqid}>
+                      <Componentindex>{equipment.eqid}</Componentindex>
+                      <Componentbutton onClick={() => { this.props.setequipmentpage(2); this.deletedata(equipment) }} className='reject'>Delete</Componentbutton>
+                    </ComponentoptionWapper>
+                  ))}
+                </Componentcheckbox>
                 :
                 ''}
             </ComponentWapper>
@@ -270,7 +278,7 @@ class Equipment extends PureComponent {
   }
 
   render() {
-    const { setequipmentpage, equipmentpage } = this.props;
+    const { setequipmentpage, equipmentpage,retrieve_equipment } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
@@ -290,14 +298,15 @@ class Equipment extends PureComponent {
             )
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(equipmentpage)}
+        {this.whichpage(equipmentpage,retrieve_equipment)}
       </ComponentWapper>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  equipmentpage: state.ppe.equipmentpage
+  equipmentpage: state.ppe.equipmentpage,
+  retrieve_equipment: state.ppe.retrieve_equipment
 })
 
 const mapDisptchToProps = (dispatch) => {

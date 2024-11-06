@@ -11,7 +11,8 @@ const defaultState = {
   approve_pmid: "pmid",
   approve_time: "time",
   oldcontent: "",
-  newcontent: ""
+  newcontent: "",
+  retrieve_employee: []
 };
 
 const reducer = (state = defaultState, action) => {
@@ -46,6 +47,11 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         newcontent: action.newcontent,
+      }
+    case constants.RETRIEVE_EMPLOYEE:
+      return {
+        ...state,
+        retrieve_employee: action.retrieve_employee,
       }
     default:
       return state;

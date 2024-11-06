@@ -7,3 +7,5 @@ export const GET_EQUIPMENT= 'admin/GET_EQUIPMENT'
 export const GET_APPROVE= 'admin/GET_APPROVE'
 export const GET_OLD_CONTENT= 'admin/GET_OLD_CONTENT'
 export const GET_NEW_CONTENT= 'admin/GET_NEW_CONTENT'
+
+export const RETRIEVE_EMPLOYEE= 'admin/RETRIEVE_EMPLOYEE'

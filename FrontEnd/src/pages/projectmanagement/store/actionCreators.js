@@ -70,8 +70,12 @@ export const memberremove = (EID) => {
 
 export const memberretrieve = (EID, name, position) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { project, EID, name, position }).then((res) => {
+    axios./*正是對接時用post*/get('/api/pmmemberretrieve.json', { project, EID, name, position }).then((res) => {
       const result = res.data.data;
+      dispatch({
+        type: constants.RETRIEVE_MEMBER,
+        retrieve_member: result
+      })
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -115,8 +119,12 @@ export const materialrevise = (name, MID, amount, unit) => {
 
 export const materialretrieve = (name, MID) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { project, name, MID }).then((res) => {
+    axios./*正是對接時用post*/get('/api/pmmaterialretrieve.json', { project, name, MID }).then((res) => {
       const result = res.data.data;
+      dispatch({
+        type: constants.RETRIEVE_MATERIAL,
+        retrieve_material: result
+      })
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
@@ -148,8 +156,12 @@ export const equipmentrevise = (name, EQID, amount, unit) => {
 
 export const equipmentretrieve = (name, EQID) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { project, name, EQID }).then((res) => {
+    axios./*正是對接時用post*/get('/api/pmequipmentretrieve.json', { project, name, EQID }).then((res) => {
       const result = res.data.data;
+      dispatch({
+        type: constants.RETRIEVE_EQUIPMENT,
+        retrieve_equipment: result
+      })
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);
