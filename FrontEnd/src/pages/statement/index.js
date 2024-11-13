@@ -21,6 +21,7 @@ import {
   Chartselect,
   Option
 } from '../../components/style';
+import { barchart, linechart, piechart } from '../../components/function/chart';
 
 class Statement extends PureComponent {
   state = {
@@ -42,8 +43,11 @@ class Statement extends PureComponent {
     startDate: new Date(),
     endDate: new Date(),
     customTimeInput: "",
-    selectedOption1: 1,
-    selectedOption2: 1
+    xyaxis: [
+      { xaxis: 1, yaxis: 1 },
+      { xaxis: 1, yaxis: 1 },
+      { xaxis: 1, yaxis: 1 }
+    ]
   };
 
   handleSelectChange = (selectedOptions) => {
@@ -74,17 +78,32 @@ class Statement extends PureComponent {
     this.setState({ chart: id });
   }
 
-  handleSelectChange1 = (selectedOptions) => {
-    this.setState({ selectedOption1: selectedOptions });
-  };
+  handleSelectChangexy = (selectedOptions, type, index) => {
+    this.setState(prevState => {
+      const newArray = [...prevState.xyaxis];
+      newArray[index][`${type}axis`] = selectedOptions;
+      return { xyaxis: newArray };
+    });
+  }
 
-  handleSelectChange2 = (selectedOptions) => {
-    this.setState({ selectedOption2: selectedOptions });
-  };
+  renderChart = () => {
+    const { chart, xyaxis } = this.state;
+
+    switch (chart) {
+      case 1:
+        return linechart(xyaxis[0].xaxis, xyaxis[0].yaxis);
+      case 2:
+        return barchart(xyaxis[1].xaxis, xyaxis[1].yaxis);
+      case 3:
+        return piechart(xyaxis[2].xaxis, xyaxis[2].yaxis);
+      default:
+        return null;
+    }
+  }
 
   render() {
     const { projectlist } = this.props;
-    const { selectedProject, startDate, endDate, customTimeInput, chart, chartlist, option, selectedOption1, selectedOption2 } = this.state;
+    const { selectedProject, startDate, endDate, customTimeInput, chart, chartlist, option, xyaxis } = this.state;
 
     const projectOptions = projectlist.map(item => ({
       value: item.id,
@@ -99,6 +118,7 @@ class Statement extends PureComponent {
         className="custom-time-input"
       />
     );
+
     if (localStorage.getItem('jwtToken') != null) {
       return (
         <PageWrapper>
@@ -163,8 +183,8 @@ class Statement extends PureComponent {
                         <Select
                           placeholder="Select x"
                           options={option}
-                          value={selectedOption1}
-                          onChange={this.handleSelectChange1}
+                          value={xyaxis[item.id - 1].xaxis}
+                          onChange={(value) => this.handleSelectChangexy(value, "x", item.id - 1)}
                           styles={PMcustomStyles}
                         />
                       </Chartselect>
@@ -172,10 +192,10 @@ class Statement extends PureComponent {
                         <Chartselect>
                           y-axis:&nbsp;&nbsp;
                           <Select
-                            placeholder="Select y"
+                            placeholder="Select x"
                             options={option}
-                            value={selectedOption2}
-                            onChange={this.handleSelectChange2}
+                            value={xyaxis[item.id - 1].yaxis}
+                            onChange={(value) => this.handleSelectChangexy(value, "y", item.id - 1)}
                             styles={PMcustomStyles}
                           />
                         </Chartselect>
@@ -187,6 +207,11 @@ class Statement extends PureComponent {
             </ComponentoptionWapper>
             <ComponentoptionWapper>
               <Componentbutton onClick={() => this.props.sendinfo(selectedProject, startDate, endDate, chart)}>Create</Componentbutton>
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentcheckbox>
+                {this.renderChart()}
+              </Componentcheckbox>
             </ComponentoptionWapper>
           </PagePage>
         </PageWrapper>
