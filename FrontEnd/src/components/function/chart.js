@@ -18,25 +18,23 @@ const data = [
 const namefix = (type) => {
   switch (type) {
     case 1:
-      return "time";
+      return "runtime";
     case 2:
-      return "emmision";
+      return "amount";
     case 3:
-      return "project";
+      return "Pname";
     case 4:
-      return "factory";
-    case 5:
-      return "none";
+      return "PN_name";
     default:
       return null;
   }
 }
 
-export const linechart = (x, y) => {
+export const linechart = (projectdata, x, y) => {
   const xaxis = namefix(x.value);
   const yaxis = namefix(y.value);
   return (
-    <LineChart width={600} height={300} data={data} margin={{ top: 20, right: 20, bottom: 5, left: 0 }}>
+    <LineChart width={600} height={300} data={projectdata} margin={{ top: 20, right: 20, bottom: 5, left: 0 }}>
       <Line type="monotone" dataKey={`${yaxis}`} stroke="#8884d8" />
       <CartesianGrid stroke="#ccc" />
       <XAxis dataKey={`${xaxis}`} />
@@ -47,11 +45,11 @@ export const linechart = (x, y) => {
   );
 }
 
-export const barchart = (x, y) => {
+export const barchart = (projectdata, x, y) => {
   const xaxis = namefix(x.value);
   const yaxis = namefix(y.value);
   return (
-    <BarChart width={500} height={300} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5, }}>
+    <BarChart width={500} height={300} data={projectdata} margin={{ top: 5, right: 30, left: 20, bottom: 5, }}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey={`${xaxis}`} />
       <YAxis />
@@ -62,11 +60,11 @@ export const barchart = (x, y) => {
   );
 }
 
-export const piechart = (x) => {
+export const piechart = (projectdata, x) => {
   const xaxis = namefix(x.value);
   return (
     <PieChart width={400} height={400}>
-      <Pie dataKey={`${xaxis}`} isAnimationActive={false} data={data} cx="50%" cy="50%" outerRadius={80} fill="#8884d8" label />
+      <Pie dataKey="amount" isAnimationActive={false} data={projectdata} cx="50%" cy="50%" outerRadius={80} fill="#8884d8" label />
       <Tooltip />
     </PieChart>
   );

@@ -4,19 +4,19 @@
     "equipments": [
       {
         "PN": "01",
-        "amount": 1,
+        "amount": "1",
         "unit": "unit"
       },
       {
         "PN": "04",
-        "amount": 14,
+        "amount": "14",
         "unit": "unit"
       }
     ],
     "materials": [
       {
         "PN": "01",
-        "amount": 1,
+        "amount": "1",
         "unit": "kg"
       }
     ],
@@ -27,19 +27,19 @@
     "equipments": [
       {
         "PN": "02",
-        "amount": 2,
+        "amount": "2",
         "unit": "unit"
       }
     ],
     "materials": [
       {
         "PN": "02",
-        "amount": 2,
+        "amount": "2",
         "unit": "kg"
       },
       {
         "PN": "05",
-        "amount": 25,
+        "amount": "25",
         "unit": "unit"
       }
     ],
@@ -50,24 +50,24 @@
     "equipments": [
       {
         "PN": "03",
-        "amount": 3,
+        "amount": "3",
         "unit": "unit"
       },
       {
         "PN": "06",
-        "amount": 36,
+        "amount": "36",
         "unit": "unit"
       }
     ],
     "materials": [
       {
         "PN": "03",
-        "amount": 3,
+        "amount": "3",
         "unit": "kg"
       },
       {
         "PN": "07",
-        "amount": 37,
+        "amount": "37",
         "unit": "unit"
       }
     ],

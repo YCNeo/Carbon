@@ -33,12 +33,13 @@ class Statement extends PureComponent {
       { id: 2, name: "line chart" },
       { id: 3, name: "pie chart" }
     ],
-    option: [
+    yoption: [
       { value: 1, label: "time" },
-      { value: 2, label: "carbon emission" },
-      { value: 3, label: "project value" },
-      { value: 4, label: "factory number" },
-      { value: 5, label: "option5" }
+      { value: 2, label: "carbon emission" }
+    ],
+    xoption: [
+      { value: 3, label: "project" },
+      { value: 4, label: "PN" }
     ],
     startDate: new Date(),
     endDate: new Date(),
@@ -86,24 +87,22 @@ class Statement extends PureComponent {
     });
   }
 
-  renderChart = () => {
+  renderChart = (projectdata) => {
     const { chart, xyaxis } = this.state;
-
-    switch (chart) {
-      case 1:
-        return linechart(xyaxis[0].xaxis, xyaxis[0].yaxis);
-      case 2:
-        return barchart(xyaxis[1].xaxis, xyaxis[1].yaxis);
-      case 3:
-        return piechart(xyaxis[2].xaxis, xyaxis[2].yaxis);
-      default:
-        return null;
-    }
+    //console.log(projectdata);
+    
+    return (
+      <Componentcheckbox>
+        {barchart(projectdata,xyaxis[0].xaxis, xyaxis[0].yaxis)}
+        {linechart(projectdata,xyaxis[1].xaxis, xyaxis[1].yaxis)}
+        {piechart(projectdata,xyaxis[2].xaxis, xyaxis[2].yaxis)}
+      </Componentcheckbox>
+    )
   }
 
   render() {
-    const { projectlist } = this.props;
-    const { selectedProject, startDate, endDate, customTimeInput, chart, chartlist, option, xyaxis } = this.state;
+    const { projectlist, projectdata } = this.props;
+    const { selectedProject, startDate, endDate, customTimeInput, chart, chartlist, xoption, yoption, xyaxis } = this.state;
 
     const projectOptions = projectlist.map(item => ({
       value: item.id,
@@ -182,7 +181,7 @@ class Statement extends PureComponent {
                         &nbsp;&nbsp;
                         <Select
                           placeholder="Select x"
-                          options={option}
+                          options={xoption}
                           value={xyaxis[item.id - 1].xaxis}
                           onChange={(value) => this.handleSelectChangexy(value, "x", item.id - 1)}
                           styles={PMcustomStyles}
@@ -193,7 +192,7 @@ class Statement extends PureComponent {
                           y-axis:&nbsp;&nbsp;
                           <Select
                             placeholder="Select x"
-                            options={option}
+                            options={yoption}
                             value={xyaxis[item.id - 1].yaxis}
                             onChange={(value) => this.handleSelectChangexy(value, "y", item.id - 1)}
                             styles={PMcustomStyles}
@@ -210,7 +209,7 @@ class Statement extends PureComponent {
             </ComponentoptionWapper>
             <ComponentoptionWapper>
               <Componentcheckbox>
-                {this.renderChart()}
+                {this.renderChart(projectdata)}
               </Componentcheckbox>
             </ComponentoptionWapper>
           </PagePage>
@@ -227,7 +226,8 @@ class Statement extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  projectlist: state.statement.projectlist
+  projectlist: state.statement.projectlist,
+  projectdata: state.statement.projectdata
 })
 
 const mapDispatchToProps = (dispatch) => {
@@ -235,14 +235,11 @@ const mapDispatchToProps = (dispatch) => {
     getproject() {
       dispatch(actionCreators.getproject())
     },
-    sendinfo(selectedProject, startDate, endDate, chart) {
+    sendinfo(selectedProject) {
       const projectChecked = selectedProject
-        ? selectedProject.map(option => {
-          const { value: id, label: name } = option;
-          return { id, name };
-        })
+        ? selectedProject.map(option => option.value)
         : [];
-      dispatch(actionCreators.sendinfo(projectChecked, startDate, endDate, chart))
+      dispatch(actionCreators.sendinfo(projectChecked));
     }
   }
 }

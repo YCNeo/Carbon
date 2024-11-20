@@ -18,10 +18,14 @@ export const getproject = () => {
   }
 }
 
-export const sendinfo = (PID, startDate, endDate, chartType) => {
+export const sendinfo = (PID ) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/AAinfo.json', { PID, startDate, endDate, chartType }).then((res) => {
-      const result = res.data;
+    axios./*正是對接時用post*/get('/api/statement_project.json', { PID}).then((res) => {      
+      const result = res.data.data;
+      dispatch({
+        type: constants.PORJECT_DATA,
+        projectdata: result
+      });
       result ? alert('success') : alert('fail')
     }).catch(() => {
       alert('AAsendinfo fail')

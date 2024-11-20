@@ -172,7 +172,7 @@ align-items: center;
   flex-direction: column;
 }
 &.flow {
-  align-items: flex-start;
+  align-items: center;
 }
 `;
 
@@ -186,16 +186,28 @@ border-radius: 7px;
 font-size: 18px;
 background: #e0e0e0;
 float: left;
+display: flex;
+align-items: center;
+justify-content: center;
 &.blank {
   background: white;
 }
 &.bottom {
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   cursor: pointer;
 }
 &.remove {
   background: rgb(204, 0, 0, 0.65);
   cursor: pointer;
+}
+&.small {
+  width: 70px;
+  padding: 0 5px 0 5px;
+  background: #95CACA;
+}
+&.big {
+  width: 200px;
+    background: #95CACA;
 }
 `;
 
@@ -250,12 +262,8 @@ background: #d0d0d0;
   margin: 0 0 0 30px;
 }
 &.addstep {
-  margin-left: 780px;
-  background: #8CEA00;
-}
-&.addstepEM {
-  margin: 0 0 20px 900px;
-  background: #8CEA00;
+  margin: 0 0 0 450px;
+  background: #82D900;
 }
 &.addstepDailyrecord {
   margin-left: 605px;
@@ -375,7 +383,9 @@ margin-bottom: 20px;
   margin: 0;
 }
 &.stepoption {
+  margin-left: 150px;
   padding-top: 0px;
+  align-items: center;
 }
 &.dailyrecord {
   align-items: center;
@@ -384,7 +394,7 @@ margin-bottom: 20px;
 `
 
 export const Description = styled.textarea`
-width: 590px; 
+width: 415px; 
 height: 150px; 
 white-space: pre-wrap; 
 overflow-wrap: break-word;
@@ -397,9 +407,6 @@ outline: none;
 background: #e0e0e0;
 resize: none;
 font-family: Arial, sans-serif;
-&.short {
-  width: 570px;
-}
 `
 
 export const Chartselect = styled.div`
