@@ -89,7 +89,6 @@ class Statement extends PureComponent {
 
   renderChart = (projectdata) => {
     const { chart, xyaxis } = this.state;
-    //console.log(projectdata);
     
     return (
       <Componentcheckbox>

@@ -9,9 +9,9 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Componentcheckbox,
   Innerpageoption
 } from '../../../components/style';
+import { table } from '../../../components/function/table';
 
 class Member extends PureComponent {
   state = {
@@ -181,16 +181,7 @@ class Member extends PureComponent {
               <Componentbutton onClick={() => { this.props.memberretrieve(retrieveFormData); this.setState({ display: true }); }}>Retrieve</Componentbutton>
             </ComponentoptionWapper>
             {this.state.display ?
-              <Componentcheckbox>
-                {retrieve_member.map((member) => (
-                  <ComponentoptionWapper key={member.eid}>
-                    <Componentindex>{member.eid}</Componentindex>
-                    <Componentindex>{member.name}</Componentindex>
-                    <Componentbutton onClick={() => { this.props.setmemberpage(2); this.revsiedata(member) }}>revise</Componentbutton>
-                    <Componentbutton onClick={() => { this.props.setmemberpage(3); this.deletedata(member) }} className='reject'>Delete</Componentbutton>
-                  </ComponentoptionWapper>
-                ))}
-              </Componentcheckbox>
+              <div>{table(retrieve_member, this.props.setmemberpage, this.revsiedata, this.deletedata)}</div>
               :
               ''}
           </ComponentWapper>

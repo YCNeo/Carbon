@@ -8,9 +8,9 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Componentcheckbox,
   Innerpageoption
 } from '../../../components/style';
+import { table } from '../../../components/function/table';
 
 class Material extends PureComponent {
   state = {
@@ -139,17 +139,7 @@ class Material extends PureComponent {
                 <Componentbutton onClick={() => { this.props.materialretrieve(retrieveFormData); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <Componentcheckbox>
-                  {retrieve_material.map((material) => (
-                    <ComponentoptionWapper key={material.eid}>
-                      <Componentindex>{material.mid}</Componentindex>
-                      <Componentindex>{material.name}</Componentindex>
-                      <Componentindex>{material.amount}</Componentindex>
-                      <Componentindex>{material.unit}</Componentindex>
-                      <Componentbutton onClick={() => { this.props.setmaterialpage(2); this.revsiedata(material) }}>revise</Componentbutton>
-                    </ComponentoptionWapper>
-                  ))}
-                </Componentcheckbox>
+                <div>{table(retrieve_material, this.props.setmaterialpage, this.revsiedata, null)}</div>
                 :
                 ''}
             </ComponentWapper>

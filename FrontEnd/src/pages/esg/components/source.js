@@ -11,6 +11,7 @@ import {
   Componentcheckbox,
   Innerpageoption
 } from '../../../components/style';
+import { table } from '../../../components/function/table';
 
 class Source extends PureComponent {
   state = {
@@ -173,19 +174,7 @@ class Source extends PureComponent {
                 <Componentbutton onClick={() => { this.props.sourceretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <Componentcheckbox>
-                  {retrieve_source.map((source) => (
-                    <ComponentoptionWapper key={source.sid}>
-                      <Componentindex>{source.sid}</Componentindex>
-                      <Componentindex>{source.ename}</Componentindex>
-                      <Componentindex>{source.form}</Componentindex>
-                      <Componentindex>{source.ingredient}</Componentindex>
-                      <Componentindex>{source.category}</Componentindex>
-                      <Componentbutton onClick={() => { this.props.setsourcepage(2); this.revsiedata(source) }}>revise</Componentbutton>
-                      <Componentbutton onClick={() => { this.props.setsourcepage(3); this.deletedata(source) }} className='reject'>Delete</Componentbutton>
-                    </ComponentoptionWapper>
-                  ))}
-                </Componentcheckbox>
+                <div>{table(retrieve_source, this.props.setsourcepage, this.revsiedata, this.deletedata)}</div>
                 :
                 ''}
             </ComponentWapper>

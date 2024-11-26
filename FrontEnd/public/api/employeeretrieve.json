@@ -1,32 +1,29 @@
-{
-  "success": true,
-  "data": [
-    {
-      "eid":"1",
-      "name": "11",
-      "gender": "111",
-      "phone": "1111",
-      "email": "11111",
-      "nation": "111111",
-      "status": 1
-    },
-    {
-      "eid":"2",
-      "name": "22",
-      "gender": "222",
-      "phone": "2222",
-      "email": "22222",
-      "nation": "222222",
-      "status": 2
-    },
-    {
-      "eid":"3",
-      "name": "33",
-      "gender": "333",
-      "phone": "3333",
-      "email": "33333",
-      "nation": "333333",
-      "status": 3
-    }
-  ]
-}
+[
+  {
+    "eid": "1",
+    "name": "11",
+    "gender": "111",
+    "phone": "1111",
+    "email": "11111",
+    "nation": "111111",
+    "status": 1
+  },
+  {
+    "eid": "2",
+    "name": "22",
+    "gender": "222",
+    "phone": "2222",
+    "email": "22222",
+    "nation": "222222",
+    "status": 2
+  },
+  {
+    "eid": "3",
+    "name": "33",
+    "gender": "333",
+    "phone": "3333",
+    "email": "33333",
+    "nation": "333333",
+    "status": 3
+  }
+]

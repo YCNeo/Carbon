@@ -14,6 +14,7 @@ import {
   DatePickerWrapper,
   Componentcheckbox
 } from '../../../components/style';
+import { table } from '../../../components/function/table';
 
 class Equipment extends PureComponent {
   state = {
@@ -221,14 +222,7 @@ class Equipment extends PureComponent {
                 <Componentbutton onClick={() => { this.props.equipmentretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                  <Componentcheckbox>
-                  {retrieve_equipment.map((equipment) => (
-                    <ComponentoptionWapper key={equipment.eqid}>
-                      <Componentindex>{equipment.eqid}</Componentindex>
-                      <Componentbutton onClick={() => { this.props.setequipmentpage(2); this.deletedata(equipment) }} className='reject'>Delete</Componentbutton>
-                    </ComponentoptionWapper>
-                  ))}
-                </Componentcheckbox>
+                <div>{table(retrieve_equipment, this.props.setequipmentpage, null, this.deletedata)}</div>
                 :
                 ''}
             </ComponentWapper>

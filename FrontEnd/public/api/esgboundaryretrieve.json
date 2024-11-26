@@ -1,23 +1,20 @@
-{
-  "success": true,
-  "data": [
-    {
-      "bid":"1",
-      "name": "11",
-      "address": "111",
-      "type": "1111"
-    },
-    {
-      "bid":"2",
-      "name": "22",
-      "address": "222",
-      "type": "2222"
-    },
-    {
-      "bid":"3",
-      "name": "33",
-      "address": "333",
-      "type": "3333"
-    }
-  ]
-}
+[
+  {
+    "bid": "1",
+    "name": "11",
+    "address": "111",
+    "type": "1111"
+  },
+  {
+    "bid": "2",
+    "name": "22",
+    "address": "222",
+    "type": "2222"
+  },
+  {
+    "bid": "3",
+    "name": "33",
+    "address": "333",
+    "type": "3333"
+  }
+]
