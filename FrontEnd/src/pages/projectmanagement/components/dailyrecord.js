@@ -18,6 +18,7 @@ import {
   Description,
   PMcustomStyles
 } from '../../../components/style';
+import { VscAdd } from 'react-icons/vsc';
 import { getequipment, getmaterial } from '../../admin/store/actionCreators';
 
 class Dailyrecord extends PureComponent {
@@ -149,70 +150,69 @@ class Dailyrecord extends PureComponent {
                   />
                 </DatePickerWrapper>
               </ComponentoptionWapper >
+              <ComponentoptionWapper>
+                <FlowWapper className='dailyrecord'>
+                  <Componentindex className='big'>Equipment</Componentindex>
+                  <Componentindex className='small'>Amount</Componentindex>
+                  <Componentindex className='small'>Unit</Componentindex>
+                  <VscAdd fontSize={20} color='green' onClick={() => this.addStep('postFormdata', 'equipment')} />
+                </FlowWapper>
+              </ComponentoptionWapper>
               {this.state.postFormdata.equipment.map((step, index) => (
                 <ComponentoptionWapper className='flow' key={index}>
-                  {index === 0 ? <Componentindex>Equipment</Componentindex> : <Componentindex className='blank' />}
-                  <FlowWapper className='dailyrecord'>
-                    {index + 1}:&nbsp;&nbsp;
-                    <Select
-                      placeholder="Select equipment"
-                      options={equipmentOptions}
-                      value={step.name}
-                      onChange={(selectedOption) => this.handleChange('postFormdata', 'equipment', index, 'name', selectedOption)}
-                      styles={PMcustomStyles}
-                    />
-                    amount:&nbsp;&nbsp;
-                    <Componentinput
-                      className='small'
-                      value={step.amount}
-                      onChange={(e) => this.handleChange('postFormdata', 'equipment', index, 'amount', e.target.value)}
-                    />
-                    runtime:&nbsp;&nbsp;
-                    <Componentinput
-                      className='small'
-                      value={step.runtime}
-                      onChange={(e) => this.handleChange('postFormdata', 'equipment', index, 'runtime', e.target.value)}
-                    />
-                  </FlowWapper>
+                  <Select
+                    placeholder="Select equipment"
+                    options={equipmentOptions}
+                    value={step.name}
+                    onChange={(selectedOption) => this.handleChange('postFormdata', 'equipment', index, 'name', selectedOption)}
+                    styles={PMcustomStyles}
+                  />
+                  <Componentinput
+                    className='small'
+                    value={step.amount}
+                    onChange={(e) => this.handleChange('postFormdata', 'equipment', index, 'amount', e.target.value)}
+                  />
+                  <Componentinput
+                    className='small'
+                    value={step.runtime}
+                    onChange={(e) => this.handleChange('postFormdata', 'equipment', index, 'runtime', e.target.value)}
+                  />
                 </ComponentoptionWapper>
               ))}
               <ComponentoptionWapper>
-                <Componentbutton className='addstepDailyrecord' onClick={() => this.addStep('postFormdata', 'equipment')}>Add Step</Componentbutton>
+                <FlowWapper className='dailyrecord'>
+                  <Componentindex className='big'>Material</Componentindex>
+                  <Componentindex className='small'>Amount</Componentindex>
+                  <Componentindex className='small'>Unit</Componentindex>
+                  <VscAdd fontSize={20} color='green' onClick={() => this.addStep('postFormdata', 'material')} />
+                </FlowWapper>
               </ComponentoptionWapper>
               {this.state.postFormdata.material.map((step, index) => (
                 <ComponentoptionWapper className='flow' key={index}>
-                  {index === 0 ? <Componentindex>Materail</Componentindex> : <Componentindex className='blank' />}
-                  <FlowWapper className='dailyrecord'>
-                    {index + 1}:&nbsp;&nbsp;
-                    <Select
-                      placeholder="Select material"
-                      options={materialOptions}
-                      value={step.name}
-                      onChange={(selectedOption) => this.handleChange('postFormdata', 'material', index, 'name', selectedOption)}
-                      styles={PMcustomStyles}
-                    />
-                    amount:&nbsp;&nbsp;
-                    <Componentinput
-                      className='small'
-                      value={step.amount}
-                      onChange={(e) => this.handleChange('postFormdata', 'material', index, 'amount', e.target.value)}
-                    />
-                    unit:&nbsp;&nbsp;
-                    <Componentinput
-                      className='small'
-                      value={step.unit}
-                      onChange={(e) => this.handleChange('postFormdata', 'material', index, 'unit', e.target.value)}
-                    />
-                  </FlowWapper>
+                  <Select
+                    placeholder="Select material"
+                    options={materialOptions}
+                    value={step.name}
+                    onChange={(selectedOption) => this.handleChange('postFormdata', 'material', index, 'name', selectedOption)}
+                    styles={PMcustomStyles}
+                  />
+                  <Componentinput
+                    className='small'
+                    value={step.amount}
+                    onChange={(e) => this.handleChange('postFormdata', 'material', index, 'amount', e.target.value)}
+                  />
+                  <Componentinput
+                    className='small'
+                    value={step.unit}
+                    onChange={(e) => this.handleChange('postFormdata', 'material', index, 'unit', e.target.value)}
+                  />
                 </ComponentoptionWapper>
               ))}
-              <ComponentoptionWapper>
-                <Componentbutton className='addstepDailyrecord' onClick={() => this.addStep('postFormdata', 'material')}>Add Step</Componentbutton>
-              </ComponentoptionWapper>
               <ComponentoptionWapper className='flow'>
                 <Componentindex>Description</Componentindex>
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
                 <Description
-                  className='short'
                   value={this.state.postFormdata.description}
                   onChange={(e) => this.setState((prevState) => ({ postFormdata: { ...prevState.postFormdata, description: e.target.value } }))}>
                 </Description>
@@ -242,70 +242,69 @@ class Dailyrecord extends PureComponent {
                   />
                 </DatePickerWrapper>
               </ComponentoptionWapper >
+              <ComponentoptionWapper>
+                <FlowWapper className='dailyrecord'>
+                  <Componentindex className='big'>Equipment</Componentindex>
+                  <Componentindex className='small'>Amount</Componentindex>
+                  <Componentindex className='small'>Unit</Componentindex>
+                  <VscAdd fontSize={20} color='green' onClick={() => this.addStep('reviseFormdata', 'equipment')} />
+                </FlowWapper>
+              </ComponentoptionWapper>
               {this.state.reviseFormdata.equipment.map((step, index) => (
                 <ComponentoptionWapper className='flow' key={index}>
-                  {index === 0 ? <Componentindex>Equipment</Componentindex> : <Componentindex className='blank' />}
-                  <FlowWapper className='dailyrecord'>
-                    {index + 1}:&nbsp;&nbsp;
-                    <Select
-                      placeholder="Select equipment"
-                      options={equipmentOptions}
-                      value={step.name}
-                      onChange={(selectedOption) => this.handleChange('reviseFormdata', 'equipment', index, 'name', selectedOption)}
-                      styles={PMcustomStyles}
-                    />
-                    amount:&nbsp;&nbsp;
-                    <Componentinput
-                      className='small'
-                      value={step.amount}
-                      onChange={(e) => this.handleChange('reviseFormdata', 'equipment', index, 'amount', e.target.value)}
-                    />
-                    runtime:&nbsp;&nbsp;
-                    <Componentinput
-                      className='small'
-                      value={step.runtime}
-                      onChange={(e) => this.handleChange('reviseFormdata', 'equipment', index, 'runtime', e.target.value)}
-                    />
-                  </FlowWapper>
+                  <Select
+                    placeholder="Select equipment"
+                    options={equipmentOptions}
+                    value={step.name}
+                    onChange={(selectedOption) => this.handleChange('reviseFormdata', 'equipment', index, 'name', selectedOption)}
+                    styles={PMcustomStyles}
+                  />
+                  <Componentinput
+                    className='small'
+                    value={step.amount}
+                    onChange={(e) => this.handleChange('reviseFormdata', 'equipment', index, 'amount', e.target.value)}
+                  />
+                  <Componentinput
+                    className='small'
+                    value={step.runtime}
+                    onChange={(e) => this.handleChange('reviseFormdata', 'equipment', index, 'runtime', e.target.value)}
+                  />
                 </ComponentoptionWapper>
               ))}
               <ComponentoptionWapper>
-                <Componentbutton className='addstepDailyrecord' onClick={() => this.addStep('reviseFormdata', 'equipment')}>Add Step</Componentbutton>
+                <FlowWapper className='dailyrecord'>
+                  <Componentindex className='big'>Material</Componentindex>
+                  <Componentindex className='small'>Amount</Componentindex>
+                  <Componentindex className='small'>Unit</Componentindex>
+                  <VscAdd fontSize={20} color='green' onClick={() => this.addStep('reviseFormdata', 'material')} />
+                </FlowWapper>
               </ComponentoptionWapper>
               {this.state.reviseFormdata.material.map((step, index) => (
                 <ComponentoptionWapper className='flow' key={index}>
-                  {index === 0 ? <Componentindex>Materail</Componentindex> : <Componentindex className='blank' />}
-                  <FlowWapper className='dailyrecord'>
-                    {index + 1}:&nbsp;&nbsp;
-                    <Select
-                      placeholder="Select material"
-                      options={materialOptions}
-                      value={step.name}
-                      onChange={(selectedOption) => this.handleChange('reviseFormdata', 'material', index, 'name', selectedOption)}
-                      styles={PMcustomStyles}
-                    />
-                    amount:&nbsp;&nbsp;
-                    <Componentinput
-                      className='small'
-                      value={step.amount}
-                      onChange={(e) => this.handleChange('reviseFormdata', 'material', index, 'amount', e.target.value)}
-                    />
-                    unit:&nbsp;&nbsp;
-                    <Componentinput
-                      className='small'
-                      value={step.unit}
-                      onChange={(e) => this.handleChange('reviseFormdata', 'material', index, 'unit', e.target.value)}
-                    />
-                  </FlowWapper>
+                  <Select
+                    placeholder="Select material"
+                    options={materialOptions}
+                    value={step.name}
+                    onChange={(selectedOption) => this.handleChange('reviseFormdata', 'material', index, 'name', selectedOption)}
+                    styles={PMcustomStyles}
+                  />
+                  <Componentinput
+                    className='small'
+                    value={step.amount}
+                    onChange={(e) => this.handleChange('reviseFormdata', 'material', index, 'amount', e.target.value)}
+                  />
+                  <Componentinput
+                    className='small'
+                    value={step.unit}
+                    onChange={(e) => this.handleChange('reviseFormdata', 'material', index, 'unit', e.target.value)}
+                  />
                 </ComponentoptionWapper>
               ))}
-              <ComponentoptionWapper>
-                <Componentbutton className='addstepDailyrecord' onClick={() => this.addStep('reviseFormdata', 'material')}>Add Step</Componentbutton>
-              </ComponentoptionWapper>
               <ComponentoptionWapper className='flow'>
                 <Componentindex>Description</Componentindex>
+              </ComponentoptionWapper>
+              <ComponentoptionWapper>
                 <Description
-                  className='short'
                   value={this.state.reviseFormdata.description}
                   onChange={(e) => this.setState((prevState) => ({ reviseFormdata: { ...prevState.reviseFormdata, description: e.target.value } }))}>
                 </Description>

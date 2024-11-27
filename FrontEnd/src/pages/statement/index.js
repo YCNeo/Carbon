@@ -21,6 +21,7 @@ import {
   Chartselect,
   Option
 } from '../../components/style';
+import { barchart, linechart, piechart } from '../../components/function/chart';
 
 class Statement extends PureComponent {
   state = {
@@ -32,18 +33,22 @@ class Statement extends PureComponent {
       { id: 2, name: "line chart" },
       { id: 3, name: "pie chart" }
     ],
-    option: [
+    yoption: [
       { value: 1, label: "time" },
-      { value: 2, label: "carbon emission" },
-      { value: 3, label: "project value" },
-      { value: 4, label: "factory number" },
-      { value: 5, label: "option5" }
+      { value: 2, label: "carbon emission" }
+    ],
+    xoption: [
+      { value: 3, label: "project" },
+      { value: 4, label: "PN" }
     ],
     startDate: new Date(),
     endDate: new Date(),
     customTimeInput: "",
-    selectedOption1: 1,
-    selectedOption2: 1
+    xyaxis: [
+      { xaxis: 1, yaxis: 1 },
+      { xaxis: 1, yaxis: 1 },
+      { xaxis: 1, yaxis: 1 }
+    ]
   };
 
   handleSelectChange = (selectedOptions) => {
@@ -74,17 +79,29 @@ class Statement extends PureComponent {
     this.setState({ chart: id });
   }
 
-  handleSelectChange1 = (selectedOptions) => {
-    this.setState({ selectedOption1: selectedOptions });
-  };
+  handleSelectChangexy = (selectedOptions, type, index) => {
+    this.setState(prevState => {
+      const newArray = [...prevState.xyaxis];
+      newArray[index][`${type}axis`] = selectedOptions;
+      return { xyaxis: newArray };
+    });
+  }
 
-  handleSelectChange2 = (selectedOptions) => {
-    this.setState({ selectedOption2: selectedOptions });
-  };
+  renderChart = (projectdata) => {
+    const { chart, xyaxis } = this.state;
+    
+    return (
+      <Componentcheckbox>
+        {barchart(projectdata,xyaxis[0].xaxis, xyaxis[0].yaxis)}
+        {linechart(projectdata,xyaxis[1].xaxis, xyaxis[1].yaxis)}
+        {piechart(projectdata,xyaxis[2].xaxis, xyaxis[2].yaxis)}
+      </Componentcheckbox>
+    )
+  }
 
   render() {
-    const { projectlist } = this.props;
-    const { selectedProject, startDate, endDate, customTimeInput, chart, chartlist, option, selectedOption1, selectedOption2 } = this.state;
+    const { projectlist, projectdata } = this.props;
+    const { selectedProject, startDate, endDate, customTimeInput, chart, chartlist, xoption, yoption, xyaxis } = this.state;
 
     const projectOptions = projectlist.map(item => ({
       value: item.id,
@@ -99,6 +116,7 @@ class Statement extends PureComponent {
         className="custom-time-input"
       />
     );
+
     if (localStorage.getItem('jwtToken') != null) {
       return (
         <PageWrapper>
@@ -162,9 +180,9 @@ class Statement extends PureComponent {
                         &nbsp;&nbsp;
                         <Select
                           placeholder="Select x"
-                          options={option}
-                          value={selectedOption1}
-                          onChange={this.handleSelectChange1}
+                          options={xoption}
+                          value={xyaxis[item.id - 1].xaxis}
+                          onChange={(value) => this.handleSelectChangexy(value, "x", item.id - 1)}
                           styles={PMcustomStyles}
                         />
                       </Chartselect>
@@ -172,10 +190,10 @@ class Statement extends PureComponent {
                         <Chartselect>
                           y-axis:&nbsp;&nbsp;
                           <Select
-                            placeholder="Select y"
-                            options={option}
-                            value={selectedOption2}
-                            onChange={this.handleSelectChange2}
+                            placeholder="Select x"
+                            options={yoption}
+                            value={xyaxis[item.id - 1].yaxis}
+                            onChange={(value) => this.handleSelectChangexy(value, "y", item.id - 1)}
                             styles={PMcustomStyles}
                           />
                         </Chartselect>
@@ -187,6 +205,11 @@ class Statement extends PureComponent {
             </ComponentoptionWapper>
             <ComponentoptionWapper>
               <Componentbutton onClick={() => this.props.sendinfo(selectedProject, startDate, endDate, chart)}>Create</Componentbutton>
+            </ComponentoptionWapper>
+            <ComponentoptionWapper>
+              <Componentcheckbox>
+                {this.renderChart(projectdata)}
+              </Componentcheckbox>
             </ComponentoptionWapper>
           </PagePage>
         </PageWrapper>
@@ -202,7 +225,8 @@ class Statement extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  projectlist: state.statement.projectlist
+  projectlist: state.statement.projectlist,
+  projectdata: state.statement.projectdata
 })
 
 const mapDispatchToProps = (dispatch) => {
@@ -210,14 +234,11 @@ const mapDispatchToProps = (dispatch) => {
     getproject() {
       dispatch(actionCreators.getproject())
     },
-    sendinfo(selectedProject, startDate, endDate, chart) {
+    sendinfo(selectedProject) {
       const projectChecked = selectedProject
-        ? selectedProject.map(option => {
-          const { value: id, label: name } = option;
-          return { id, name };
-        })
+        ? selectedProject.map(option => option.value)
         : [];
-      dispatch(actionCreators.sendinfo(projectChecked, startDate, endDate, chart))
+      dispatch(actionCreators.sendinfo(projectChecked));
     }
   }
 }

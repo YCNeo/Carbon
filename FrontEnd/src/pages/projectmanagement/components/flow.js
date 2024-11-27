@@ -14,6 +14,7 @@ import {
   Description,
   PMcustomStyles
 } from '../../../components/style';
+import { VscChromeClose, VscAdd } from "react-icons/vsc";
 import { getequipment, getmaterial } from '../../admin/store/actionCreators';
 
 class Flow extends PureComponent {
@@ -140,57 +141,66 @@ class Flow extends PureComponent {
         return (
           <ComponentWapper>
             {this.state.flowlist.map((step, index) => (
-              <ComponentoptionWapper className='flow' key={index}>
-                <Componentindex>Step {index + 1}</Componentindex>
-                <FlowWapper className='step'>
-                  {step.equipments.map((equipment, subIndex) => (
-                    <FlowWapper className='stepoption' key={subIndex}>
-                      <Componentindex>Equipment</Componentindex>
-                      <Select
-                        placeholder="Select equipment"
-                        options={equipmentOptions}
-                        readOnly
-                        value={equipment.PN}
-                        styles={PMcustomStyles}
-                      />
-                      <Componentindex>Amount</Componentindex>
-                      <Componentinput
-                        className='small'
-                        value={equipment.amount}
-                        readOnly
-                      />
-                      <Componentindex>Unit</Componentindex>
-                      <Componentinput
-                        className='small'
-                        value={equipment.unit}
-                        readOnly
-                      />
+              <div>
+                <ComponentoptionWapper className='flow' key={index}>
+                  <FlowWapper className='step'>
+                    <FlowWapper>
+                      <Componentindex>Step {index + 1}</Componentindex>
+                      <Componentindex className='big'>Equipment</Componentindex>
+                      <Componentindex className='small'>Amount</Componentindex>
+                      <Componentindex className='small'>Unit</Componentindex>
                     </FlowWapper>
-                  ))}
-                  {step.materials.map((material, subIndex) => (
-                    <FlowWapper className='stepoption' key={subIndex}>
-                      <Componentindex>Material</Componentindex>
-                      <Select
-                        placeholder="Select material"
-                        options={materialOptions}
-                        readOnly
-                        value={material.PN}
-                        styles={PMcustomStyles}
-                      />
-                      <Componentindex>Amount</Componentindex>
-                      <Componentinput
-                        className='small'
-                        value={material.amount}
-                        readOnly
-                      />
-                      <Componentindex>Unit</Componentindex>
-                      <Componentinput
-                        className='small'
-                        value={material.unit}
-                        readOnly
-                      />
+                    {step.equipments.map((equipment, subIndex) => (
+                      <FlowWapper className='stepoption' key={subIndex}>
+                        <Select
+                          placeholder="Select equipment"
+                          options={equipmentOptions}
+                          readOnly
+                          value={equipment.PN}
+                          styles={PMcustomStyles}
+                        />
+                        <Componentinput
+                          className='small'
+                          value={equipment.amount}
+                          readOnly
+                        />
+                        <Componentinput
+                          className='small'
+                          value={equipment.unit}
+                          readOnly
+                        />
+                      </FlowWapper>
+                    ))}
+                    <FlowWapper>
+                      <Componentindex className='blank' />
+                      <Componentindex className='big'>Material</Componentindex>
+                      <Componentindex className='small'>Amount</Componentindex>
+                      <Componentindex className='small'>Unit</Componentindex>
                     </FlowWapper>
-                  ))}
+                    {step.materials.map((material, subIndex) => (
+                      <FlowWapper className='stepoption' key={subIndex}>
+                        <Select
+                          placeholder="Select material"
+                          options={materialOptions}
+                          readOnly
+                          value={material.PN}
+                          styles={PMcustomStyles}
+                        />
+                        <Componentinput
+                          className='small'
+                          value={material.amount}
+                          readOnly
+                        />
+                        <Componentinput
+                          className='small'
+                          value={material.unit}
+                          readOnly
+                        />
+                      </FlowWapper>
+                    ))}
+                  </FlowWapper>
+                </ComponentoptionWapper>
+                <ComponentoptionWapper className='flow'>
                   <FlowWapper>
                     <Componentindex>Description</Componentindex>
                     <Description
@@ -198,8 +208,8 @@ class Flow extends PureComponent {
                       readOnly
                     />
                   </FlowWapper>
-                </FlowWapper>
-              </ComponentoptionWapper>
+                </ComponentoptionWapper>
+              </div>
             ))}
           </ComponentWapper>
         );
@@ -207,64 +217,70 @@ class Flow extends PureComponent {
         return (
           <ComponentWapper>
             {reviseSteps.map((step, index) => (
-              <ComponentoptionWapper className='flow' key={index}>
-                <FlowWapper className='step'>
-                  <Componentindex className='bottom'>Step {index + 1}</Componentindex>
-                  <Componentindex className='remove' onClick={() => (this.deletestep(index))}>delete step</Componentindex>
-                </FlowWapper>
-                <FlowWapper className='step'>
-                  {step.equipments.map((equipment, subIndex) => (
-                    <FlowWapper className='stepoption' key={subIndex}>
-                      <Componentindex>Equipment</Componentindex>
-                      <Select
-                        placeholder="Select equipment"
-                        options={equipmentOptions}
-                        value={equipment.PN}
-                        onChange={(selectedOption) => this.handleChange('revise', index, 'equipments', 'PN', subIndex, selectedOption)}
-                        styles={PMcustomStyles}
-                      />
-                      <Componentindex>Amount</Componentindex>
-                      <Componentinput
-                        className='small'
-                        value={equipment.amount}
-                        onChange={(e) => this.handleChange('revise', index, 'equipments', 'amount', subIndex, e.target.value)}
-                      />
-                      <Componentindex>Unit</Componentindex>
-                      <Componentinput
-                        className='small'
-                        value={equipment.unit}
-                        onChange={(e) => this.handleChange('revise', index, 'equipments', 'unit', subIndex, e.target.value)}
-                      />
-                      <Componentindex className='remove' onClick={() => (this.deleteoption(index, 'equipments', subIndex))}>delete this</Componentindex>
+              <div>
+                <ComponentoptionWapper className='flow' key={index}>
+                  <FlowWapper className='step'>
+                    <FlowWapper>
+                      <Componentindex>Step {index + 1}&nbsp;&nbsp;{<VscChromeClose color='red' onClick={() => (this.deletestep(index))} />}</Componentindex>
+                      <Componentindex className='big'>Equipment</Componentindex>
+                      <Componentindex className='small'>Amount</Componentindex>
+                      <Componentindex className='small'>Unit</Componentindex>
+                      <VscAdd fontSize={20} color='green' onClick={() => this.addStep('revise', index, 'equipments')} />
                     </FlowWapper>
-                  ))}
-                  <Componentbutton className='addstepEM' onClick={() => this.addStep('revise', index, 'equipments')}>Add equipment</Componentbutton>
-                  {step.materials.map((material, subIndex) => (
-                    <FlowWapper className='stepoption' key={subIndex}>
-                      <Componentindex>Material</Componentindex>
-                      <Select
-                        placeholder="Select material"
-                        options={materialOptions}
-                        value={material.PN}
-                        onChange={(selectedOption) => this.handleChange('revise', index, 'materials', 'PN', subIndex, selectedOption)}
-                        styles={PMcustomStyles}
-                      />
-                      <Componentindex>Amount</Componentindex>
-                      <Componentinput
-                        className='small'
-                        value={material.amount}
-                        onChange={(e) => this.handleChange('revise', index, 'materials', 'amount', subIndex, e.target.value)}
-                      />
-                      <Componentindex>Unit</Componentindex>
-                      <Componentinput
-                        className='small'
-                        value={material.unit}
-                        onChange={(e) => this.handleChange('revise', index, 'materials', 'unit', subIndex, e.target.value)}
-                      />
-                      <Componentindex className='remove' onClick={() => (this.deleteoption(index, 'materials', subIndex))}>delete this</Componentindex>
+                    {step.equipments.map((equipment, subIndex) => (
+                      <FlowWapper className='stepoption' key={subIndex}>
+                        <Select
+                          placeholder="Select equipment"
+                          options={equipmentOptions}
+                          value={equipment.PN}
+                          onChange={(selectedOption) => this.handleChange('revise', index, 'equipments', 'PN', subIndex, selectedOption)}
+                          styles={PMcustomStyles}
+                        />
+                        <Componentinput
+                          className='small'
+                          value={equipment.amount}
+                          onChange={(e) => this.handleChange('revise', index, 'equipments', 'amount', subIndex, e.target.value)}
+                        />
+                        <Componentinput
+                          className='small'
+                          value={equipment.unit}
+                          onChange={(e) => this.handleChange('revise', index, 'equipments', 'unit', subIndex, e.target.value)}
+                        />
+                        <VscChromeClose fontSize={20} color='red' className='remove' onClick={() => (this.deleteoption(index, 'equipments', subIndex))} />
+                      </FlowWapper>
+                    ))}
+                    <FlowWapper>
+                      <Componentindex className='blank' />
+                      <Componentindex className='big'>Material</Componentindex>
+                      <Componentindex className='small'>Amount</Componentindex>
+                      <Componentindex className='small'>Unit</Componentindex>
+                      <VscAdd fontSize={20} color='green' onClick={() => this.addStep('revise', index, 'materials')} />
                     </FlowWapper>
-                  ))}
-                  <Componentbutton className='addstepEM' onClick={() => this.addStep('revise', index, 'materials')}>Add material</Componentbutton>
+                    {step.materials.map((material, subIndex) => (
+                      <FlowWapper className='stepoption' key={subIndex}>
+                        <Select
+                          placeholder="Select material"
+                          options={materialOptions}
+                          value={material.PN}
+                          onChange={(selectedOption) => this.handleChange('revise', index, 'materials', 'PN', subIndex, selectedOption)}
+                          styles={PMcustomStyles}
+                        />
+                        <Componentinput
+                          className='small'
+                          value={material.amount}
+                          onChange={(e) => this.handleChange('revise', index, 'materials', 'amount', subIndex, e.target.value)}
+                        />
+                        <Componentinput
+                          className='small'
+                          value={material.unit}
+                          onChange={(e) => this.handleChange('revise', index, 'materials', 'unit', subIndex, e.target.value)}
+                        />
+                        <VscChromeClose fontSize={20} color='red' className='remove' onClick={() => (this.deleteoption(index, 'materials', subIndex))} />
+                      </FlowWapper>
+                    ))}
+                  </FlowWapper>
+                </ComponentoptionWapper>
+                <ComponentoptionWapper className='flow'>
                   <FlowWapper>
                     <Componentindex>Description</Componentindex>
                     <Description
@@ -272,8 +288,8 @@ class Flow extends PureComponent {
                       onChange={(e) => this.handleChange('revise', index, 'description', null, 0, e.target.value)}
                     />
                   </FlowWapper>
-                </FlowWapper>
-              </ComponentoptionWapper>
+                </ComponentoptionWapper>
+              </div>
             ))}
             <ComponentoptionWapper>
               <Componentbutton className='addstep' onClick={() => this.addStep('revise', null, null)}>Add Step</Componentbutton>

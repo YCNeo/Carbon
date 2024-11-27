@@ -8,9 +8,9 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Componentcheckbox,
   Innerpageoption
 } from '../../../components/style';
+import { table } from '../../../components/function/table';
 
 class Employee extends PureComponent {
   state = {
@@ -198,19 +198,7 @@ class Employee extends PureComponent {
                 <Componentbutton onClick={() => { this.props.employeeretrieve(retrieveFormData); this.setState({ display: true }) }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                  <Componentcheckbox>
-                    {retrieve_employee.map((employee) => (
-                      <ComponentoptionWapper key={employee.eid}>
-                        <Componentindex>{employee.name}</Componentindex>
-                        <Componentindex>{employee.gender}</Componentindex>
-                        <Componentindex>{employee.phone}</Componentindex>
-                        <Componentindex>{employee.email}</Componentindex>
-                        <Componentindex>{employee.nation}</Componentindex>
-                        <Componentbutton onClick={() => { this.props.setpage(2); this.revsiedata(employee) }}>revise</Componentbutton>
-                        <Componentbutton onClick={() => { this.props.setpage(3); this.deletedata(employee) }} className='reject'>Delete</Componentbutton>
-                      </ComponentoptionWapper>
-                    ))}
-                  </Componentcheckbox>
+                <div>{table(retrieve_employee, this.props.setpage, this.revsiedata, this.deletedata)}</div>
                 :
                 ''}
             </ComponentWapper>

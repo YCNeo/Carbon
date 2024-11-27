@@ -11,6 +11,7 @@ import {
   Componentcheckbox,
   Innerpageoption
 } from '../../../components/style';
+import { table } from '../../../components/function/table';
 
 class BoundaryEdition extends PureComponent {
   state = {
@@ -152,18 +153,7 @@ class BoundaryEdition extends PureComponent {
                 <Componentbutton onClick={() => { this.props.boundary_editionretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <Componentcheckbox>
-                  {retrieve_boundary.map((boundary) => (
-                    <ComponentoptionWapper key={boundary.bid}>
-                      <Componentindex>{boundary.bid}</Componentindex>
-                      <Componentindex>{boundary.address}</Componentindex>
-                      <Componentindex>{boundary.name}</Componentindex>
-                      <Componentindex>{boundary.type}</Componentindex>
-                      <Componentbutton onClick={() => { this.props.setboundary_editionpage(2); this.revsiedata(boundary) }}>revise</Componentbutton>
-                      <Componentbutton onClick={() => { this.props.setboundary_editionpage(3); this.deletedata(boundary) }} className='reject'>Delete</Componentbutton>
-                    </ComponentoptionWapper>
-                  ))}
-                </Componentcheckbox>
+                <div>{table(retrieve_boundary, this.props.setboundary_editionpage, this.revsiedata, this.deletedata)}</div>
                 :
                 ''}
             </ComponentWapper>

@@ -1,50 +1,47 @@
-{
-  "success": true,
-  "data": [
-    {
-      "id": "1",
-      "PN": "01",
-      "name": "material1"
-    },
-    {
-      "id": "2",
-      "PN": "02",
-      "name": "material2"
-    },
-    {
-      "id": "3",
-      "PN": "03",
-      "name": "material3"
-    },
-    {
-      "id": "4",
-      "PN": "04",
-      "name": "material4"
-    },
-    {
-      "id": "5",
-      "PN": "05",
-      "name": "material5"
-    },
-    {
-      "id": "6",
-      "PN": "06",
-      "name": "material6"
-    },
-    {
-      "id": "7",
-      "PN": "07",
-      "name": "material7"
-    },
-    {
-      "id": "8",
-      "PN": "08",
-      "name": "material8"
-    },
-    {
-      "id": "9",
-      "PN": "09",
-      "name": "material9"
-    }
-  ]
-}
+[
+  {
+    "id": "1",
+    "PN": "01",
+    "name": "material1"
+  },
+  {
+    "id": "2",
+    "PN": "02",
+    "name": "material2"
+  },
+  {
+    "id": "3",
+    "PN": "03",
+    "name": "material3"
+  },
+  {
+    "id": "4",
+    "PN": "04",
+    "name": "material4"
+  },
+  {
+    "id": "5",
+    "PN": "05",
+    "name": "material5"
+  },
+  {
+    "id": "6",
+    "PN": "06",
+    "name": "material6"
+  },
+  {
+    "id": "7",
+    "PN": "07",
+    "name": "material7"
+  },
+  {
+    "id": "8",
+    "PN": "08",
+    "name": "material8"
+  },
+  {
+    "id": "9",
+    "PN": "09",
+    "name": "material9"
+  }
+]
