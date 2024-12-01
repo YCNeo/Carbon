@@ -22,6 +22,7 @@ import {
   Option
 } from '../../components/style';
 import { barchart, linechart, piechart } from '../../components/function/chart';
+import { table } from '../../components/function/table';
 
 class Statement extends PureComponent {
   state = {
@@ -48,7 +49,8 @@ class Statement extends PureComponent {
       { xaxis: 1, yaxis: 1 },
       { xaxis: 1, yaxis: 1 },
       { xaxis: 1, yaxis: 1 }
-    ]
+    ],
+    display: false
   };
 
   handleSelectChange = (selectedOptions) => {
@@ -88,13 +90,13 @@ class Statement extends PureComponent {
   }
 
   renderChart = (projectdata) => {
-    const { chart, xyaxis } = this.state;
-    
+    const { xyaxis } = this.state;
+
     return (
       <Componentcheckbox>
-        {barchart(projectdata,xyaxis[0].xaxis, xyaxis[0].yaxis)}
-        {linechart(projectdata,xyaxis[1].xaxis, xyaxis[1].yaxis)}
-        {piechart(projectdata,xyaxis[2].xaxis, xyaxis[2].yaxis)}
+        {barchart(projectdata, xyaxis[0].xaxis, xyaxis[0].yaxis)}
+        {linechart(projectdata, xyaxis[1].xaxis, xyaxis[1].yaxis)}
+        {piechart(projectdata, xyaxis[2].xaxis, xyaxis[2].yaxis)}
       </Componentcheckbox>
     )
   }
@@ -204,13 +206,17 @@ class Statement extends PureComponent {
               </Componentcheckbox>
             </ComponentoptionWapper>
             <ComponentoptionWapper>
-              <Componentbutton onClick={() => this.props.sendinfo(selectedProject, startDate, endDate, chart)}>Create</Componentbutton>
+              <Componentbutton onClick={() => { this.props.sendinfo(selectedProject, startDate, endDate, chart); this.setState({ display: true }) }}>Create</Componentbutton>
             </ComponentoptionWapper>
-            <ComponentoptionWapper>
-              <Componentcheckbox>
-                {this.renderChart(projectdata)}
-              </Componentcheckbox>
-            </ComponentoptionWapper>
+            {this.state.display ?
+              <ComponentoptionWapper className='statement'>
+                {table(projectdata, null, null, null)}
+                <Componentcheckbox>
+                  {this.renderChart(projectdata)}
+                </Componentcheckbox>
+              </ComponentoptionWapper>
+              :
+              ''}
           </PagePage>
         </PageWrapper>
       )

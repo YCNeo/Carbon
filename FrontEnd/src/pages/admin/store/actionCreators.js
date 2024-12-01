@@ -37,11 +37,11 @@ export const AAsendinfo = (name, access) => {
   }
 }
 
-export const CPsendinfo = (projectName, PMID, materialChecked, equipmentChecked) => {
+export const CPsendinfo = (projectName, PMID/*, materialChecked, equipmentChecked*/) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/CPinfo.json', { projectName, PMID, materialChecked, equipmentChecked }).then((res) => {
+    axios./*正是對接時用post*/get('/api/CPinfo.json', { projectName, PMID/*, materialChecked, equipmentChecked */}).then((res) => {
       const result = res.data;
-      result ? alert('success') : alert('fail')
+      result ? alert('PID: ' + result.PID + '\npmid: ' + result.pmid) : alert('fail')
     }).catch(() => {
       alert('CPsendinfo fail')
     });

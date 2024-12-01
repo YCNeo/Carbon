@@ -13,3 +13,4 @@ export const FLOW_UPDATED = 'projectmanagement/FLOW_UPDATED';
 export const RETRIEVE_MEMBER = 'projectmanagement/RETRIEVE_MEMBER';
 export const RETRIEVE_MATERIAL = 'projectmanagement/RETRIEVE_MATERIAL';
 export const RETRIEVE_EQUIPMENT = 'projectmanagement/RETRIEVE_EQUIPMENT';
+export const RETRIEVE_DAILYRECORD = 'projectmanagement/RETRIEVE_DAILYRECORD';

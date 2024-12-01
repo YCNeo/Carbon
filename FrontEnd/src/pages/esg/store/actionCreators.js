@@ -131,8 +131,12 @@ export const sourcerevise = (EName, form, MName, category) => {
 
 export const statementretrieve = (EName, form, category) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { category, form, EName }).then((res) => {
+    axios./*正是對接時用post*/get('/api/statementretrieve.json', { category, form, EName }).then((res) => {
       const result = res.data;
+      dispatch({
+        type:constants.RETRIEVE_STATEMENT,
+        retrieve_statement: result
+      })
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);

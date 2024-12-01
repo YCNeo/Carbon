@@ -16,9 +16,9 @@ class Material extends PureComponent {
   state = {
     hoveredBox: null,
     pages: [
-      { id: 1, text: 'Post' },
+      { id: 1, text: 'Retrieve' },
       { id: 2, text: 'Revise' },
-      { id: 3, text: 'Retrieve' },
+      { id: 3, text: 'Post' },
     ],
     postFormData: {
       name: '',
@@ -71,7 +71,7 @@ class Material extends PureComponent {
   whichpage(page, retrieve_material) {
     const { postFormData, reviseFormData, retrieveFormData } = this.state;
     switch (page) {
-      case 1:
+      case 3:
         {
           return (
             <ComponentWapper>
@@ -123,7 +123,7 @@ class Material extends PureComponent {
             </ComponentWapper>
           );
         }
-      case 3:
+      case 1:
         {
           return (
             <ComponentWapper>

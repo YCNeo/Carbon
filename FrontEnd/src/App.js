@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 
 import store from './store';
 
-import Header from './common/header';
+//import Headers from './common/header';
 import Login from './pages/login'
 import Admin from './pages/admin'
 import Statement from './pages/statement'
@@ -15,11 +15,10 @@ import ESG from './pages/esg';
 import {
   MainWrapper,
   MainIndexlist,
-  Maintop,
   Mainpageoption
 } from './components/style';
 import './index.css';
-import Logout from './components/function/logout';
+import Header from './components/function/header';
 
 class App extends Component {
   state = {
@@ -27,14 +26,12 @@ class App extends Component {
     hoveredBox: null,
     pages: [
       { id: 0, text: 'home', link: '' },
-      { id: 1, text: 'Admin', link: 'admin' },
-      { id: 2, text: 'Project management', link: 'projectmanagement' },
-      { id: 3, text: 'PPE', link: 'ppe' },
-      { id: 4, text: 'Statement', link: 'statement' },
-      { id: 5, text: 'ESG', link: 'esg' }
-    ],
-    eid: '',
-    ename: ''
+      { id: 1, text: 'ESG', link: 'esg' },
+      { id: 2, text: 'Admin', link: 'admin' },
+      { id: 3, text: 'Project management', link: 'projectmanagement' },
+      { id: 4, text: 'PPE', link: 'ppe' },
+      { id: 5, text: 'Statement', link: 'statement' }
+    ]
   };
   handleMouseEnter = (index) => {
     this.setState({ hoveredBox: index });
@@ -48,22 +45,14 @@ class App extends Component {
     this.setState({ mainpage: page });
   }
 
-  getinfo = () => {
-    this.setState({ eid: localStorage.getItem('EID'), ename: localStorage.getItem('Ename') });
-  }
-
   render() {
     const { hoveredBox, pages, mainpage } = this.state;
     return (
       <Provider store={store}>
         <BrowserRouter>
-          {<Header />}
+          {/*<Headers />*/}
           <MainWrapper className='context'>
-            <Maintop>
-              <h2>Carbon Project</h2>
-              {this.state.eid}&nbsp;&nbsp;{this.state.ename}
-              <Logout />
-            </Maintop>
+            <Header />
             <MainWrapper>
               <MainIndexlist>
                 {pages.map(({ id, text, link }) => (
@@ -95,10 +84,6 @@ class App extends Component {
         </BrowserRouter>
       </Provider >
     )
-  }
-
-  componentDidMount() {
-    this.getinfo();
   }
 }
 

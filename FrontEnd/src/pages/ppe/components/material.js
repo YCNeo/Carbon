@@ -20,9 +20,9 @@ class Material extends PureComponent {
   state = {
     hoveredBox: null,
     pages: [
-      { id: 1, text: 'Post' },
+      { id: 1, text: 'Retrieve' },
       { id: 2, text: 'Delete' },
-      { id: 3, text: 'Retrieve' },
+      { id: 3, text: 'Post' },
       { id: 4, text: 'Disposal list' }
     ],
     postFormdata: {
@@ -97,7 +97,7 @@ class Material extends PureComponent {
   whichpage(page, retrieve_material) {
     const { postFormdata, deleteFormdata, retrieveFormdata } = this.state;
     switch (page) {
-      case 1:
+      case 3:
         {
           const CustomTimeInput = ({ value, onChange }) => (
             <input
@@ -201,7 +201,7 @@ class Material extends PureComponent {
             </ComponentWapper>
           )
         }
-      case 3:
+      case 1:
         {
           return (
             <ComponentWapper>

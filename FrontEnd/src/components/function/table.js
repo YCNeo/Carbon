@@ -14,7 +14,7 @@ export const table = (list, setpage, revsiedata, deletedata) => {
     <TableWapper>
       <TableRow>
         {headers.map((header) => (<TableCell className='header' key={header}>{header}</TableCell>))}
-        <TableCell className={(deletedata != null && revsiedata != null) ? 'header' : 'onebutton'} />
+        {(revsiedata === null && deletedata === null) ? null : <TableCell className={(deletedata != null && revsiedata != null) ? 'header' : 'onebutton'} />}
       </TableRow>
 
       {list.map((data, rowIndex) => (

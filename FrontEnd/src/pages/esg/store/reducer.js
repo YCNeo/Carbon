@@ -7,7 +7,8 @@ const defaultState = {
   statementpage: 1,
   auditpage: 1,
   retrieve_boundary: [],
-  retrieve_source: []
+  retrieve_source: [],
+  retrieve_statement: []
 };
 
 const reducer = (state = defaultState, action) => {
@@ -46,6 +47,11 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         retrieve_source: action.retrieve_source,
+      };
+    case constants.RETRIEVE_STATEMENT:
+      return {
+        ...state,
+        retrieve_statement: action.retrieve_statement,
       };
     default:
       return state;

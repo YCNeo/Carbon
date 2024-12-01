@@ -20,9 +20,9 @@ class Equipment extends PureComponent {
   state = {
     hoveredBox: null,
     pages: [
-      { id: 1, text: 'Post' },
+      { id: 1, text: 'Retrieve' },
       { id: 2, text: 'Delete' },
-      { id: 3, text: 'Retrieve' },
+      { id: 3, text: 'Post' },
       { id: 4, text: 'Post Repair' },
       { id: 5, text: 'Repair Log' },
       { id: 6, text: 'Disposal List' },
@@ -98,12 +98,11 @@ class Equipment extends PureComponent {
     });
   }
 
-  whichpage(page,retrieve_equipment) {
+  whichpage(page, retrieve_equipment) {
     const { postFormdata, deleteFormdata, retrieveFormdata, postrepairFormdata } = this.state;
     switch (page) {
-      case 1:
+      case 3:
         {
-
           const CustomTimeInput = ({ value, onChange }) => (
             <input
               value={value}
@@ -202,7 +201,7 @@ class Equipment extends PureComponent {
             </ComponentWapper>
           );
         }
-      case 3:
+      case 1:
         {
           return (
             <ComponentWapper>
@@ -272,7 +271,7 @@ class Equipment extends PureComponent {
   }
 
   render() {
-    const { setequipmentpage, equipmentpage,retrieve_equipment } = this.props;
+    const { setequipmentpage, equipmentpage, retrieve_equipment } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
@@ -292,7 +291,7 @@ class Equipment extends PureComponent {
             )
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(equipmentpage,retrieve_equipment)}
+        {this.whichpage(equipmentpage, retrieve_equipment)}
       </ComponentWapper>
     )
   }

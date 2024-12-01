@@ -9,7 +9,7 @@ import {
   Jumpbottom
 } from './style';
 
-const Header = (props) => {
+const Headers = (props) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -77,4 +77,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Headers);
