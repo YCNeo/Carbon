@@ -141,8 +141,8 @@ class Flow extends PureComponent {
         return (
           <ComponentWapper>
             {this.state.flowlist.map((step, index) => (
-              <div>
-                <ComponentoptionWapper className='flow' key={index}>
+              <div key={index}>
+                <ComponentoptionWapper className='flow'>
                   <FlowWapper className='step'>
                     <FlowWapper>
                       <Componentindex>Step {index + 1}</Componentindex>
@@ -217,8 +217,8 @@ class Flow extends PureComponent {
         return (
           <ComponentWapper>
             {reviseSteps.map((step, index) => (
-              <div>
-                <ComponentoptionWapper className='flow' key={index}>
+              <div key={index}>
+                <ComponentoptionWapper className='flow'>
                   <FlowWapper className='step'>
                     <FlowWapper>
                       <Componentindex>Step {index + 1}&nbsp;&nbsp;{<VscChromeClose color='red' onClick={() => (this.deletestep(index))} />}</Componentindex>

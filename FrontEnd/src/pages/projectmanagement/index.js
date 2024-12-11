@@ -86,8 +86,8 @@ class Projectmanagement extends Component {
     };
 
     const options = projectlist.map(item => ({
-      value: item.id,
-      label: item.name,
+      value: item.PID,
+      label: item.pname,
     }));
 
     const customStyles = {
@@ -163,8 +163,8 @@ class Projectmanagement extends Component {
     const { pm_ranklist, projectlist } = this.props;
 
     const matchedProjects = projectlist.filter(project =>
-      pm_ranklist.some(rank => rank.pid === project.id)
-    ).map(project => project.id);
+      pm_ranklist.some(rank => rank.pid === project.PID)
+    ).map(project => project.PID);
 
     this.setState({
       matchedProjects

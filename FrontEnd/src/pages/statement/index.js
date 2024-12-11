@@ -60,8 +60,8 @@ class Statement extends PureComponent {
   handleSelectAll = () => {
     const { projectlist } = this.props;
     const projectOptions = projectlist.map(item => ({
-      value: item.id,
-      label: item.name
+      value: item.PID,
+      label: item.pname
     }));
     this.setState({
       selectedProject: projectOptions,
@@ -101,13 +101,19 @@ class Statement extends PureComponent {
     )
   }
 
+  mergeArrays(data) {
+    const apple = Object.values(data).flat();
+    return apple;
+  }
+
   render() {
     const { projectlist, projectdata } = this.props;
     const { selectedProject, startDate, endDate, customTimeInput, chart, chartlist, xoption, yoption, xyaxis } = this.state;
+    const receiveprojectdata = this.mergeArrays(projectdata);
 
     const projectOptions = projectlist.map(item => ({
-      value: item.id,
-      label: item.name
+      value: item.PID,
+      label: item.pname
     }));
 
     const CustomTimeInput = ({ value, onChange }) => (
@@ -210,9 +216,9 @@ class Statement extends PureComponent {
             </ComponentoptionWapper>
             {this.state.display ?
               <ComponentoptionWapper className='statement'>
-                {table(projectdata, null, null, null)}
+                {table(receiveprojectdata, null, null, null)}
                 <Componentcheckbox>
-                  {this.renderChart(projectdata)}
+                  {this.renderChart(receiveprojectdata)}
                 </Componentcheckbox>
               </ComponentoptionWapper>
               :

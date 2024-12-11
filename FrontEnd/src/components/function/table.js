@@ -14,7 +14,14 @@ export const table = (list, setpage, revsiedata, deletedata) => {
     <TableWapper>
       <TableRow>
         {headers.map((header) => (<TableCell className='header' key={header}>{header}</TableCell>))}
-        {(revsiedata === null && deletedata === null) ? null : <TableCell className={(deletedata != null && revsiedata != null) ? 'header' : 'onebutton'} />}
+        {(localStorage.getItem("pm_rank") === "pm") ?
+          (revsiedata === null && deletedata === null) ?
+            null
+            :
+            <TableCell
+              className={(deletedata != null && revsiedata != null) ? 'header' : 'onebutton'} />
+          :
+          null}
       </TableRow>
 
       {list.map((data, rowIndex) => (
@@ -22,8 +29,15 @@ export const table = (list, setpage, revsiedata, deletedata) => {
           {headers.map((header) => (
             <TableCell className={(rowIndex % 2 === 0) ? 'lightcell' : 'darkcell'} key={`${data.eid}-${header}`}>{data[header]}</TableCell>
           ))}
-          {revsiedata ? <TableButton onClick={() => { setpage(2); revsiedata(data); }}>修改</TableButton> : null}
-          {deletedata ? <TableButton onClick={() => { revsiedata ? setpage(3) : setpage(2); deletedata(data); }} className="delete">刪除</TableButton> : null}
+          {
+            (localStorage.getItem("pm_rank") === "pm") ?
+              <>
+                {revsiedata ? <TableButton onClick={() => { setpage(2); revsiedata(data); }}>修改</TableButton> : null}
+                {deletedata ? <TableButton onClick={() => { revsiedata ? setpage(3) : setpage(2); deletedata(data); }} className="delete">刪除</TableButton> : null}
+              </>
+              :
+              null
+          }
         </TableRow>
       ))}
     </TableWapper>

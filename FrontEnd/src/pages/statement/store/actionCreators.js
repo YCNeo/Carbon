@@ -21,7 +21,7 @@ export const getproject = () => {
 export const sendinfo = (PID ) => {
   return (dispatch) => {
     axios./*正是對接時用post*/get('/api/statement_project.json', { PID}).then((res) => {      
-      const result = res.data.data;
+      const result = res.data;
       dispatch({
         type: constants.PORJECT_DATA,
         projectdata: result
