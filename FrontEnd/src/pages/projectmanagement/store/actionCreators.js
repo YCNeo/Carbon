@@ -182,8 +182,12 @@ export const dailyrecordpost = (date, equipment, material, description) => {
 
 export const dailyrecordretrieve = (date) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/member.json', { project, date }).then((res) => {
+    axios./*正是對接時用post*/get('/api/dailyrecord.json', { project, date }).then((res) => {
       const result = res.data;
+      dispatch({
+        type: constants.RETRIEVE_DAILYRECORD,
+        retrieve_dailyrecord: result
+      })
       result ? alert('success') : alert('fail')
     }).catch((error) => {
       console.error('Error fetching material data:', error);

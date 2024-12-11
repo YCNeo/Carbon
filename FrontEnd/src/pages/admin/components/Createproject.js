@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import Select from 'react-select';
+//import Select from 'react-select';
 import { actionCreators } from '../store';
 import {
   ComponentWapper,
@@ -9,11 +9,11 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  customStyles
+  //customStyles
 } from '../../../components/style';
 
 class Createproject extends PureComponent {
-  state = {
+  /*state = {
     selectedMaterial: null,
     allMaterialSelected: false,
     selectedEquipment: null,
@@ -38,9 +38,9 @@ class Createproject extends PureComponent {
       selectedMaterial: materialOptions,
       allMaterialSelected: true
     });
-  };
+  };*/
 
-  handleSelectAllE = () => {
+  /*handleSelectAllE = () => {
     const { equipmentlist } = this.props;
     const equipmentOptions = equipmentlist.map(item => ({
       value: item.id,
@@ -50,13 +50,13 @@ class Createproject extends PureComponent {
       selectedEquipment: equipmentOptions,
       allEquipmentSelected: true
     });
-  };
+  };*/
 
   render() {
-    const { materiallist, equipmentlist } = this.props;
-    const { selectedMaterial, selectedEquipment } = this.state;
+    //const { materiallist, equipmentlist } = this.props;
+    //const { selectedMaterial, selectedEquipment } = this.state;
 
-    const materialOptions = materiallist.map(item => ({
+    /*const materialOptions = materiallist.map(item => ({
       value: item.id,
       label: item.name
     }));
@@ -64,7 +64,7 @@ class Createproject extends PureComponent {
     const equipmentOptions = equipmentlist.map(item => ({
       value: item.id,
       label: item.name
-    }));
+    }));*/
 
     return (
       <ComponentWapper>
@@ -77,7 +77,7 @@ class Createproject extends PureComponent {
           <Componentindex>PM ID</Componentindex>
           <Componentinput ref={(input) => { this.pm_id = input }} />
         </ComponentoptionWapper>
-        <ComponentoptionWapper>
+        {/*<ComponentoptionWapper>
           <Componentindex>Material</Componentindex>
           <Select
             placeholder="Select material"
@@ -106,29 +106,29 @@ class Createproject extends PureComponent {
           <Componentbutton className='selectall' onClick={this.handleSelectAllE}>
             Select All
           </Componentbutton>
-        </ComponentoptionWapper>
+        </ComponentoptionWapper>*/}
         <ComponentoptionWapper>
-          <Componentbutton onClick={() => this.props.CPsendinfo(this.project_name, this.pm_id, selectedMaterial, selectedEquipment)}>Create</Componentbutton>
+          <Componentbutton onClick={() => this.props.CPsendinfo(this.project_name, this.pm_id/*, selectedMaterial, selectedEquipment*/)}>Create</Componentbutton>
         </ComponentoptionWapper>
       </ComponentWapper>
     )
   }
 
-  componentDidMount() {
+  /*componentDidMount() {
     this.props.getmaterial();
     this.props.getequipment();
-  }
+  }*/
 }
 
 const mapStateToProps = (state) => ({
-  materiallist: state.admin.materiallist,
-  equipmentlist: state.admin.equipmentlist
+  //materiallist: state.admin.materiallist,
+  //equipmentlist: state.admin.equipmentlist
 })
 
 const mapDisptchToProps = (dispatch) => {
   return {
-    CPsendinfo(project_name, pm_id, selectedMaterial, selectedEquipment) {
-      const materialChecked = selectedMaterial
+    CPsendinfo(project_name, pm_id/*, selectedMaterial, selectedEquipment*/) {
+      /*const materialChecked = selectedMaterial
         ? selectedMaterial.map(option => {
           const { value: id, label: name } = option;
           return { id, name };
@@ -140,15 +140,15 @@ const mapDisptchToProps = (dispatch) => {
           const { value: id, label: name } = option;
           return { id, name };
         })
-        : [];
-      dispatch(actionCreators.CPsendinfo(project_name.value, pm_id.value, materialChecked, equipmentChecked));
-    },
+        : [];*/  
+      dispatch(actionCreators.CPsendinfo(project_name.value, pm_id.value/*, materialChecked, equipmentChecked*/));
+    }/*,
     getmaterial() {
       dispatch(actionCreators.getmaterial())
     },
     getequipment() {
       dispatch(actionCreators.getequipment())
-    }
+    }*/
   }
 }
 

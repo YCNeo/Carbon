@@ -22,6 +22,7 @@ import {
   Option
 } from '../../components/style';
 import { barchart, linechart, piechart } from '../../components/function/chart';
+import { table } from '../../components/function/table';
 
 class Statement extends PureComponent {
   state = {
@@ -48,7 +49,8 @@ class Statement extends PureComponent {
       { xaxis: 1, yaxis: 1 },
       { xaxis: 1, yaxis: 1 },
       { xaxis: 1, yaxis: 1 }
-    ]
+    ],
+    display: false
   };
 
   handleSelectChange = (selectedOptions) => {
@@ -58,8 +60,8 @@ class Statement extends PureComponent {
   handleSelectAll = () => {
     const { projectlist } = this.props;
     const projectOptions = projectlist.map(item => ({
-      value: item.id,
-      label: item.name
+      value: item.PID,
+      label: item.pname
     }));
     this.setState({
       selectedProject: projectOptions,
@@ -88,24 +90,30 @@ class Statement extends PureComponent {
   }
 
   renderChart = (projectdata) => {
-    const { chart, xyaxis } = this.state;
-    
+    const { xyaxis } = this.state;
+
     return (
       <Componentcheckbox>
-        {barchart(projectdata,xyaxis[0].xaxis, xyaxis[0].yaxis)}
-        {linechart(projectdata,xyaxis[1].xaxis, xyaxis[1].yaxis)}
-        {piechart(projectdata,xyaxis[2].xaxis, xyaxis[2].yaxis)}
+        {barchart(projectdata, xyaxis[0].xaxis, xyaxis[0].yaxis)}
+        {linechart(projectdata, xyaxis[1].xaxis, xyaxis[1].yaxis)}
+        {piechart(projectdata, xyaxis[2].xaxis, xyaxis[2].yaxis)}
       </Componentcheckbox>
     )
+  }
+
+  mergeArrays(data) {
+    const apple = Object.values(data).flat();
+    return apple;
   }
 
   render() {
     const { projectlist, projectdata } = this.props;
     const { selectedProject, startDate, endDate, customTimeInput, chart, chartlist, xoption, yoption, xyaxis } = this.state;
+    const receiveprojectdata = this.mergeArrays(projectdata);
 
     const projectOptions = projectlist.map(item => ({
-      value: item.id,
-      label: item.name
+      value: item.PID,
+      label: item.pname
     }));
 
     const CustomTimeInput = ({ value, onChange }) => (
@@ -204,13 +212,17 @@ class Statement extends PureComponent {
               </Componentcheckbox>
             </ComponentoptionWapper>
             <ComponentoptionWapper>
-              <Componentbutton onClick={() => this.props.sendinfo(selectedProject, startDate, endDate, chart)}>Create</Componentbutton>
+              <Componentbutton onClick={() => { this.props.sendinfo(selectedProject, startDate, endDate, chart); this.setState({ display: true }) }}>Create</Componentbutton>
             </ComponentoptionWapper>
-            <ComponentoptionWapper>
-              <Componentcheckbox>
-                {this.renderChart(projectdata)}
-              </Componentcheckbox>
-            </ComponentoptionWapper>
+            {this.state.display ?
+              <ComponentoptionWapper className='statement'>
+                {table(receiveprojectdata, null, null, null)}
+                <Componentcheckbox>
+                  {this.renderChart(receiveprojectdata)}
+                </Componentcheckbox>
+              </ComponentoptionWapper>
+              :
+              ''}
           </PagePage>
         </PageWrapper>
       )

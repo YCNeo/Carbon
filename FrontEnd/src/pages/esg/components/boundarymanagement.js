@@ -8,7 +8,6 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Componentcheckbox,
   Innerpageoption
 } from '../../../components/style';
 import { table } from '../../../components/function/table';
@@ -17,10 +16,10 @@ class BoundaryEdition extends PureComponent {
   state = {
     hoveredBox: null,
     pages: [
-      { id: 1, text: 'Post' },
+      { id: 1, text: 'Retrieve' },
       { id: 2, text: 'Revise' },
       { id: 3, text: 'Delete' },
-      { id: 4, text: 'Retrieve' }
+      { id: 4, text:  'Post'}
     ],
     postFormdata: {
       name: '',
@@ -78,7 +77,7 @@ class BoundaryEdition extends PureComponent {
   whichpage(page, retrieve_boundary) {
     const { postFormdata, reviseFormdata, deleteFormdata, retrieveFormdata } = this.state;
     switch (page) {
-      case 1:
+      case 4:
         {
           return (
             <ComponentWapper>
@@ -133,7 +132,7 @@ class BoundaryEdition extends PureComponent {
             </ComponentWapper>
           )
         }
-      case 4:
+      case 1:
         {
           return (
             <ComponentWapper>

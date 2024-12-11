@@ -174,6 +174,9 @@ align-items: center;
 &.flow {
   align-items: center;
 }
+&.statement {
+  align-items: flex-start
+}
 `;
 
 export const Componentindex = styled.div`
@@ -280,6 +283,46 @@ font-size: 18px;
 border: none;
 background: #e0e0e0;
 float: left;
+`
+
+//////////////////////////////////table////////////////////////////////
+export const TableWapper = styled.div`
+height: auto;
+width: auto;
+display: flex;
+flex-direction: column;
+`
+
+export const TableRow = styled.div`
+height: auto;
+width: auto;
+display: flex;
+flex-direction: row;
+`
+
+export const TableCell = styled.div`
+height: 30px;
+width: 80px;
+line-height: 30px;
+text-align: center;
+border: solid white 1px;
+&.header {background: #79BA4D}
+&.darkcell {background: #E2EEDA}
+&.lightcell {background: #D2EDBF}
+&.onebutton {width: 40px; background: #79BA4D;}
+`
+
+export const TableButton = styled.div`
+text-align: center;
+line-height: 30px;
+height: 30px;
+width: 40px;
+font-size: 18px;
+cursor: pointer;
+font-size: 15px;
+border: solid white 1px;
+background: #d0d0d0;
+&.delete {color: red}
 `
 
 //////////////////////////////////////others//////////////////////////////////////
@@ -429,7 +472,6 @@ cursor: pointer;
 margin-top: 6px;
 margin-left: 10px;
 line-height: 38px;
-border: 2px solid #777;
 background: #d0d0d0;
 border-radius: 20px;
 `;
@@ -449,42 +491,7 @@ export const PMcustomStyles = {
   })
 };
 
-//////////////////////////////////table////////////////////////////////
-export const TableWapper = styled.div`
-height: auto;
-width: auto;
+export const HeaderWapper=styled.div`
 display: flex;
-flex-direction: column;
-`
-
-export const TableRow = styled.div`
-height: auto;
-width: auto;
-display: flex;
-flex-direction: row;
-`
-
-export const TableCell = styled.div`
-height: 30px;
-width: 80px;
-line-height: 30px;
-text-align: center;
-border: solid white 1px;
-&.header {background: #79BA4D}
-&.darkcell {background: #E2EEDA}
-&.lightcell {background: #D2EDBF}
-&.onebutton {width: 40px; background: #79BA4D;}
-`
-
-export const TableButton = styled.div`
-text-align: center;
-line-height: 30px;
-height: 30px;
-width: 40px;
-font-size: 18px;
-cursor: pointer;
-font-size: 15px;
-border: solid white 1px;
-background: #d0d0d0;
-&.delete {color: red}
+align-items: center
 `

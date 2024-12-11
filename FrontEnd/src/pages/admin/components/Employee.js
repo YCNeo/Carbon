@@ -16,10 +16,10 @@ class Employee extends PureComponent {
   state = {
     hoveredBox: null,
     pages: [
-      { id: 1, text: 'Post' },
+      { id: 1, text: 'Retrieve' },
       { id: 2, text: 'Revise' },
       { id: 3, text: 'Delete' },
-      { id: 4, text: 'Retrieve' },
+      { id: 4, text: 'Post' },
     ],
     postFormData: {
       name: '',
@@ -92,7 +92,7 @@ class Employee extends PureComponent {
   whichpage(page, retrieve_employee) {
     const { postFormData, reviseFormData, deleteFormData, retrieveFormData } = this.state;
     switch (page) {
-      case 1:
+      case 4:
         {
           return (
             <ComponentWapper>
@@ -174,7 +174,7 @@ class Employee extends PureComponent {
             </ComponentWapper>
           );
         }
-      case 4:
+      case 1:
         {
           return (
             <ComponentWapper>
@@ -214,7 +214,7 @@ class Employee extends PureComponent {
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
-        <Componenttitle>Access Assignment</Componenttitle>
+        <Componenttitle>Empolyee</Componenttitle>
         <ComponentoptionWapper>
           {pages.map(({ id, text }) => (
             <Innerpageoption

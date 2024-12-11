@@ -17,10 +17,10 @@ class Member extends PureComponent {
   state = {
     hoveredBox: null,
     pages: [
-      { id: 1, text: 'Post' },
+      { id: 1, text: 'Retrieve' },
       { id: 2, text: 'Revise' },
       { id: 3, text: 'Delete' },
-      { id: 4, text: 'Retrieve' },
+      { id: 4, text: 'Post' },
     ],
     postFormData: {
       eid: '',
@@ -82,7 +82,7 @@ class Member extends PureComponent {
   whichpage(page, retrieve_member) {
     const { postFormData, reviseFormData, deleteFormData, retrieveFormData } = this.state;
     switch (page) {
-      case 1:
+      case 4:
         {
           const positionOptions = this.props.positionlist.map(item => ({
             value: item.id,
@@ -152,7 +152,7 @@ class Member extends PureComponent {
           </ComponentWapper>
         );
       }
-      case 4: {
+      case 1: {
         const positionOptions = this.props.positionlist.map(item => ({
           value: item.id,
           label: item.name

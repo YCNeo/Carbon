@@ -8,9 +8,9 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Componentcheckbox,
   Innerpageoption
 } from '../../../components/style';
+import { table } from '../../../components/function/table';
 
 class Statement extends PureComponent {
   state = {
@@ -44,7 +44,7 @@ class Statement extends PureComponent {
     }));
   };
 
-  whichpage(page) {
+  whichpage(page, retrieve_statement) {
     const { retrieveFormdata } = this.state;
     switch (page) {
       case 1:
@@ -67,11 +67,7 @@ class Statement extends PureComponent {
                 <Componentbutton onClick={() => { this.props.statementretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <div>
-                  <ComponentoptionWapper>
-                    <Componentcheckbox>list</Componentcheckbox>
-                  </ComponentoptionWapper>
-                </div>
+                <div>{table(retrieve_statement, null, null, null)}</div>
                 :
                 ''}
             </ComponentWapper>
@@ -83,7 +79,7 @@ class Statement extends PureComponent {
   }
 
   render() {
-    const { setstatementpage, statementpage } = this.props;
+    const { setstatementpage, statementpage, retrieve_statement } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
@@ -101,14 +97,15 @@ class Statement extends PureComponent {
             </Innerpageoption>
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(statementpage)}
+        {this.whichpage(statementpage, retrieve_statement)}
       </ComponentWapper>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  statementpage: state.esg.statementpage
+  statementpage: state.esg.statementpage,
+  retrieve_statement: state.esg.retrieve_statement
 });
 
 const mapDisptchToProps = (dispatch) => {

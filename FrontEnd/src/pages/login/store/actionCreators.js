@@ -23,10 +23,14 @@ const pmrank = (rank) => ({
   list: rank
 })
 
+const userinfo =(data)=>({
+  type: constants.USER_INFO,
+  eid: data.EID,
+  ename: data.Ename
+})
+
 export const logout = () => {
   localStorage.removeItem('jwtToken');
-  localStorage.removeItem('EID');
-  localStorage.removeItem('Ename');
   localStorage.removeItem('authority');
   localStorage.removeItem('PM_rank');
   localStorage.removeItem('project');
@@ -57,8 +61,7 @@ export const login = (user, ori_password) => {
       localStorage.setItem('jwtToken', token);// put
       axios./*正是對接時用post*/get('/api/login.json', { user }).then((res) => { //記得改route
         const result2 = res.data;
-        localStorage.setItem('EID', result2.EID);
-        localStorage.setItem('Ename', result2.Ename);
+        dispatch(userinfo(result2));
         localStorage.setItem('authority', result2.authority);
         dispatch(pmrank(result2.PM_rank));
       })

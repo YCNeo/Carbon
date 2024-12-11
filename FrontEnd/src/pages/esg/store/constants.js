@@ -6,3 +6,4 @@ export const SET_AUDIT_PAGE = 'esg/SET_AUDIT_PAGE';
 
 export const RETRIEVE_BOUNDARY = 'esg/RETRIEVE_BOUNDARY';
 export const RETRIEVE_SOURCE = 'esg/RETRIEVE_SOURCE';
+export const RETRIEVE_STATEMENT = 'esg/RETRIEVE_STATEMENT';

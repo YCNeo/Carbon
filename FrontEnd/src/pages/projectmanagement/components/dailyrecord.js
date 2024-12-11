@@ -11,7 +11,6 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Componentcheckbox,
   Innerpageoption,
   DatePickerWrapper,
   FlowWapper,
@@ -20,14 +19,15 @@ import {
 } from '../../../components/style';
 import { VscAdd } from 'react-icons/vsc';
 import { getequipment, getmaterial } from '../../admin/store/actionCreators';
+import { table } from '../../../components/function/table'
 
 class Dailyrecord extends PureComponent {
   state = {
     hoveredBox: null,
     pages: [
-      { id: 1, text: 'Post' },
+      { id: 1, text: 'Retrieve' },
       { id: 2, text: 'Revise' },
-      { id: 3, text: 'Retrieve' },
+      { id: 3, text: 'Post' },
     ],
     postFormdata: {
       Date: new Date(),
@@ -109,7 +109,7 @@ class Dailyrecord extends PureComponent {
     this.setState({ [form]: newFormdata });
   };
 
-  whichpage(page) {
+  whichpage(page, retrieve_dailyrecord) {
     const materialOptions = this.props.materiallist.map(item => ({
       value: item.id,
       label: item.name
@@ -131,7 +131,7 @@ class Dailyrecord extends PureComponent {
     );
 
     switch (page) {
-      case 1:
+      case 3:
         {
           return (
             <ComponentWapper>
@@ -315,7 +315,7 @@ class Dailyrecord extends PureComponent {
             </ComponentWapper>
           );
         }
-      case 3:
+      case 1:
         {
           return (
             <ComponentWapper>
@@ -338,14 +338,7 @@ class Dailyrecord extends PureComponent {
                 <Componentbutton onClick={() => { this.props.dailyrecordretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
-                <div>
-                  <ComponentoptionWapper>
-                    <Componentcheckbox>list</Componentcheckbox>
-                  </ComponentoptionWapper>
-                  <ComponentoptionWapper>
-                    <Componentbutton onClick={() => { this.props.setdailyrecordpage(2) }}>revise</Componentbutton>
-                  </ComponentoptionWapper>
-                </div>
+                <div>{table(retrieve_dailyrecord, null, null, null)}</div>
                 :
                 ''}
             </ComponentWapper>
@@ -357,7 +350,7 @@ class Dailyrecord extends PureComponent {
   }
 
   render() {
-    const { setdailyrecordpage, dailyrecordpage } = this.props;
+    const { setdailyrecordpage, dailyrecordpage, retrieve_dailyrecord } = this.props;
     const { hoveredBox, pages } = this.state;
     return (
       <ComponentWapper>
@@ -377,7 +370,7 @@ class Dailyrecord extends PureComponent {
             )
           ))}
         </ComponentoptionWapper>
-        {this.whichpage(dailyrecordpage)}
+        {this.whichpage(dailyrecordpage, retrieve_dailyrecord)}
       </ComponentWapper>
     )
   }
@@ -391,7 +384,8 @@ class Dailyrecord extends PureComponent {
 const mapStateToProps = (state) => ({
   dailyrecordpage: state.projectmanagement.dailyrecordpage,
   materiallist: state.admin.materiallist,
-  equipmentlist: state.admin.equipmentlist
+  equipmentlist: state.admin.equipmentlist,
+  retrieve_dailyrecord: state.projectmanagement.retrieve_dailyrecord
 })
 
 const mapDisptchToProps = (dispatch) => {
