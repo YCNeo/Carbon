@@ -25,8 +25,8 @@ class Accessassignment extends PureComponent {
   handleSelectAll = () => {
     const { accesslist } = this.props;
     const accessOptions = accesslist.map(item => ({
-      value: item.id,
-      label: item.name
+      value: item.PID,
+      label: item.pname
     }));
     this.setState({
       selectedAccess: accessOptions,
@@ -39,8 +39,8 @@ class Accessassignment extends PureComponent {
     const { selectedAccess } = this.state;
 
     const accessOptions = accesslist.map(item => ({
-      value: item.id,
-      label: item.name
+      value: item.PID,
+      label: item.pname
     }));
 
     return (
@@ -86,8 +86,8 @@ const mapDisptchToProps = (dispatch) => {
     AAsendinfo(user_id, selectedAccess) {
       const accessChecked = selectedAccess
         ? selectedAccess.map(option => {
-          const { value: id, label: name } = option;
-          return { id, name };
+          const { value: PID, label: pname } = option;
+          return { PID, pname };
         })
         : [];
       dispatch(actionCreators.CUsendinfo(user_id.value, accessChecked));
