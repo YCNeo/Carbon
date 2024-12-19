@@ -1,28 +1,31 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import DatePicker from 'react-datepicker';
+import Select from 'react-select';
 import { actionCreators } from '../store';
 import {
   ComponentWapper,
   Componentindex,
-  Componentinput,
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  Innerpageoption
+  Innerpageoption,
+  DatePickerWrapper,
+  customStyles
 } from '../../../components/style';
 import { table } from '../../../components/function/table';
+import { getboundary } from '../../admin/store/actionCreators';
 
 class Statement extends PureComponent {
   state = {
     hoveredBox: null,
+    selecedBoundary: null,
     pages: [
       { id: 1, text: 'Retrieve' },
     ],
-    retrieveFormdata: {
-      ename: '',
-      form: '',
-      category: '',
-    },
+    startDate: new Date(),
+    endDate: new Date(),
+    customTimeInput: "",
     display: false
   };
 
@@ -32,6 +35,14 @@ class Statement extends PureComponent {
 
   handleMouseLeave = () => {
     this.setState({ hoveredBox: null });
+  };
+
+  handleTimeInputChange = (field, event) => {
+    this.setState({ [field]: event.target.value });
+  };
+
+  handleDateChange = (field, date) => {
+    this.setState({ [field]: date });
   };
 
   handleInputChange = (event, formType, field) => {
@@ -44,27 +55,70 @@ class Statement extends PureComponent {
     }));
   };
 
+  handleSelectChange = (selectedOptions) => {
+    this.setState({ selecedBoundary: selectedOptions });
+  };
+
   whichpage(page, retrieve_statement) {
-    const { retrieveFormdata } = this.state;
+    const { startDate, endDate, customTimeInput, selecedBoundary } = this.state;
+    const { boundarylist } = this.props;
+    const CustomTimeInput = ({ value, onChange }) => (
+      <input
+        value={value}
+        onChange={onChange}
+        placeholder="HH:mm"
+        className="custom-time-input"
+      />
+    );
+
+    const boundaryOptions = boundarylist.map(item => ({
+      value: item.bid,
+      label: item.name
+    }));
+
     switch (page) {
       case 1:
         {
           return (
             <ComponentWapper>
               <ComponentoptionWapper >
-                <Componentindex>EName</Componentindex>
-                <Componentinput value={retrieveFormdata.ename} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'ename')} />
+                <Componentindex>Start Date</Componentindex>
+                <DatePickerWrapper>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => this.handleDateChange('startDate', date)}
+                    dateFormat="yyyy/MM/dd"
+                    timeCaption="time"
+                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                  />
+                </DatePickerWrapper>
               </ComponentoptionWapper >
               <ComponentoptionWapper>
-                <Componentindex>Form</Componentindex>
-                <Componentinput value={retrieveFormdata.form} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'form')} />
+                <Componentindex>End Date</Componentindex>
+                <DatePickerWrapper>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => this.handleDateChange('endDate', date)}
+                    dateFormat="yyyy/MM/dd"
+                    timeCaption="time"
+                    customTimeInput={<CustomTimeInput value={customTimeInput} onChange={(e) => this.handleTimeInputChange('customTimeInput', e)} />}
+                  />
+                </DatePickerWrapper>
               </ComponentoptionWapper>
               <ComponentoptionWapper>
                 <Componentindex>Category</Componentindex>
-                <Componentinput value={retrieveFormdata.category} onChange={(e) => this.handleInputChange(e, 'retrieveFormdata', 'category')} />
+                <Select
+                  placeholder="Select boundary"
+                  closeMenuOnSelect={false}
+                  options={boundaryOptions}
+                  isMulti
+                  value={selecedBoundary}
+                  onChange={this.handleSelectChange}
+                  styles={customStyles}
+                />
               </ComponentoptionWapper>
               <ComponentoptionWapper>
-                <Componentbutton onClick={() => { this.props.statementretrieve(retrieveFormdata); this.setState({ display: true }); }}>Retrieve</Componentbutton>
+                <Componentbutton onClick={() => { this.props.statementretrieve(startDate, endDate, selecedBoundary); this.setState({ display: true }); }}>Retrieve</Componentbutton>
               </ComponentoptionWapper>
               {this.state.display ?
                 <div>{table(retrieve_statement, null, null, null)}</div>
@@ -101,11 +155,16 @@ class Statement extends PureComponent {
       </ComponentWapper>
     )
   }
+
+  componentDidMount() {
+    this.props.getboundary();
+  }
 }
 
 const mapStateToProps = (state) => ({
   statementpage: state.esg.statementpage,
-  retrieve_statement: state.esg.retrieve_statement
+  retrieve_statement: state.esg.retrieve_statement,
+  boundarylist: state.admin.boundarylist
 });
 
 const mapDisptchToProps = (dispatch) => {
@@ -113,9 +172,17 @@ const mapDisptchToProps = (dispatch) => {
     setstatementpage(id) {
       dispatch(actionCreators.setstatementpage(id));
     },
-    statementretrieve(retrieveFormdata) {
-      const { ename, form, category } = retrieveFormdata
-      dispatch(actionCreators.statementretrieve(ename, form, category));
+    statementretrieve(startdate, enddate, Boundarylist) {
+      const startDate = startdate.toISOString().split('T')[0];
+      const endDate = enddate.toISOString().split('T')[0];
+      const selecedBoundary = Boundarylist.map(option => {
+        const { value: bid } = option;
+        return { bid };
+      })
+      dispatch(actionCreators.statementretrieve(startDate, endDate, selecedBoundary));
+    },
+    getboundary() {
+      dispatch(getboundary());
     }
   }
 }

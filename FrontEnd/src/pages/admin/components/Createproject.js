@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-//import Select from 'react-select';
+import Select from 'react-select';
 import { actionCreators } from '../store';
 import {
   ComponentWapper,
@@ -9,62 +9,26 @@ import {
   Componentbutton,
   Componenttitle,
   ComponentoptionWapper,
-  //customStyles
+  customStyles
 } from '../../../components/style';
 
 class Createproject extends PureComponent {
-  /*state = {
-    selectedMaterial: null,
-    allMaterialSelected: false,
-    selectedEquipment: null,
-    allEquipmentSelected: false,
+  state = {
+    selectedBoundary: null,
   };
 
-  handleSelectChangeM = (selectedOptions) => {
-    this.setState({ selectedMaterial: selectedOptions });
+  handleSelectChange = (selectedOptions) => {
+    this.setState({ selectedBoundary: selectedOptions });
   };
-
-  handleSelectChangeE = (selectedOptions) => {
-    this.setState({ selectedEquipment: selectedOptions });
-  };
-
-  handleSelectAllM = () => {
-    const { materiallist } = this.props;
-    const materialOptions = materiallist.map(item => ({
-      value: item.id,
-      label: item.name
-    }));
-    this.setState({
-      selectedMaterial: materialOptions,
-      allMaterialSelected: true
-    });
-  };*/
-
-  /*handleSelectAllE = () => {
-    const { equipmentlist } = this.props;
-    const equipmentOptions = equipmentlist.map(item => ({
-      value: item.id,
-      label: item.name
-    }));
-    this.setState({
-      selectedEquipment: equipmentOptions,
-      allEquipmentSelected: true
-    });
-  };*/
 
   render() {
-    //const { materiallist, equipmentlist } = this.props;
-    //const { selectedMaterial, selectedEquipment } = this.state;
+    const { boundarylist } = this.props;
+    const { selectedBoundary } = this.state;
 
-    /*const materialOptions = materiallist.map(item => ({
-      value: item.id,
+    const boundaryOptions = boundarylist.map(item => ({
+      value: item.bid,
       label: item.name
     }));
-
-    const equipmentOptions = equipmentlist.map(item => ({
-      value: item.id,
-      label: item.name
-    }));*/
 
     return (
       <ComponentWapper>
@@ -77,78 +41,44 @@ class Createproject extends PureComponent {
           <Componentindex>PM ID</Componentindex>
           <Componentinput ref={(input) => { this.pm_id = input }} />
         </ComponentoptionWapper>
-        {/*<ComponentoptionWapper>
-          <Componentindex>Material</Componentindex>
+        <ComponentoptionWapper>
+          <Componentindex>Boundary</Componentindex>
           <Select
-            placeholder="Select material"
-            closeMenuOnSelect={false}
-            options={materialOptions}
-            isMulti
-            value={selectedMaterial}
-            onChange={this.handleSelectChangeM}
+            placeholder="Select boundary"
+            options={boundaryOptions}
+            value={selectedBoundary}
+            onChange={this.handleSelectChange}
             styles={customStyles}
           />
-          <Componentbutton className='selectall' onClick={this.handleSelectAllM}>
-            Select All
-          </Componentbutton>
         </ComponentoptionWapper>
         <ComponentoptionWapper>
-          <Componentindex>Equipment</Componentindex>
-          <Select
-            placeholder="Select equipment"
-            closeMenuOnSelect={false}
-            options={equipmentOptions}
-            isMulti
-            value={selectedEquipment}
-            onChange={this.handleSelectChangeE}
-            styles={customStyles}
-          />
-          <Componentbutton className='selectall' onClick={this.handleSelectAllE}>
-            Select All
-          </Componentbutton>
-        </ComponentoptionWapper>*/}
-        <ComponentoptionWapper>
-          <Componentbutton onClick={() => this.props.CPsendinfo(this.project_name, this.pm_id/*, selectedMaterial, selectedEquipment*/)}>Create</Componentbutton>
+          <Componentbutton onClick={() => this.props.CPsendinfo(this.project_name, this.pm_id, selectedBoundary)}>Create</Componentbutton>
         </ComponentoptionWapper>
       </ComponentWapper>
     )
   }
 
-  /*componentDidMount() {
-    this.props.getmaterial();
-    this.props.getequipment();
-  }*/
+  componentDidMount() {
+    this.props.getboundary();
+  }
 }
 
 const mapStateToProps = (state) => ({
-  //materiallist: state.admin.materiallist,
-  //equipmentlist: state.admin.equipmentlist
+  boundarylist: state.admin.boundarylist
 })
 
 const mapDisptchToProps = (dispatch) => {
   return {
-    CPsendinfo(project_name, pm_id/*, selectedMaterial, selectedEquipment*/) {
-      /*const materialChecked = selectedMaterial
-        ? selectedMaterial.map(option => {
-          const { value: id, label: name } = option;
-          return { id, name };
-        })
-        : [];
-
-      const equipmentChecked = selectedEquipment
-        ? selectedEquipment.map(option => {
-          const { value: id, label: name } = option;
-          return { id, name };
-        })
-        : [];*/  
-      dispatch(actionCreators.CPsendinfo(project_name.value, pm_id.value/*, materialChecked, equipmentChecked*/));
-    }/*,
-    getmaterial() {
-      dispatch(actionCreators.getmaterial())
+    CPsendinfo(project_name, pm_id, selectedBoundary) {
+      if (selectedBoundary === null) {
+        alert('choose boundary');
+      } else {
+        dispatch(actionCreators.CPsendinfo(project_name.value, pm_id.value, selectedBoundary.value));
+      }
     },
-    getequipment() {
-      dispatch(actionCreators.getequipment())
-    }*/
+    getboundary() {
+      dispatch(actionCreators.getboundary())
+    }
   }
 }
 

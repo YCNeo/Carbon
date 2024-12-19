@@ -37,9 +37,9 @@ export const AAsendinfo = (name, access) => {
   }
 }
 
-export const CPsendinfo = (projectName, PMID/*, materialChecked, equipmentChecked*/) => {
+export const CPsendinfo = (projectName, PMID, bid) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/CPinfo.json', { projectName, PMID/*, materialChecked, equipmentChecked */}).then((res) => {
+    axios./*正是對接時用post*/get('/api/CPinfo.json', { projectName, PMID, bid }).then((res) => {
       const result = res.data;
       result ? alert('PID: ' + result.PID + '\npmid: ' + result.pmid) : alert('fail')
     }).catch(() => {
@@ -150,6 +150,20 @@ export const getequipment = () => {
       });
     }).catch((error) => {
       console.error('Error fetching equipment data:', error);
+    });
+  }
+}
+
+export const getboundary = () => {
+  return (dispatch) => {
+    axios.get('/api/boundary.json').then((res) => {
+      const result = res.data;
+      dispatch({
+        type: constants.GET_BOUNDARY,
+        boundarylist: result
+      });
+    }).catch((error) => {
+      console.error('Error fetching boundary data:', error);
     });
   }
 }

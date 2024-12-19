@@ -129,12 +129,12 @@ export const sourcerevise = (EName, form, MName, category) => {
 
 /////////////////////////////statement////////////////////////////
 
-export const statementretrieve = (EName, form, category) => {
+export const statementretrieve = (startDate, endDate, selecedtBoundary) => {
   return (dispatch) => {
-    axios./*正是對接時用post*/get('/api/statementretrieve.json', { category, form, EName }).then((res) => {
+    axios./*正是對接時用post*/get('/api/statementretrieve.json', { startDate, endDate, selecedtBoundary }).then((res) => {
       const result = res.data;
       dispatch({
-        type:constants.RETRIEVE_STATEMENT,
+        type: constants.RETRIEVE_STATEMENT,
         retrieve_statement: result
       })
       result ? alert('success') : alert('fail')
